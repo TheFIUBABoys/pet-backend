@@ -40,3 +40,5 @@ build/
 
 /config/database.yml
 
+# Compiled api doc
+api_doc/doc.html

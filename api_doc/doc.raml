@@ -1,0 +1,47 @@
+#%RAML 0.8
+title: PetBackend API
+baseUri: http://localhost:3000/
+version: v0.1
+/user:
+  /signup: #Since this is under /user: the endpoint would be /user/signup
+    post:
+      description: Sign Up to the app using fb token and id
+      body:
+        application/json:
+          example: |
+            {
+                "TODO"
+            }
+      responses:
+        200:
+          body:
+            application/json:
+                example: |
+                  {
+                      "TODO"
+                  }
+        400:
+          description: Will return error code 400 when fields are missing or username are already taken
+          body:
+            application/json:
+              example: |
+                {
+                    TODO
+                }
+  /login:
+    post:
+      description: Login using fb id and token to get a valid api token
+      body:
+        application/json:
+          example: |
+            {
+              "TODO"
+            }
+      responses:
+        200:
+          body:
+            application/json:
+                example: |
+                  {
+                      "TODO"
+                  }
