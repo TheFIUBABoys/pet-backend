@@ -1,21 +1,20 @@
 class Users::SessionsController < Devise::SessionsController
-  respond_to :json, :html
   before_action :configure_sign_in_params, only: [:create]
 
   # GET /users/sign_in
-  def new
-    super
-  end
+  # def new
+  #   super
+  # end
 
   # POST /users/sign_in
-  def create
-    super
-  end
+  # def create
+  #   super
+  # end
 
   # DELETE /users/sign_out
-  def destroy
-    super
-  end
+  # def destroy
+  #   super
+  # end
 
   protected
 
