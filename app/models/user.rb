@@ -7,11 +7,11 @@ class User < ActiveRecord::Base
   before_save :ensure_authentication_token
 
   def email_required?
-    facebook_token.present?
+    facebook_token.blank?
   end
 
   def password_required?
-    facebook_token.present?
+    facebook_token.blank?
   end
 
   def ensure_authentication_token
