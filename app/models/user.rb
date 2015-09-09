@@ -7,6 +7,12 @@ class User < ActiveRecord::Base
   before_save :ensure_authentication_token
   after_create :confirm!
 
+  validates :email, uniqueness: true, allow_nil: true, allow_blank: true
+  validates :facebook_id, uniqueness: true, allow_nil: true, allow_blank: true
+
+  validates_presence_of :facebook_id, unless: :email?
+  validates_presence_of :facebook_token, unless: :email?
+
   def email_required?
     facebook_token.blank?
   end
