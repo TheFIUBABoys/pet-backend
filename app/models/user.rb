@@ -5,6 +5,7 @@ class User < ActiveRecord::Base
          :lockable
 
   before_save :ensure_authentication_token
+  after_create :confirm!
 
   def email_required?
     facebook_token.blank?
