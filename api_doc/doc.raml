@@ -63,11 +63,36 @@ version: v0.1
     get:
       description: Search for pets
       queryParameters:
-        limit: The max amount of pets you want in your response.
-        type: The type of pet (Dog/Cat)
-        needs_transit_home: true/false
-        published: true/false
-        user_id: The id of the user whose pets you want to see.
+        limit:
+          displayName: limit
+          type: number
+          description: The max amount of pets you want in your response.
+          example: 5
+          required: false
+        type:
+          displayName: pet type
+          type: string
+          description: The type of pet.
+          example: "Cat"
+          required: false
+        needs_transit_home:
+          displayName: transit home
+          type: boolean
+          description: Whether the pets need transit home or not.
+          example: true
+          required: false
+        published:
+          displayName: published
+          type: boolean
+          description: Search by published status.
+          example: true
+          required: false
+        user_id:
+          displayName: user id
+          type: number
+          description: The id of the user whose pets you want to search for.
+          example: true
+          required: false
       responses:
         200:
           body:
