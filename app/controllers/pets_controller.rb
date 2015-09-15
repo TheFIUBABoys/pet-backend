@@ -4,7 +4,11 @@ class PetsController < ApplicationController
   # GET /pets
   # GET /pets.json
   def index
-    @pets = Pet.all
+    if pet_params
+      @pets = Pet.where(pet_params)
+    else
+      @pets = Pet.all
+    end
   end
 
   # GET /pets/1
@@ -24,15 +28,17 @@ class PetsController < ApplicationController
   # POST /pets
   # POST /pets.json
   def create
-    @pet = Pet.new(pet_params)
+    pet_response = publish_pet_service.call(pet_params)
+
+    @pet = pet_response
 
     respond_to do |format|
-      if @pet.save
-        format.html { redirect_to @pet, notice: 'Pet was successfully created.' }
-        format.json { render :show, status: :created, location: @pet }
+      if pet_response.success?
+        format.html { redirect_to pet_response, notice: 'Pet was successfully created.' }
+        format.json { render :show, status: :created, location: pet_response }
       else
         format.html { render :new }
-        format.json { render json: @pet.errors, status: :unprocessable_entity }
+        format.json { render json: pet_response.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -62,13 +68,18 @@ class PetsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_pet
-      @pet = Pet.find(params[:id])
-    end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def pet_params
-      params.require(:pet).permit(:type, :name, :description)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_pet
+    @pet = Pet.find(params[:id])
+  end
+
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def pet_params
+    params.require(:pet).permit(:type, :name, :description, :needs_transit_home, :published)
+  end
+
+  def publish_pet_service
+    @publish_pet_service ||= PublishPetService.new(current_user)
+  end
 end

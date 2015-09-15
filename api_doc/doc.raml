@@ -15,16 +15,16 @@ version: v0.1
         body:
           application/json:
               example: |
-                {"id":13,"created_at":"2015-09-09T00:17:08.293Z","facebook_id":null,"authentication_token":"EBknxu26nKmxuzx_xxx2"}
+                { "id": 13,"created_at": "2015-09-09T00:17:08.293Z", "facebook_id": null,"authentication_token": "EBknxu26nKmxuzx_xxx2" }
       422:
         description: Will return error code 422 when fields are missing or email is already taken
         body:
           application/json:
             example: |
-              {"errors":{"email":["has already been taken"]}}
-              {"errors":{"email":["can't be blank"]}}
-              {"errors":{"facebook_id":["has already been taken"]}}
-              {"errors":{"facebook_id":["can't be blank"]}}
+              { "errors":{ "email":["has already been taken"]}}
+              { "errors":{ "email":["can't be blank"]}}
+              { "errors":{ "facebook_id":["has already been taken"]}}
+              { "errors":{ "facebook_id":["can't be blank"]}}
   /sign_in:
     post:
       description: Sign In to the app using email and password or facebook_token and facebook_id
@@ -38,11 +38,25 @@ version: v0.1
           body:
             application/json:
                 example: |
-                  {"id":6,"email":"gonchu.b@gmail.com","created_at":"2015-09-08T01:45:42.216Z","updated_at":"2015-09-09T00:31:34.644Z","facebook_id":null,"facebook_token":null,"authentication_token":"K62wJZYwP7KNMUBAQMp9"}
+                  { "id": 6,"email": "gonchu.b@gmail.com", "created_at": "2015-09-08T01:45:42.216Z", "updated_at": "2015-09-09T00:31:34.644Z", "facebook_id": null,"facebook_token": null,"authentication_token": "K62wJZYwP7KNMUBAQMp9" }
         422:
           description: Will return error code 422 when credentials are invalid
           body:
             application/json:
               example: |
-                {"error":"Invalid email or password."}
-                {"error":"Invalid id or token"}
+                { "error": "Invalid email or password." }
+                { "error": "Invalid id or token" }
+  /pets:
+    post:
+      description: Create pet and (optionally) publish it in the app
+      body:
+        application/json:
+          example: |
+            { "pet": { "type": "Cat", "name": "John", "description": "Very nice cat." } }
+            { "pet": { "type": "Dog", "name": "Steve", "description": "Very nice dog.", "published": true } }
+      responses:
+        200:
+          body:
+            application/json:
+                example: |
+                  { "id": 6,"type": "Cat", "name": "John", "description": "Very nice cat.", "published":false,"needs_transit_home":false,"created_at": "2015-09-15T03:02:16.890Z", "updated_at": "2015-09-15T03:02:16.890Z" }
