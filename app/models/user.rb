@@ -13,6 +13,8 @@ class User < ActiveRecord::Base
   validates_presence_of :facebook_id, unless: :email?
   validates_presence_of :facebook_token, unless: :email?
 
+  has_many :pets
+
   def email_required?
     facebook_token.blank?
   end
