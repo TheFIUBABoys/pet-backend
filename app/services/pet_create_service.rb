@@ -1,4 +1,4 @@
-class PublishPetService < BaseService
+class PetCreateService < BaseService
 
   def initialize(user)
     @user = user
