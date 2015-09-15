@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150915024619) do
+ActiveRecord::Schema.define(version: 20150915032850) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -25,6 +25,7 @@ ActiveRecord::Schema.define(version: 20150915024619) do
     t.boolean  "needs_transit_home", default: false, null: false
     t.boolean  "published",          default: false, null: false
     t.integer  "user_id"
+    t.string   "location"
   end
 
   add_index "pets", ["type"], name: "index_pets_on_type", using: :btree

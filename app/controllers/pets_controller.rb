@@ -4,11 +4,13 @@ class PetsController < ApplicationController
   # GET /pets
   # GET /pets.json
   def index
-    if pet_params
-      @pets = Pet.where(pet_params)
+    if pet_search_params.any?
+      @pets = Pet.where(pet_search_params).order(created_at: :desc)
     else
-      @pets = Pet.all
+      @pets = Pet.all.order(created_at: :desc)
     end
+
+    @pets = @pets.limit(params[:limit]) if params[:limit]
   end
 
   # GET /pets/1
@@ -28,7 +30,7 @@ class PetsController < ApplicationController
   # POST /pets
   # POST /pets.json
   def create
-    pet_response = publish_pet_service.call(pet_params)
+    pet_response = pet_create_service.call(pet_params)
 
     @pet = pet_response
 
@@ -76,10 +78,14 @@ class PetsController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def pet_params
-    params.require(:pet).permit(:type, :name, :description, :needs_transit_home, :published)
+    params.require(:pet).permit(:type, :name, :description, :needs_transit_home, :published, :location)
   end
 
-  def publish_pet_service
-    @publish_pet_service ||= PublishPetService.new(current_user)
+  def pet_search_params
+    params.permit(:type, :name, :description, :needs_transit_home, :published, :user_id)
+  end
+
+  def pet_create_service
+    @pet_create_service ||= PetCreateService.new(current_user)
   end
 end

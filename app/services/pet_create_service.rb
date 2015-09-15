@@ -5,7 +5,7 @@ class PetCreateService < BaseService
   end
 
   def call(pet_attributes, publish: false)
-    pet = Pet.create(pet_attributes)
+    pet = @user.pets.create(pet_attributes)
 
     pet.publish! if publish
 

@@ -52,7 +52,7 @@ version: v0.1
       body:
         application/json:
           example: |
-            { "pet": { "type": "Cat", "name": "John", "description": "Very nice cat." } }
+            { "pet": { "type": "Cat", "name": "John", "description": "Very nice cat.", "needs_transit_home": true, location: "127.1,-12.0" } }
             { "pet": { "type": "Dog", "name": "Steve", "description": "Very nice dog.", "published": true } }
       responses:
         200:
@@ -60,3 +60,17 @@ version: v0.1
             application/json:
                 example: |
                   { "id": 6,"type": "Cat", "name": "John", "description": "Very nice cat.", "published":false,"needs_transit_home":false,"created_at": "2015-09-15T03:02:16.890Z", "updated_at": "2015-09-15T03:02:16.890Z" }
+    get:
+      description: Search for pets
+      queryParameters:
+        limit: The max amount of pets you want in your response.
+        type: The type of pet (Dog/Cat)
+        needs_transit_home: true/false
+        published: true/false
+        user_id: The id of the user whose pets you want to see.
+      responses:
+        200:
+          body:
+            application/json:
+                example: |
+                  { "id": 6,"type": "Cat", "name": "John", "description": "Very nice cat.", "published": false, "needs_transit_home": false, "created_at": "2015-09-15T03:02:16.890Z", "updated_at": "2015-09-15T03:02:16.890Z" }
