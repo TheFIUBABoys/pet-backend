@@ -17,10 +17,21 @@ class Pet < ActiveRecord::Base
 
   scope :males,   -> { where(gender: GENDER_MALE) }
   scope :females, -> { where(gender: GENDER_FEMALE) }
+  scope :with_colors, ->(colors) {
+    full_query = nil
+
+    colors.split.each do |color|
+      query = "%#{color}%"
+      color_match = arel_table[:colors].matches(query)
+      full_query = full_query ? full_query.and(color_match) : color_match
+    end
+
+    where(full_query)
+  }
   scope :with_metadata, ->(query) {
     words = query.to_s.strip.split
     words.map! { |word| "metadata LIKE '%#{word}%'" }
-    self.where(words.join(" OR "))
+    where(words.join(" OR "))
   }
 
   def publish
