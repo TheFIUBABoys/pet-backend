@@ -8,9 +8,13 @@ class Users::RegistrationsController < Devise::RegistrationsController
   # end
 
   # POST /resource
-  # def create
-  #   super
-  # end
+  def create
+    if facebook_params? && user = User.find_by(facebook_params)
+      render json: user
+    else
+      super
+    end
+  end
 
   # GET /resource/edit
   # def edit
@@ -36,13 +40,21 @@ class Users::RegistrationsController < Devise::RegistrationsController
   #   super
   # end
 
-  # protected
+  protected
 
   # If you have extra params to permit, append them to the sanitizer.
   def configure_sign_up_params
     devise_parameter_sanitizer.for(:sign_up) do |u|
       u.permit(:facebook_id, :facebook_token, :email, :password, :password_confirmation)
     end
+  end
+
+  def facebook_params?
+    facebook_params[:facebook_id] && facebook_params[:facebook_token]
+  end
+
+  def facebook_params
+    params.fetch(:user).slice(:facebook_id, :facebook_token)
   end
 
   # If you have extra params to permit, append them to the sanitizer.
