@@ -42,3 +42,7 @@ build/
 
 # Compiled api doc
 api_doc/doc.html
+
+*.iml
+.idea/
+docs.html

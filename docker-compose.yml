@@ -1,0 +1,14 @@
+postgres:
+  image: postgres:9.4.4
+  ports:
+    - "5432:5432"
+  volumes_from:
+    - 'data'
+  environment:
+    POSTGRES_USER: "pet-adopt"
+    POSTGRES_PASSWORD: "pet-adopt"
+
+data:
+  image: busybox
+  volumes:
+    - ./data:/data
