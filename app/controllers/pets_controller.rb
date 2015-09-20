@@ -78,11 +78,12 @@ class PetsController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def pet_params
-    params.require(:pet).permit(:type, :name, :description, :needs_transit_home, :published, :location)
+    params.require(:pet).
+      permit(:type, :name, :description, :gender, :colors, :needs_transit_home, :published, :location, :metadata)
   end
 
   def pet_search_params
-    params.permit(:type, :name, :description, :needs_transit_home, :published, :user_id)
+    params.permit(:type, :name, :description, :gender, :colors, :needs_transit_home, :published, :user_id, :metadata)
   end
 
   def pet_create_service
