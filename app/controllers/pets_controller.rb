@@ -69,6 +69,10 @@ class PetsController < ApplicationController
     end
   end
 
+  def top
+    @pets = Pet.all.order(created_at: :desc).limit(5)
+  end
+
   private
 
   # Use callbacks to share common setup or constraints between actions.
