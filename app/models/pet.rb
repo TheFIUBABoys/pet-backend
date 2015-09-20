@@ -5,8 +5,8 @@ class Pet < ActiveRecord::Base
 
   validates_format_of :location, with: /[-+]?([1-8]?\d(\.\d+)?|90(\.0+)?),\s*[-+]?(180(\.0+)?|((1[0-7]\d)|([1-9]?\d))(\.\d+)?)/
 
-  %w[male female].each do |position|
-    const_set "gender_#{position}".upcase, position
+  %w[male female].each do |gender|
+    const_set "gender_#{gender}".upcase, gender
   end
 
   GENDERS = [GENDER_MALE, GENDER_FEMALE]
@@ -20,7 +20,7 @@ class Pet < ActiveRecord::Base
   scope :with_metadata, ->(query) {
     words = query.to_s.strip.split
     words.map! { |word| "metadata LIKE '%#{word}%'" }
-    self.where(words.join(" OR "))``
+    self.where(words.join(" OR "))
   }
 
   def publish
