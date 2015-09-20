@@ -93,6 +93,24 @@ version: v0.1
           description: The id of the user whose pets you want to search for.
           example: true
           required: false
+        gender:
+          displayName: gender
+          type: string
+          description: The gender of the pets to be returned (male or female).
+          example: "male"
+          required: false
+        colors:
+          displayName: colors
+          type: string
+          description: The colors that pets should have (they should have all of them).
+          example: "black white"
+          required: false
+        metadata:
+          displayName: metadata
+          type: string
+          description: Metadata to search pets. If it matches any of the metadata words, the pet is returned.
+          example: "gato macho"
+          required: false
       responses:
         200:
           body:
