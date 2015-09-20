@@ -9,7 +9,8 @@ class Users::RegistrationsController < Devise::RegistrationsController
 
   # POST /resource
   def create
-    if facebook_params? && user = User.find_by(facebook_params)
+    if facebook_params? && user = User.find_by(facebook_id: facebook_params[:facebook_id])
+      user.update_attributes(facebook_token: facebook_params[:facebook_token])
       render json: user
     else
       super
