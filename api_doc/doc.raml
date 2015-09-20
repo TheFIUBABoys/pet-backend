@@ -97,5 +97,14 @@ version: v0.1
         200:
           body:
             application/json:
+              example: |
+                { "id": 6,"type": "Cat", "name": "John", "description": "Very nice cat.", "published": false, "needs_transit_home": false, "created_at": "2015-09-15T03:02:16.890Z", "updated_at": "2015-09-15T03:02:16.890Z" }
+    /top:
+      get:
+        description: Get top 5 pets.
+        responses:
+          200:
+            body:
+              application/json:
                 example: |
-                  { "id": 6,"type": "Cat", "name": "John", "description": "Very nice cat.", "published": false, "needs_transit_home": false, "created_at": "2015-09-15T03:02:16.890Z", "updated_at": "2015-09-15T03:02:16.890Z" }
+                  [{"id":11,"type":"Cat","name":"John","description":"hlo","published":true,"needs_transit_home":false,"created_at":"2015-09-15T04:21:52.311Z","updated_at":"2015-09-20T19:16:19.167Z","user_id":1,"location":"127,2","url":"http://localhost:8000/pets/11.json"},{"id":8,"type":"Cat","name":"John","description":"Very nice cat.","published":true,"needs_transit_home":false,"created_at":"2015-09-15T03:26:02.572Z","updated_at":"2015-09-15T03:35:07.761Z","user_id":1,"location":"12,-12.0","url":"http://localhost:8000/pets/8.json"}]
