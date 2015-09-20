@@ -1,0 +1,6 @@
+es:
+  pets:
+    cat: gato
+    dog: perro
+    male: macho
+    female: hembra
