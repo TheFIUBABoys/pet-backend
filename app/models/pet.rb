@@ -20,18 +20,22 @@ class Pet < ActiveRecord::Base
   scope :with_colors, ->(colors) {
     full_query = nil
 
-    colors.split.each do |color|
-      query = "%#{color}%"
+    to_queries(colors).each do |query|
       color_match = arel_table[:colors].matches(query)
       full_query = full_query ? full_query.and(color_match) : color_match
     end
 
     where(full_query)
   }
-  scope :with_metadata, ->(query) {
-    words = query.to_s.strip.split
-    words.map! { |word| "metadata LIKE '%#{word}%'" }
-    where(words.join(" OR "))
+  scope :with_metadata, ->(tags) {
+    full_query = nil
+
+    to_queries(tags).each do |query|
+      meta_match = arel_table[:metadata].matches(query)
+      full_query = full_query ? full_query.or(meta_match) : meta_match
+    end
+
+    where(full_query)
   }
 
   def publish
@@ -51,6 +55,10 @@ class Pet < ActiveRecord::Base
   end
 
   private
+
+  def self.to_queries(query)
+    query.to_s.strip.split.map { |w| "%#{w}%" }
+  end
 
   def update_metadata
     tags = []
