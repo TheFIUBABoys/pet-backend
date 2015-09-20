@@ -4,11 +4,14 @@ class PetsController < ApplicationController
   # GET /pets
   # GET /pets.json
   def index
-    if pet_search_params.any?
-      @pets = Pet.where(pet_search_params).order(created_at: :desc)
-    else
-      @pets = Pet.all.order(created_at: :desc)
-    end
+    params = pet_search_params
+
+    color_query    = params.delete(:colors)
+    metadata_query = params.delete(:metadata)
+
+    @pets = Pet.where(params).order(created_at: :desc)
+    @pets = @pets.with_metadata(metadata_query) if metadata_query.present?
+    @pets = @pets.with_colors(color_query) if color_query.present?
 
     @pets = @pets.limit(params[:limit]) if params[:limit]
   end
