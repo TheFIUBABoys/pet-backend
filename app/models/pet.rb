@@ -10,8 +10,10 @@ class Pet < ActiveRecord::Base
   end
 
   GENDERS = [GENDER_MALE, GENDER_FEMALE]
-
   validates_inclusion_of :gender, in: GENDERS, allow_blank: false
+
+  TYPES = [Cat.name, Dog.name]
+  validates_inclusion_of :type, in: TYPES, allow_blank: false
 
   before_save :update_metadata
 
@@ -66,7 +68,7 @@ class Pet < ActiveRecord::Base
 
     # Tag pet based on type, gender and colors.
     %i[type gender].each do |attribute|
-      tags << I18n.t("pets.#{self.send(attribute).downcase}")
+      tags << I18n.t("pets.#{self.send(attribute).downcase}") if self.send(attribute)
     end
     tags << self.colors
 
