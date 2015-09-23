@@ -30,7 +30,7 @@ describe "Pets API" do
 
           %i[type gender vaccinated name].each do |attribute|
             context "when pets match the filter" do
-              let(:options) { { "#{attribute}" => pet.send(attribute) } }
+              let(:options) { { :"#{attribute}" => pet.send(attribute) } }
 
               it "returns the matching pets" do
                 subject
@@ -41,7 +41,7 @@ describe "Pets API" do
             end
 
             context "when pets do not match the filter" do
-              let(:options) { { "#{attribute}" => !pet.send(attribute) } }
+              let(:options) { { :"#{attribute}" => !pet.send(attribute) } }
 
               it "returns the matching pets" do
                 subject
