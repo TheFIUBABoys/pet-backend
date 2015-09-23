@@ -257,6 +257,25 @@ version: v0.1
           description: Will return a 204 with no content.
         404:
           description: Will return a 404 status if the pet is not found.
+    /photo:
+      post:
+        description: Add a photo to the given pet.
+        body:
+          application/file:
+            example: Upload the image in a param named "image"
+        responses:
+          200:
+            body:
+              application/json:
+                example: |
+                  {
+                    "id":6,
+                    "original_url":"http://localhost:8000/system/pet_images/images/000/000/006/original/imagereq.png?1443043475",
+                    "medium_url":"http://localhost:8000/system/pet_images/images/000/000/006/medium/imagereq.png?1443043475",
+                    "thumb_url":"http://localhost:8000/system/pet_images/images/000/000/006/thumb/imagereq.png?1443043475"
+                  }
+          404:
+            description: Will return a 404 status if the pet is not found.
   /top:
     get:
       description: Get top 5 pets.

@@ -12,6 +12,7 @@
 /test/version_tmp/
 tmp/
 /log/
+/public/system
 
 ## Specific to RubyMotion:
 .dat*

@@ -10,6 +10,7 @@ gem "devise"
 gem "devise-i18n"
 gem "will_paginate", "~> 3.0.6"
 gem "will_paginate-bootstrap"
+gem "paperclip", "~> 4.3"
 
 # Front end
 gem "haml-rails"

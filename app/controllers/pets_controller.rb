@@ -1,5 +1,5 @@
 class PetsController < ApplicationController
-  before_action :set_pet, only: [:show, :edit, :update, :destroy]
+  before_action :set_pet, only: [:show, :edit, :update, :destroy, :photo]
 
   rescue_from ActiveRecord::RecordNotFound, with: :not_found
 
@@ -76,6 +76,10 @@ class PetsController < ApplicationController
 
   def top
     @pets = Pet.all.order(created_at: :desc).limit(5)
+  end
+
+  def photo
+    @pet_photo = @pet.images.create(image: params[:image])
   end
 
   private

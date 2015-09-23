@@ -5,6 +5,10 @@ Rails.application.routes.draw do
     collection do
       get "top"
     end
+
+    member do
+      post "photo"
+    end
   end
 
   root "pets#index"
