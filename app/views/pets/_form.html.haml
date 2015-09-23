@@ -11,17 +11,56 @@
           %li= msg
 
   .form-group
-    = f.label :type, class: 'col-sm-2 control-label'
+    = f.label :type, class: "col-sm-2 control-label"
     .col-sm-10
-      = f.select :type, pet_type_options, { prompt: "--- Select ---" }, class: 'form-control', required: true
+      = f.select :type, pet_type_options, { prompt: "--- Select ---" }, class: "form-control", required: true
+
   .form-group
-    = f.label :name, class: 'col-sm-2 control-label'
+    = f.label :gender, class: "col-sm-2 control-label"
     .col-sm-10
-      = f.text_field :name, class: 'form-control', required: true
+      = f.select :gender, pet_gender_options, { prompt: "--- Select ---" }, class: "form-control", required: true
+
   .form-group
-    = f.label :description, class: 'col-sm-2 control-label'
+    = f.label :name, class: "col-sm-2 control-label"
     .col-sm-10
-      = f.text_area :description, class: 'form-control', required: true
+      = f.text_field :name, class: "form-control", required: true
+
+  .form-group
+    = f.label :colors, class: "col-sm-2 control-label"
+    .col-sm-10
+      = f.text_field :colors, class: "form-control"
+
+  .form-group
+    = f.label :description, class: "col-sm-2 control-label"
+    .col-sm-10
+      = f.text_area :description, class: "form-control", required: true
+
+  .form-group
+    = f.label :metadata, class: "col-sm-2 control-label"
+    .col-sm-10
+      = f.text_area :metadata, class: "form-control"
+
   .form-group
     .col-sm-offset-2.col-sm-10
-      = f.submit class: 'btn btn-primary'
+      .checkbox
+        = f.label :needs_transit_home do
+          = f.check_box :needs_transit_home
+          Needs transit home
+
+  .form-group
+    .col-sm-offset-2.col-sm-10
+      .checkbox
+        = f.label :published do
+          = f.check_box :published
+          Published
+
+  .form-group
+    .col-sm-offset-2.col-sm-10
+      .checkbox
+        = f.label :vaccinated do
+          = f.check_box :vaccinated
+          Vaccinated
+
+  .form-group
+    .col-sm-offset-2.col-sm-10
+      = f.submit class: "btn btn-primary"

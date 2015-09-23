@@ -8,9 +8,16 @@
   %h1 Show pet
 
 %dl.dl-horizontal
-  %dt Type:
-  %dd= @pet.type
-  %dt Name:
-  %dd= @pet.name
-  %dt Description:
-  %dd= @pet.description
+  - @pet.attributes.each do |attribute, value|
+    %dt= "#{attribute.humanize}:"
+    %dd
+      - if value == true
+        %span.glyphicon.glyphicon-ok
+      - elsif value == false
+        %span.glyphicon.glyphicon-remove
+      - elsif value.acts_like?(:time)
+        = l value, format: :short
+      - elsif value.try(:id)
+        = value.email
+      - else
+        = value

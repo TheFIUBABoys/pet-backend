@@ -8,6 +8,7 @@ gem "jbuilder", "~> 2.0"
 gem "turbolinks"
 gem "responders"
 gem "devise"
+gem "devise-i18n"
 
 # Front end
 gem "haml-rails"

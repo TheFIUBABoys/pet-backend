@@ -56,6 +56,7 @@ GEM
       responders
       thread_safe (~> 0.1)
       warden (~> 1.2.3)
+    devise-i18n (0.12.1)
     diff-lcs (1.2.5)
     erb2haml (0.1.5)
       html2haml
@@ -198,6 +199,7 @@ DEPENDENCIES
   bootstrap-sass (~> 3.3.5)
   coffee-rails (~> 4.1.0)
   devise
+  devise-i18n
   erb2haml
   factory_girl_rails (~> 4.0)
   forgery
