@@ -293,4 +293,91 @@ describe "Pets API" do
 
   end
 
+  describe "DELETE /pets/:id.json" do
+
+    let(:pet) { FactoryGirl.create :pet, :dog, :male, :published }
+    subject { delete pet_path(pet, format: :json, user_token: token) }
+
+    context "when logged in" do
+      let(:token) { FactoryGirl.create(:user).authentication_token }
+
+      context "when pet with given id does not exist" do
+        subject { delete pet_path(id: Forgery(:name).first_name, format: :json, user_token: token) }
+
+        it "responds with 404" do
+          subject
+          expect(response.status).to eq 404
+        end
+      end
+
+      context "when pet with given id exists" do
+        it "responds with 204" do
+          subject
+          expect(response.status).to eq 204
+        end
+      end
+    end
+
+    context "when not logged in" do
+      let(:pet_params) { { } }
+      let(:token) { "" }
+
+      it "responds with 401" do
+        subject
+        expect(response.status).to eq 401
+      end
+    end
+
+  end
+
+  describe "GET /pets/top.json" do
+
+    subject { get top_pets_path(format: :json, user_token: token) }
+
+    context "when logged in" do
+      let(:token) { FactoryGirl.create(:user).authentication_token }
+
+      it "responds with 200" do
+        subject
+        expect(response.status).to eq 200
+      end
+
+      context "when there are less than 5 pets" do
+        before do
+          Pet.destroy_all
+          FactoryGirl.create_list :pet, 4, :dog, :male, :published
+        end
+
+        it "returns all the pets" do
+          subject
+
+          pets = JSON.parse(response.body)
+          expect(pets.count).to be < 5
+        end
+      end
+
+      context "when there are more than 5 pets" do
+        before { FactoryGirl.create_list :pet, 10, :dog, :male, :published }
+
+        it "returns 5 pets" do
+          subject
+
+          pets = JSON.parse(response.body)
+          expect(pets.count).to eql(5)
+        end
+      end
+    end
+
+    context "when not logged in" do
+      let(:pet_params) { { } }
+      let(:token) { "" }
+
+      it "responds with 401" do
+        subject
+        expect(response.status).to eq 401
+      end
+    end
+
+  end
+
 end
