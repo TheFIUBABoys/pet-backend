@@ -1,27 +1,32 @@
 .page-header
   = link_to pets_path, class: 'btn btn-default' do
     %span.glyphicon.glyphicon-list-alt
-    Back
+    = t("shared.back")
   = link_to edit_pet_path(@pet), class: 'btn btn-primary' do
     %span.glyphicon.glyphicon-pencil
-    Edit
-  %h1 Show pet
+    = t("shared.edit")
+  %h1= t(".title")
 
-%dl.dl-horizontal
-  - @pet.attributes.each do |attribute, value|
-    %dt= "#{attribute.humanize}:"
-    %dd
-      - if value == true
-        %span.glyphicon.glyphicon-ok
-      - elsif value == false
-        %span.glyphicon.glyphicon-remove
-      - elsif value.acts_like?(:time)
-        = l value, format: :short
-      - else
-        = value
+.table-responsive
+  %table.table.table-striped.table-bordered.table-hover
+    %tbody
+      - t("activerecord.attributes.pet").each do |attribute, text|
+        %tr
+          %td
+            %b= text
+          %td
+            - value = @pet.send(attribute.to_sym)
+            - if value == true
+              = t("shared.yes_word")
+            - elsif value == false
+              = t("shared.no_word")
+            - elsif value.acts_like?(:time)
+              = l value, format: :short
+            - else
+              = value
 
 - if @pet.images.any?
   .photos
-    %h2 Photos
+    %h2= t(".photos")
     - @pet.images.each do |pet_image|
       %img.img-rounded{ src: asset_url(pet_image.image.url(:medium)) }

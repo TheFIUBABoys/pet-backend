@@ -2,8 +2,68 @@ es:
   shared:
     yes_word: "Si"
     no_word: "No"
+    prompt: "--- Seleccione ---"
+    back: "Atrás"
+    show: "Detalle"
+    edit: "Editar"
+    destroy: "Borrar"
+    confirm: "¿Está seguro?"
+    logout: "Cerrar sesión"
+    login: "Iniciar sesión"
   pets:
     cat: Gato
     dog: Perro
     male: Macho
     female: Hembra
+    filters:
+      type_prompt: "--- Tipo ---"
+      gender_prompt: "--- Género ---"
+      published_prompt: "--- Publicado ---"
+      vaccinated_prompt: "--- Vacunas ---"
+      needs_transit_home_prompt: "--- Necesita hogar de tránsito ---"
+      submit: "Buscar"
+    form:
+      needs_transit_home: "Necesita hogar en tránsito"
+      published: "Publicado"
+      vaccinated: "Vacunas"
+    image_form:
+      help: "Adjunte la nueva imagen aquí"
+      submit: "Guardar imagen"
+    edit:
+      title: "Editar mascota"
+    index:
+      new_pet: "Nueva mascota"
+      title: "Mascotas"
+      type: "Tipo"
+      gender: "Género"
+      name: "Nombre"
+      description: "Descripción"
+    new:
+      title: "Nueva mascota"
+    show:
+      title: "Detalle de la mascota"
+      photos: "Fotos de la mascota"
+  will_paginate:
+    previous_label: Anterior
+    next_label: Siguiente
+  activerecord:
+    models:
+      pet: Mascota
+    attributes:
+      pet:
+        id: Id
+        type: Tipo
+        gender: Género
+        name: Nombre
+        colors: Colores
+        description: Descripción
+        location: Coordenadas
+        metadata: Metadata
+        needs_transit_home: Needs transit home
+        published: Publicado
+        vaccinated: Vacunas
+        user_id: Usuario
+        created_at: Creado el
+        updated_at: Actualizado el
+      pet_image:
+        image: Imagen

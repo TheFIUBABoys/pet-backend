@@ -1,11 +1,14 @@
 .page-header
   = link_to pets_path, class: 'btn btn-default' do
     %span.glyphicon.glyphicon-list-alt
-    Back
+    = t("shared.back")
   = link_to @pet, class: 'btn btn-primary' do
     %span.glyphicon.glyphicon-info-sign
-    Show
-  %h1 Editing pet
+    = t("shared.show")
+  %h1= t(".title")
 
 = render "form"
+
+%hr
+
 = render "image_form"

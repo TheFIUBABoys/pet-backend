@@ -1,8 +1,8 @@
 .page-header
   = link_to new_pet_path, class: 'btn btn-primary' do
     %span.glyphicon.glyphicon-plus
-    New Pet
-  %h1 Listing pets
+    = t(".new_pet")
+  %h1= t(".title")
 
 .filters
   = render "filters"
@@ -13,10 +13,10 @@
   %table.table.table-striped.table-bordered.table-hover
     %thead
       %tr
-        %th Type
-        %th Gender
-        %th Name
-        %th Description
+        %th= t(".type")
+        %th= t(".gender")
+        %th= t(".name")
+        %th= t(".description")
         %th
         %th
         %th
@@ -28,8 +28,8 @@
           %td= t("pets.#{pet.gender}")
           %td= pet.name
           %td= pet.description
-          %td= link_to 'Show', pet
-          %td= link_to 'Edit', edit_pet_path(pet)
-          %td= link_to 'Destroy', pet, data: { confirm: 'Are you sure?' }, method: :delete
+          %td= link_to t("shared.show"), pet
+          %td= link_to t("shared.edit"), edit_pet_path(pet)
+          %td= link_to t("shared.destroy"), pet, data: { confirm: t("shared.confirm") }, method: :delete
 
 = will_paginate @pets, renderer: BootstrapPagination::Rails
