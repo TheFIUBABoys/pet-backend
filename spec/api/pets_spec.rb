@@ -20,8 +20,7 @@ describe "Pets API" do
 
             subject
 
-            pets = JSON.parse(response.body)
-            expect(pets.first["id"]).to eql(pet.id)
+            expect(json.first["id"]).to eql(pet.id)
           end
         end
 
@@ -35,8 +34,7 @@ describe "Pets API" do
               it "returns the matching pets" do
                 subject
 
-                pets = JSON.parse(response.body)
-                expect(pets.first["id"]).to eql(pet.id)
+                expect(json.first["id"]).to eql(pet.id)
               end
             end
 
@@ -46,8 +44,7 @@ describe "Pets API" do
               it "returns the matching pets" do
                 subject
 
-                pets = JSON.parse(response.body)
-                expect(pets).to be_empty
+                expect(json).to be_empty
               end
             end
           end
@@ -58,8 +55,7 @@ describe "Pets API" do
         it "returns an empty array" do
           subject
 
-          pets = JSON.parse(response.body)
-          expect(pets).to be_empty
+          expect(json).to be_empty
         end
       end
 
@@ -69,8 +65,7 @@ describe "Pets API" do
 
           subject
 
-          pets = JSON.parse(response.body)
-          expect(pets).to be_empty
+          expect(json).to be_empty
         end
       end
     end
@@ -153,8 +148,7 @@ describe "Pets API" do
         it "returns the pet with the given id" do
           subject
 
-          response_pet = JSON.parse(response.body)
-          expect(response_pet["id"]).to eql(pet.id)
+          expect(json["id"]).to eql(pet.id)
         end
       end
     end
@@ -200,9 +194,8 @@ describe "Pets API" do
           it "returns the pet with the changed name" do
             subject
 
-            response_pet = JSON.parse(response.body)
-            expect(response_pet["id"]).to eql(pet.id)
-            expect(response_pet["name"]).to eql(pet_params[:name])
+            expect(json["id"]).to eql(pet.id)
+            expect(json["name"]).to eql(pet_params[:name])
           end
         end
 
@@ -217,9 +210,8 @@ describe "Pets API" do
           it "returns the pet with the changed gender" do
             subject
 
-            response_pet = JSON.parse(response.body)
-            expect(response_pet["id"]).to eql(pet.id)
-            expect(response_pet["gender"]).to eql(pet_params[:gender])
+            expect(json["id"]).to eql(pet.id)
+            expect(json["gender"]).to eql(pet_params[:gender])
           end
 
           it "changes the metadata" do
@@ -227,9 +219,8 @@ describe "Pets API" do
 
             subject
 
-            response_pet = JSON.parse(response.body)
-            expect(response_pet["id"]).to eql(pet.id)
-            expect(response_pet["metadata"]).not_to eql(old_metadata)
+            expect(json["id"]).to eql(pet.id)
+            expect(json["metadata"]).not_to eql(old_metadata)
           end
         end
 
@@ -244,9 +235,8 @@ describe "Pets API" do
           it "returns the pet with the changed type" do
             subject
 
-            response_pet = JSON.parse(response.body)
-            expect(response_pet["id"]).to eql(pet.id)
-            expect(response_pet["type"]).to eql(pet_params[:type])
+            expect(json["id"]).to eql(pet.id)
+            expect(json["type"]).to eql(pet_params[:type])
           end
 
           it "changes the metadata" do
@@ -254,9 +244,8 @@ describe "Pets API" do
 
             subject
 
-            response_pet = JSON.parse(response.body)
-            expect(response_pet["id"]).to eql(pet.id)
-            expect(response_pet["metadata"]).not_to eql(old_metadata)
+            expect(json["id"]).to eql(pet.id)
+            expect(json["metadata"]).not_to eql(old_metadata)
           end
         end
 
@@ -272,9 +261,8 @@ describe "Pets API" do
             it "returns the pet with the changed name" do
               subject
 
-              response_pet = JSON.parse(response.body)
-              expect(response_pet["id"]).to eql(pet.id)
-              expect(response_pet[attribute.to_s]).to eql(pet_params[attribute])
+              expect(json["id"]).to eql(pet.id)
+              expect(json[attribute.to_s]).to eql(pet_params[attribute])
             end
           end
         end
@@ -351,8 +339,7 @@ describe "Pets API" do
         it "returns all the pets" do
           subject
 
-          pets = JSON.parse(response.body)
-          expect(pets.count).to be < 5
+          expect(json.count).to be < 5
         end
       end
 
@@ -362,8 +349,7 @@ describe "Pets API" do
         it "returns 5 pets" do
           subject
 
-          pets = JSON.parse(response.body)
-          expect(pets.count).to eql(5)
+          expect(json.count).to eql(5)
         end
       end
     end
