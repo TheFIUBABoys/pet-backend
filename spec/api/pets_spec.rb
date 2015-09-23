@@ -6,7 +6,7 @@ describe "Pets API" do
     subject { get pets_path(options.merge(format: :json, user_token: token)) }
 
     context "when logged in" do
-      let(:token) { FactoryGirl.create(:user).authentication_token }
+      let(:token) { FactoryGirl.create(:user, :email_auth).authentication_token }
 
       it "responds with 200" do
         subject
@@ -86,7 +86,7 @@ describe "Pets API" do
     subject { post pets_path(format: :json, user_token: token), { pet: pet_params } }
 
     context "when logged in" do
-      let(:token) { FactoryGirl.create(:user).authentication_token }
+      let(:token) { FactoryGirl.create(:user, :email_auth).authentication_token }
       let(:valid_pet_params) { { type: Cat.name, gender: Pet::GENDER_MALE } }
 
       context "when specifying all required parameters" do
@@ -128,7 +128,7 @@ describe "Pets API" do
     subject { get pet_path(pet, format: :json, user_token: token) }
 
     context "when logged in" do
-      let(:token) { FactoryGirl.create(:user).authentication_token }
+      let(:token) { FactoryGirl.create(:user, :email_auth).authentication_token }
 
       context "when pet with given id does not exist" do
         subject { get pet_path(id: Forgery(:name).first_name, format: :json, user_token: token) }
@@ -170,7 +170,7 @@ describe "Pets API" do
     subject { put pet_path(pet, format: :json, user_token: token), { pet: pet_params }  }
 
     context "when logged in" do
-      let(:token) { FactoryGirl.create(:user).authentication_token }
+      let(:token) { FactoryGirl.create(:user, :email_auth).authentication_token }
 
       context "when pet with given id does not exist" do
         let(:pet_params) { { name: Forgery(:name).first_name } }
@@ -287,7 +287,7 @@ describe "Pets API" do
     subject { delete pet_path(pet, format: :json, user_token: token) }
 
     context "when logged in" do
-      let(:token) { FactoryGirl.create(:user).authentication_token }
+      let(:token) { FactoryGirl.create(:user, :email_auth).authentication_token }
 
       context "when pet with given id does not exist" do
         subject { delete pet_path(id: Forgery(:name).first_name, format: :json, user_token: token) }
@@ -323,7 +323,7 @@ describe "Pets API" do
     subject { get top_pets_path(format: :json, user_token: token) }
 
     context "when logged in" do
-      let(:token) { FactoryGirl.create(:user).authentication_token }
+      let(:token) { FactoryGirl.create(:user, :email_auth).authentication_token }
 
       it "responds with 200" do
         subject

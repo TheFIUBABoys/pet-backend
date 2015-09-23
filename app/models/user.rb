@@ -1,9 +1,7 @@
 class User < ActiveRecord::Base
-  devise :database_authenticatable, :registerable, :recoverable, :rememberable, :trackable, :validatable, :confirmable,
-         :lockable
+  devise :database_authenticatable, :registerable, :recoverable, :rememberable, :trackable, :validatable, :lockable
 
   before_save :ensure_authentication_token
-  after_create :confirm
 
   validates :email, uniqueness: true, allow_nil: true, allow_blank: true
   validates :facebook_id, uniqueness: true, allow_nil: true, allow_blank: true
