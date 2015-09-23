@@ -127,4 +127,170 @@ describe "Pets API" do
 
   end
 
+  describe "GET /pets/:id.json" do
+
+    let(:pet) { FactoryGirl.create :pet, :dog, :male, :published }
+    subject { get pet_path(pet, format: :json, user_token: token) }
+
+    context "when logged in" do
+      let(:token) { FactoryGirl.create(:user).authentication_token }
+
+      context "when pet with given id does not exist" do
+        subject { get pet_path(id: Forgery(:name).first_name, format: :json, user_token: token) }
+
+        it "responds with 404" do
+          subject
+          expect(response.status).to eq 404
+        end
+      end
+
+      context "when pet with given id exists" do
+        it "responds with 200" do
+          subject
+          expect(response.status).to eq 200
+        end
+
+        it "returns the pet with the given id" do
+          subject
+
+          response_pet = JSON.parse(response.body)
+          expect(response_pet["id"]).to eql(pet.id)
+        end
+      end
+    end
+
+    context "when not logged in" do
+      let(:token) { "" }
+
+      it "responds with 401" do
+        subject
+        expect(response.status).to eq 401
+      end
+    end
+
+  end
+
+  describe "PUT /pets/:id.json" do
+
+    let(:pet) { FactoryGirl.create :pet, :dog, :male, :published }
+    subject { put pet_path(pet, format: :json, user_token: token), { pet: pet_params }  }
+
+    context "when logged in" do
+      let(:token) { FactoryGirl.create(:user).authentication_token }
+
+      context "when pet with given id does not exist" do
+        let(:pet_params) { { name: Forgery(:name).first_name } }
+        subject { put pet_path(id: Forgery(:name).first_name, format: :json, user_token: token), { pet: pet_params } }
+
+        it "responds with 404" do
+          subject
+          expect(response.status).to eq 404
+        end
+      end
+
+      context "when pet with given id exists" do
+        context "when updating the name" do
+          let(:pet_params) { { name: Forgery(:name).first_name } }
+
+          it "responds with 200" do
+            subject
+            expect(response.status).to eq 200
+          end
+
+          it "returns the pet with the changed name" do
+            subject
+
+            response_pet = JSON.parse(response.body)
+            expect(response_pet["id"]).to eql(pet.id)
+            expect(response_pet["name"]).to eql(pet_params[:name])
+          end
+        end
+
+        context "when updating the gender" do
+          let(:pet_params) { { gender: Pet::GENDERS.reject { |g| g == pet.gender }.first } }
+
+          it "responds with 200" do
+            subject
+            expect(response.status).to eq 200
+          end
+
+          it "returns the pet with the changed gender" do
+            subject
+
+            response_pet = JSON.parse(response.body)
+            expect(response_pet["id"]).to eql(pet.id)
+            expect(response_pet["gender"]).to eql(pet_params[:gender])
+          end
+
+          it "changes the metadata" do
+            old_metadata = pet.metadata
+
+            subject
+
+            response_pet = JSON.parse(response.body)
+            expect(response_pet["id"]).to eql(pet.id)
+            expect(response_pet["metadata"]).not_to eql(old_metadata)
+          end
+        end
+
+        context "when updating the type" do
+          let(:pet_params) { { type: Pet::TYPES.reject { |t| t == pet.type }.first } }
+
+          it "responds with 200" do
+            subject
+            expect(response.status).to eq 200
+          end
+
+          it "returns the pet with the changed type" do
+            subject
+
+            response_pet = JSON.parse(response.body)
+            expect(response_pet["id"]).to eql(pet.id)
+            expect(response_pet["type"]).to eql(pet_params[:type])
+          end
+
+          it "changes the metadata" do
+            old_metadata = pet.metadata
+
+            subject
+
+            response_pet = JSON.parse(response.body)
+            expect(response_pet["id"]).to eql(pet.id)
+            expect(response_pet["metadata"]).not_to eql(old_metadata)
+          end
+        end
+
+        %i[published vaccinated needs_transit_home].each do |attribute|
+          context "when updating #{attribute}" do
+            let(:pet_params) { { :"#{attribute}" => !pet.send(attribute) } }
+
+            it "responds with 200" do
+              subject
+              expect(response.status).to eq 200
+            end
+
+            it "returns the pet with the changed name" do
+              subject
+
+              response_pet = JSON.parse(response.body)
+              expect(response_pet["id"]).to eql(pet.id)
+              expect(response_pet[attribute.to_s]).to eql(pet_params[attribute])
+            end
+          end
+        end
+      end
+    end
+
+    context "when not logged in" do
+      let(:pet_params) { { } }
+      let(:token) { "" }
+
+      it "responds with 401" do
+        subject
+        expect(response.status).to eq 401
+      end
+    end
+
+  end
+
 end

@@ -1,6 +1,8 @@
 class PetsController < ApplicationController
   before_action :set_pet, only: [:show, :edit, :update, :destroy]
 
+  rescue_from ActiveRecord::RecordNotFound, with: :not_found
+
   # GET /pets
   # GET /pets.json
   def index

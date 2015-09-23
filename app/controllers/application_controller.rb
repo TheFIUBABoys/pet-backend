@@ -20,4 +20,10 @@ class ApplicationController < ActionController::Base
 
     sign_in(user, store: false) if user
   end
+
+  def not_found
+    respond_to do |format|
+      format.json { render json: {}, status: :not_found }
+    end
+  end
 end
