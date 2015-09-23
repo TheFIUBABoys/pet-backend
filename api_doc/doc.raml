@@ -126,7 +126,7 @@ version: v0.1
                   "updated_at": "2015-09-15T03:02:16.890Z"
                 }
   get:
-    description: Search for pets
+    description: Search for pets (only shows published pets)
     queryParameters:
       limit:
         displayName: limit
@@ -144,12 +144,6 @@ version: v0.1
         displayName: transit home
         type: boolean
         description: Whether the pets need transit home or not.
-        example: true
-        required: false
-      published:
-        displayName: published
-        type: boolean
-        description: Search by published status.
         example: true
         required: false
       vaccinated:

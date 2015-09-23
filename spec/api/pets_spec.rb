@@ -1,17 +1,56 @@
 describe "Pets API" do
   describe "GET /pets.json" do
-    it "returns all the pets" do
-      user = FactoryGirl.create :user
 
-      get "/pets.json?user_token=#{user.authentication_token}"
+    subject { get "/pets.json?user_token=#{token}" }
 
-      expect(response.status).to eq 200
+    context "when logged in" do
+      let(:token) { FactoryGirl.create(:user).authentication_token }
 
-      # body = JSON.parse(response.body)
-      # movie_titles = body.map { |m| m["title"] }
-      #
-      # expect(movie_titles).to match_array(["The Lord of the Rings",
-      #                                      "The Two Towers"])
+      it "responds with 200" do
+        subject
+        expect(response.status).to eq 200
+      end
+
+      context "when there are published pets" do
+        it "returns all the pets" do
+          pet = FactoryGirl.create :pet, :dog, :male, :published
+
+          subject
+
+          pets = JSON.parse(response.body)
+          expect(pets.first["id"]).to eql(pet.id)
+        end
+      end
+
+      context "when there are no published pets" do
+        it "returns an empty array" do
+          subject
+
+          pets = JSON.parse(response.body)
+          expect(pets).to be_empty
+        end
+      end
+
+      context "when there are no pets" do
+        it "returns an empty array" do
+          FactoryGirl.create :pet, :dog, :male, :unpublished
+
+          subject
+
+          pets = JSON.parse(response.body)
+          expect(pets).to be_empty
+        end
+      end
     end
+
+    context "when not logged in" do
+      let(:token) { "" }
+
+      it "responds with 401" do
+        subject
+        expect(response.status).to eq 401
+      end
+    end
+
   end
 end

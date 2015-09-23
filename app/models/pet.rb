@@ -15,6 +15,7 @@ class Pet < ActiveRecord::Base
 
   before_save :update_metadata
 
+  scope :published, -> { where(published: true) }
   scope :males,   -> { where(gender: GENDER_MALE) }
   scope :females, -> { where(gender: GENDER_FEMALE) }
   scope :with_colors, ->(colors) {
