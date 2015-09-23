@@ -52,7 +52,7 @@ version: v0.1
       body:
         application/json:
           example: |
-            { "pet": { "type": "Cat", "name": "John", "gender": "male", "description": "Very nice cat.", "needs_transit_home": true, location: "127.1,-12.0" } }
+            { "pet": {"type": "Cat", "name": "John", "description": "Very nice cat.", "published": true, "gender": "male"} }
             { "pet": { "type": "Dog", "name": "Steve", "gender": "female", "description": "Very nice dog.", "published": true, location: "127.1,-12.0", "colors": "gray white", "metadata": "handsome" } }
       responses:
         200:
@@ -87,6 +87,12 @@ version: v0.1
           description: Search by published status.
           example: true
           required: false
+        vaccinated:
+          displayName: vaccinated
+          type: boolean
+          description: Search by vaccination status.
+          example: true
+          required: false
         user_id:
           displayName: user id
           type: number
@@ -117,6 +123,38 @@ version: v0.1
             application/json:
               example: |
                 { "id": 6,"type": "Cat", "name": "John", "description": "Very nice cat.", "published": false, "needs_transit_home": false, "created_at": "2015-09-15T03:02:16.890Z", "updated_at": "2015-09-15T03:02:16.890Z" }
+    /:id:
+      get:
+        description: Get the pet specified by the id.
+        responses:
+          200:
+            body:
+              application/json:
+                example: |
+                  {"id":11,"type":"Cat","name":"John","description":"hlo","published":true,"vaccinated":true,"needs_transit_home":false,"created_at":"2015-09-15T04:21:52.311Z","updated_at":"2015-09-23T00:17:52.432Z","user_id":1,"location":"127,2","metadata":"gato macho black gray black gray handsome","colors":"black gray","gender":"male"}
+          404:
+            description: Will return a 404 status if the pet is not found.
+      put:
+        description: Update the pet specified by the id.
+        body:
+          application/json:
+            example: |
+              { "pet": { "vaccinaated": false } }
+        responses:
+          200:
+            body:
+              application/json:
+                example: |
+                  {"id":11,"type":"Cat","name":"John","description":"hlo","published":true,"vaccinated":true,"needs_transit_home":false,"created_at":"2015-09-15T04:21:52.311Z","updated_at":"2015-09-23T00:17:52.432Z","user_id":1,"location":"127,2","metadata":"gato macho black gray black gray handsome","colors":"black gray","gender":"male"}
+          404:
+            description: Will return a 404 status if the pet is not found.
+      delete:
+        description: Delete the pet specified by the id.
+        responses:
+          204:
+            description: Will return a 204 with no content.
+          404:
+            description: Will return a 404 status if the pet is not found.
     /top:
       get:
         description: Get top 5 pets.
