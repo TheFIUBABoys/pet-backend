@@ -2,6 +2,7 @@ source "https://rubygems.org"
 
 # Back end
 gem "rails", "4.1"
+gem "rails-i18n"
 gem "pg"
 gem "jbuilder", "~> 2.0"
 gem "turbolinks"

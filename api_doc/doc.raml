@@ -8,14 +8,32 @@ version: v0.1
     body:
       application/json:
         example: |
-          { "user": { "email": "gonchu.b@gmail.com", "password": "admin1234", "password_confirmation": "admin1234" } }
-          { "user": { "facebook_id": "1234", "facebook_token": "4567" } }
+          {
+            "user":
+              {
+                "email": "gonchu.b@gmail.com",
+                "password": "admin1234",
+                "password_confirmation": "admin1234"
+              }
+           }
+
+          {
+            "user": {
+              "facebook_id": "1234",
+              "facebook_token": "4567"
+            }
+          }
     responses:
       200:
         body:
           application/json:
               example: |
-                { "id": 13,"created_at": "2015-09-09T00:17:08.293Z", "facebook_id": null,"authentication_token": "EBknxu26nKmxuzx_xxx2" }
+                {
+                  "id": 13,
+                  "created_at": "2015-09-09T00:17:08.293Z",
+                  "facebook_id": null,
+                  "authentication_token": "EBknxu26nKmxuzx_xxx2"
+                }
       422:
         description: Will return error code 422 when fields are missing or email is already taken
         body:
@@ -31,14 +49,32 @@ version: v0.1
       body:
         application/json:
           example: |
-            { "user": { "email": "gonchu.b@gmail.com", "password": "admin1234" } }
-            { "user": { "facebook_id": "1234", "facebook_token": "4567" } }
+            {
+              "user": {
+                "email": "gonchu.b@gmail.com",
+                "password": "admin1234"
+              }
+            }
+            {
+              "user": {
+                "facebook_id": "1234",
+                "facebook_token": "4567"
+              }
+            }
       responses:
         200:
           body:
             application/json:
                 example: |
-                  { "id": 6,"email": "gonchu.b@gmail.com", "created_at": "2015-09-08T01:45:42.216Z", "updated_at": "2015-09-09T00:31:34.644Z", "facebook_id": null,"facebook_token": null,"authentication_token": "K62wJZYwP7KNMUBAQMp9" }
+                  {
+                    "id": 6,
+                    "email": "gonchu.b@gmail.com",
+                    "created_at": "2015-09-08T01:45:42.216Z",
+                    "updated_at": "2015-09-09T00:31:34.644Z",
+                    "facebook_id": null,
+                    "facebook_token": null,
+                    "authentication_token": "K62wJZYwP7KNMUBAQMp9"
+                   }
         422:
           description: Will return error code 422 when credentials are invalid
           body:
@@ -52,14 +88,43 @@ version: v0.1
     body:
       application/json:
         example: |
-          { "pet": {"type": "Cat", "name": "John", "description": "Very nice cat.", "published": true, "gender": "male"} }
-          { "pet": { "type": "Dog", "name": "Steve", "gender": "female", "description": "Very nice dog.", "published": true, location: "127.1,-12.0", "colors": "gray white", "metadata": "handsome" } }
+          {
+            "pet": {
+              "type": "Cat",
+              "name": "John",
+              "description": "Very nice cat.",
+              "published": true,
+              "gender": "male"
+            }
+          }
+
+          {
+            "pet": {
+              "type": "Dog",
+              "name": "Steve",
+              "gender": "female",
+              "description": "Very nice dog.",
+              "published": true,
+              location: "127.1,-12.0",
+              "colors": "gray white",
+              "metadata": "handsome"
+            }
+          }
     responses:
       200:
         body:
           application/json:
               example: |
-                { "id": 6,"type": "Cat", "name": "John", "description": "Very nice cat.", "published":false,"needs_transit_home":false,"created_at": "2015-09-15T03:02:16.890Z", "updated_at": "2015-09-15T03:02:16.890Z" }
+                {
+                  "id": 6,
+                  "type": "Cat",
+                  "name": "John",
+                  "description": "Very nice cat.",
+                  "published":false,
+                  "needs_transit_home":false,
+                  "created_at": "2015-09-15T03:02:16.890Z",
+                  "updated_at": "2015-09-15T03:02:16.890Z"
+                }
   get:
     description: Search for pets
     queryParameters:
@@ -122,8 +187,17 @@ version: v0.1
         body:
           application/json:
             example: |
-              { "id": 6,"type": "Cat", "name": "John", "description": "Very nice cat.", "published": false, "needs_transit_home": false, "created_at": "2015-09-15T03:02:16.890Z", "updated_at": "2015-09-15T03:02:16.890Z" }
-  /:id:
+              {
+                "id": 6,
+                "type": "Cat",
+                "name": "John",
+                "description": "Very nice cat.",
+                "published": false,
+                "needs_transit_home": false,
+                "created_at": "2015-09-15T03:02:16.890Z",
+                "updated_at": "2015-09-15T03:02:16.890Z"
+              }
+  /{id}:
     get:
       description: Get the pet specified by the id.
       responses:
@@ -131,7 +205,22 @@ version: v0.1
           body:
             application/json:
               example: |
-                {"id":11,"type":"Cat","name":"John","description":"hlo","published":true,"vaccinated":true,"needs_transit_home":false,"created_at":"2015-09-15T04:21:52.311Z","updated_at":"2015-09-23T00:17:52.432Z","user_id":1,"location":"127,2","metadata":"gato macho black gray black gray handsome","colors":"black gray","gender":"male"}
+                {
+                  "id":11,
+                  "type":"Cat",
+                  "name":"John",
+                  "description":"hlo",
+                  "published":true,
+                  "vaccinated":true,
+                  "needs_transit_home":false,
+                  "created_at":"2015-09-15T04:21:52.311Z",
+                  "updated_at":"2015-09-23T00:17:52.432Z",
+                  "user_id":1,
+                  "location":"127,2",
+                  "metadata":"gato macho black gray handsome",
+                  "colors":"black gray",
+                  "gender":"male"
+                }
         404:
           description: Will return a 404 status if the pet is not found.
     put:
@@ -139,13 +228,32 @@ version: v0.1
       body:
         application/json:
           example: |
-            { "pet": { "vaccinaated": false } }
+            {
+              "pet": {
+                "vaccinaated": false
+              }
+            }
       responses:
         200:
           body:
             application/json:
               example: |
-                {"id":11,"type":"Cat","name":"John","description":"hlo","published":true,"vaccinated":true,"needs_transit_home":false,"created_at":"2015-09-15T04:21:52.311Z","updated_at":"2015-09-23T00:17:52.432Z","user_id":1,"location":"127,2","metadata":"gato macho black gray black gray handsome","colors":"black gray","gender":"male"}
+                {
+                  "id":11,
+                  "type":"Cat",
+                  "name":"John",
+                  "description":"hlo",
+                  "published":true,
+                  "vaccinated":true,
+                  "needs_transit_home":false,
+                  "created_at":"2015-09-15T04:21:52.311Z",
+                  "updated_at":"2015-09-23T00:17:52.432Z",
+                  "user_id":1,
+                  "location":"127,2",
+                  "metadata":"gato macho black gray handsome",
+                  "colors":"black gray",
+                  "gender":"male"
+                }
         404:
           description: Will return a 404 status if the pet is not found.
     delete:
@@ -163,4 +271,33 @@ version: v0.1
           body:
             application/json:
               example: |
-                [{"id":11,"type":"Cat","name":"John","description":"hlo","published":true,"needs_transit_home":false,"created_at":"2015-09-15T04:21:52.311Z","updated_at":"2015-09-20T19:16:19.167Z","user_id":1,"location":"127,2","url":"http://localhost:8000/pets/11.json"},{"id":8,"type":"Cat","name":"John","description":"Very nice cat.","published":true,"needs_transit_home":false,"created_at":"2015-09-15T03:26:02.572Z","updated_at":"2015-09-15T03:35:07.761Z","user_id":1,"location":"12,-12.0","url":"http://localhost:8000/pets/8.json"}]
+                [
+                  {
+                    "id":11,
+                    "type":"Cat",
+                    "gender":"male",
+                    "name":"John",
+                    "description":"hlo",
+                    "published":true,
+                    "needs_transit_home":false,
+                    "created_at":"2015-09-15T04:21:52.311Z",
+                    "updated_at":"2015-09-20T19:16:19.167Z",
+                    "user_id":1,
+                    "location":"127,2",
+                    "url":"http://localhost:8000/pets/11.json"
+                   },
+                   {
+                    "id":8,
+                    "type":"Cat",
+                    "gender":"male",
+                    "name":"John",
+                    "description":"Very nice cat.",
+                    "published":true,
+                    "needs_transit_home":false,
+                    "created_at":"2015-09-15T03:26:02.572Z",
+                    "updated_at":"2015-09-15T03:35:07.761Z",
+                    "user_id":1,
+                    "location":"12,-12.0",
+                    "url":"http://localhost:8000/pets/8.json"
+                   }
+                ]
