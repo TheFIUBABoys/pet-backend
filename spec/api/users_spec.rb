@@ -20,6 +20,7 @@ describe "Users API" do
 
             it "returns the user with an authentication token" do
               subject
+              expect(json["email"]).to eql(user_params[:email])
               expect(json["authentication_token"]).to be_present
             end
           end
@@ -51,7 +52,7 @@ describe "Users API" do
       end
 
       context "when email already exists" do
-        let(:user) { FactoryGirl.create :user, :email }
+        let(:user) { FactoryGirl.create :user, :email_auth }
         let(:user_params) { {email: user.email, password: password, password_confirmation: password} }
 
         it "responds with 422" do
@@ -90,13 +91,45 @@ describe "Users API" do
       end
 
       context "when facebook_id already exists" do
-        let(:user) { FactoryGirl.create :user, :facebook }
+        let(:user) { FactoryGirl.create :user, :facebook_auth }
         let(:user_params) { { facebook_id: user.facebook_id, facebook_token: user.facebook_token } }
 
         it "logs in the existing user" do
           subject
           expect(json["id"]).to eql(user.id)
           expect(json["authentication_token"]).to be_present
+        end
+      end
+    end
+
+  end
+
+  describe "POST /users/sign_in.json" do
+
+    subject { post user_session_path(format: :json), { user: user_params } }
+
+    context "with email credentials" do
+      let(:user) { FactoryGirl.create :user, :email_auth }
+      let(:user_params) { { email: user.email, password: user.password } }
+
+      context "when email matches password" do
+        it "responds with 201" do
+          subject
+          expect(response.status).to eq 201
+        end
+
+        it "returns the user with an authentication token" do
+          subject
+          expect(json["authentication_token"]).to be_present
+        end
+      end
+
+      context "when email does not match password" do
+        let(:user_params) { { email: user.email, password: Forgery(:basic).text } }
+
+        it "responds with 401" do
+          subject
+          expect(response.status).to eq 401
         end
       end
     end
