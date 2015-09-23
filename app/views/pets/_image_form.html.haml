@@ -1,0 +1,10 @@
+= form_tag photo_pet_path(@pet), multipart: true, html: { class: "form-horizontal", role: "form" } do
+  .form-group
+    = label_tag :image, :image, class: "col-sm-2 control-label"
+    .col-sm-10
+      = file_field_tag :image, required: true
+      %p.help-block Upload your new image
+
+  .form-group
+    .col-sm-offset-2.col-sm-10
+      = submit_tag "Upload photo", class: "btn btn-info"

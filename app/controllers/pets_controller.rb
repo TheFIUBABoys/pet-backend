@@ -79,7 +79,12 @@ class PetsController < ApplicationController
   end
 
   def photo
-    @pet_photo = @pet.images.create(image: params[:image])
+    pet_photo = @pet.images.create(image: params[:image])
+
+    respond_to do |format|
+      format.html { redirect_to @pet, notice: 'Image uploaded successfully.' }
+      format.json { @pet_photo = pet_photo }
+    end
   end
 
   private
