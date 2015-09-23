@@ -17,7 +17,5 @@
         %span.glyphicon.glyphicon-remove
       - elsif value.acts_like?(:time)
         = l value, format: :short
-      - elsif value.try(:id)
-        = value.email
       - else
         = value

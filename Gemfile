@@ -5,10 +5,11 @@ gem "rails", "4.1"
 gem "rails-i18n"
 gem "pg"
 gem "jbuilder", "~> 2.0"
-gem "turbolinks"
 gem "responders"
 gem "devise"
 gem "devise-i18n"
+gem "will_paginate", "~> 3.0.6"
+gem "will_paginate-bootstrap"
 
 # Front end
 gem "haml-rails"

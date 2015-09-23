@@ -6,16 +6,26 @@ class PetsController < ApplicationController
   # GET /pets
   # GET /pets.json
   def index
+    page   = params[:page]
     params = pet_search_params
 
     color_query    = params.delete(:colors)
     metadata_query = params.delete(:metadata)
 
-    @pets = Pet.published.where(params).order(created_at: :desc)
-    @pets = @pets.with_metadata(metadata_query) if metadata_query.present?
-    @pets = @pets.with_colors(color_query) if color_query.present?
+    pets = Pet.published.where(params).order(created_at: :desc)
+    pets = pets.with_metadata(metadata_query) if metadata_query.present?
+    pets = pets.with_colors(color_query) if color_query.present?
 
-    @pets = @pets.limit(params[:limit]) if params[:limit]
+    pets = pets.limit(params[:limit]) if params[:limit]
+
+    respond_to do |format|
+      format.html do
+        @pets = pets.paginate(page: page, per_page: 10)
+      end
+      format.json do
+        @pets = pets
+      end
+    end
   end
 
   # GET /pets/1
