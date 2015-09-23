@@ -276,6 +276,29 @@ version: v0.1
                   }
           404:
             description: Will return a 404 status if the pet is not found.
+      /{image_id}:
+        get:
+          description: Get the photo urls.
+          responses:
+            200:
+              body:
+                application/json:
+                  example: |
+                    {
+                      "id":6,
+                      "original_url":"http://localhost:8000/system/pet_images/images/000/000/006/original/imagereq.png?1443043475",
+                      "medium_url":"http://localhost:8000/system/pet_images/images/000/000/006/medium/imagereq.png?1443043475",
+                      "thumb_url":"http://localhost:8000/system/pet_images/images/000/000/006/thumb/imagereq.png?1443043475"
+                    }
+            404:
+              description: Will return a 404 status if the photo is not found.
+        delete:
+          description: Delete the photo.
+          responses:
+            204:
+              description: Will return a 204 with no content.
+            404:
+              description: Will return a 404 status if the photo is not found.
   /top:
     get:
       description: Get top 5 pets.

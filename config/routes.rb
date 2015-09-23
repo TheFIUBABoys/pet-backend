@@ -6,7 +6,7 @@ Rails.application.routes.draw do
       get "top"
     end
 
-    resources :images, only: [:create]
+    resources :images, only: [:show, :create, :destroy]
   end
 
   root "pets#index"

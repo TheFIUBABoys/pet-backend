@@ -22,26 +22,23 @@ es:
       vaccinated_prompt: "--- Vacunas ---"
       needs_transit_home_prompt: "--- Necesita hogar de tránsito ---"
       submit: "Buscar"
-    form:
-      needs_transit_home: "Necesita hogar en tránsito"
-      published: "Publicado"
-      vaccinated: "Vacunas"
     image_form:
       help: "Adjunte la nueva imagen aquí"
     edit:
       title: "Editar mascota"
+      image_created: "La imagen fue creada exitosamente."
+      image_destroyed: "La imagen fue borrada exitosamente."
     index:
       new_pet: "Nueva mascota"
       title: "Mascotas"
-      type: "Tipo"
-      gender: "Género"
-      name: "Nombre"
-      description: "Descripción"
+      destroyed: "La mascota fue borrada exitosamente."
     new:
       title: "Nueva mascota"
     show:
       title: "Detalle de la mascota"
       photos: "Fotos de la mascota"
+      created: "La mascota fue creada con éxito"
+      updated: "La mascota fue actualizada exitosamente."
   will_paginate:
     previous_label: Anterior
     next_label: Siguiente

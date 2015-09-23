@@ -40,26 +40,13 @@
     .col-sm-10
       = f.text_area :metadata, class: "form-control"
 
-  .form-group
-    .col-sm-offset-2.col-sm-10
-      .checkbox
-        = f.label :needs_transit_home do
-          = f.check_box :needs_transit_home
-          = t(".needs_transit_home")
-
-  .form-group
-    .col-sm-offset-2.col-sm-10
-      .checkbox
-        = f.label :published do
-          = f.check_box :published
-          = t(".published")
-
-  .form-group
-    .col-sm-offset-2.col-sm-10
-      .checkbox
-        = f.label :vaccinated do
-          = f.check_box :vaccinated
-          = t(".vaccinated")
+  - %i[needs_transit_home vaccinated published].each do |attribute|
+    .form-group
+      .col-sm-offset-2.col-sm-10
+        .checkbox
+          = f.label attribute do
+            = f.check_box attribute
+            = t("activerecord.attributes.pet.#{attribute}")
 
   .form-group
     .col-sm-offset-2.col-sm-10
