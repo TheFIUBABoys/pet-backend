@@ -1,7 +1,9 @@
 describe "Pets API" do
+
   describe "GET /pets.json" do
 
-    subject { get "/pets.json?user_token=#{token}" }
+    let(:options) { {} }
+    subject { get pets_path(options.merge(format: :json, user_token: token)) }
 
     context "when logged in" do
       let(:token) { FactoryGirl.create(:user).authentication_token }
@@ -12,13 +14,43 @@ describe "Pets API" do
       end
 
       context "when there are published pets" do
-        it "returns all the pets" do
-          pet = FactoryGirl.create :pet, :dog, :male, :published
+        context "without filters" do
+          it "returns all the pets" do
+            pet = FactoryGirl.create :pet, :dog, :male, :published
 
-          subject
+            subject
 
-          pets = JSON.parse(response.body)
-          expect(pets.first["id"]).to eql(pet.id)
+            pets = JSON.parse(response.body)
+            expect(pets.first["id"]).to eql(pet.id)
+          end
+        end
+
+        context "with filters" do
+          let(:pet) { FactoryGirl.create :pet, :dog, :male, :published }
+
+          %i[type gender vaccinated name].each do |attribute|
+            context "when pets match the filter" do
+              let(:options) { { "#{attribute}" => pet.send(attribute) } }
+
+              it "returns the matching pets" do
+                subject
+
+                pets = JSON.parse(response.body)
+                expect(pets.first["id"]).to eql(pet.id)
+              end
+            end
+
+            context "when pets do not match the filter" do
+              let(:options) { { "#{attribute}" => !pet.send(attribute) } }
+
+              it "returns the matching pets" do
+                subject
+
+                pets = JSON.parse(response.body)
+                expect(pets).to be_empty
+              end
+            end
+          end
         end
       end
 
@@ -56,7 +88,7 @@ describe "Pets API" do
 
   describe "POST /pets.json" do
 
-    subject { post "/pets.json?user_token=#{token}", { pet: pet_params } }
+    subject { post pets_path(format: :json, user_token: token), { pet: pet_params } }
 
     context "when logged in" do
       let(:token) { FactoryGirl.create(:user).authentication_token }
@@ -94,4 +126,5 @@ describe "Pets API" do
     end
 
   end
+
 end
