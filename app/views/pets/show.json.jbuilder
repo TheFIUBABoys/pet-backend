@@ -3,8 +3,8 @@ json.extract! @pet, :id, :type, :name, :description, :published, :vaccinated, :n
 json.images do
   json.array! @pet.images do |image|
     json.id image.id
-    json.original_url "#{request.protocol}#{request.host}:#{request.port}#{image.image.url}"
-    json.medium_url "#{request.protocol}#{request.host}:#{request.port}#{image.image.url(:medium)}"
-    json.thumb_url "#{request.protocol}#{request.host}:#{request.port}#{image.image.url(:thumb)}"
+    json.original_url asset_url(image.image.url)
+    json.medium_url asset_url(image.image.url(:medium))
+    json.thumb_url asset_url(image.image.url(:thumb))
   end
 end
