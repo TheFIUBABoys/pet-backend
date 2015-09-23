@@ -1,5 +1,6 @@
 require File.expand_path("../../config/environment", __FILE__)
 
+require "rails_helper"
 require "rspec/rails"
 require "factory_girl_rails"
 

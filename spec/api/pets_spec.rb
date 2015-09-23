@@ -1,5 +1,3 @@
-require "rails_helper"
-
 describe "Pets API" do
   describe "GET /pets.json" do
     it "returns all the pets" do
