@@ -1,10 +1,10 @@
-= form_tag photo_pet_path(@pet), multipart: true, class: "form-horizontal", role: "form" do
+= form_for @pet_image, url: pet_images_path(@pet), multipart: true, class: "form-horizontal", role: "form" do |f|
   .form-group
-    = label_tag :image, t("activerecord.attributes.pet_image.image"), class: "col-sm-2 control-label"
+    = f.label :image, class: "col-sm-2 control-label"
     .col-sm-10
-      = file_field_tag :image, required: true
+      = f.file_field :image, required: true
       %p.help-block= t(".help")
 
   .form-group
     .col-sm-offset-2.col-sm-10
-      = submit_tag t(".submit"), class: "btn btn-info"
+      = f.submit class: "btn btn-info"

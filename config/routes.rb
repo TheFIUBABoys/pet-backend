@@ -6,9 +6,7 @@ Rails.application.routes.draw do
       get "top"
     end
 
-    member do
-      post "photo"
-    end
+    resources :images, only: [:create]
   end
 
   root "pets#index"

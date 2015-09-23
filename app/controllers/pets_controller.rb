@@ -1,5 +1,5 @@
 class PetsController < ApplicationController
-  before_action :set_pet, only: [:show, :edit, :update, :destroy, :photo]
+  before_action :set_pet, only: [:show, :edit, :update, :destroy]
 
   rescue_from ActiveRecord::RecordNotFound, with: :not_found
 
@@ -30,6 +30,7 @@ class PetsController < ApplicationController
 
   # GET /pets/1/edit
   def edit
+    @pet_image = @pet.images.new
   end
 
   # POST /pets
@@ -76,15 +77,6 @@ class PetsController < ApplicationController
 
   def top
     @pets = Pet.all.order(created_at: :desc).limit(5)
-  end
-
-  def photo
-    pet_photo = @pet.images.create(image: params[:image])
-
-    respond_to do |format|
-      format.html { redirect_to @pet, notice: 'Image uploaded successfully.' }
-      format.json { @pet_photo = pet_photo }
-    end
   end
 
   private

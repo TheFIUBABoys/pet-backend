@@ -28,7 +28,6 @@ es:
       vaccinated: "Vacunas"
     image_form:
       help: "Adjunte la nueva imagen aquí"
-      submit: "Guardar imagen"
     edit:
       title: "Editar mascota"
     index:
@@ -49,6 +48,7 @@ es:
   activerecord:
     models:
       pet: Mascota
+      pet_image: Imagen
     attributes:
       pet:
         id: Id

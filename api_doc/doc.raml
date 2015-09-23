@@ -257,12 +257,12 @@ version: v0.1
           description: Will return a 204 with no content.
         404:
           description: Will return a 404 status if the pet is not found.
-    /photo:
+    /images:
       post:
         description: Add a photo to the given pet.
         body:
           application/file:
-            example: Upload the image in a param named "image"
+            example: Upload the image in a param named "pet_image[image]"
         responses:
           200:
             body:
