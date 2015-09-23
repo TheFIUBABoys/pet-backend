@@ -4,11 +4,17 @@
     New Pet
   %h1 Listing pets
 
+.filters
+  = render "filters"
+
+%hr
+
 .table-responsive
   %table.table.table-striped.table-bordered.table-hover
     %thead
       %tr
         %th Type
+        %th Gender
         %th Name
         %th Description
         %th
@@ -18,7 +24,8 @@
     %tbody
       - @pets.each do |pet|
         %tr
-          %td= pet.type
+          %td= t("pets.#{pet.type.downcase}")
+          %td= t("pets.#{pet.gender}")
           %td= pet.name
           %td= pet.description
           %td= link_to 'Show', pet

@@ -1,4 +1,7 @@
 en:
+  shared:
+    yes_word: "Yes"
+    no_word: "No"
   pets:
     cat: cat
     dog: dog

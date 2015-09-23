@@ -1,6 +1,9 @@
 es:
+  shared:
+    yes_word: "Si"
+    no_word: "No"
   pets:
-    cat: gato
-    dog: perro
-    male: macho
-    female: hembra
+    cat: Gato
+    dog: Perro
+    male: Macho
+    female: Hembra

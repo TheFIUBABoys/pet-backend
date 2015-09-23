@@ -60,7 +60,7 @@ class Pet < ActiveRecord::Base
   private
 
   def self.to_queries(query)
-    query.to_s.strip.split.map { |w| "%#{w}%" }
+    query.to_s.strip.split.map { |w| "%#{w.downcase}%" }
   end
 
   def update_metadata
@@ -68,7 +68,7 @@ class Pet < ActiveRecord::Base
 
     # Tag pet based on type, gender and colors.
     %i[type gender].each do |attribute|
-      tags << I18n.t("pets.#{self.send(attribute).downcase}") if self.send(attribute)
+      tags << I18n.t("pets.#{self.send(attribute).downcase}").downcase if self.send(attribute)
     end
     tags << self.colors
 

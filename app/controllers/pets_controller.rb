@@ -6,24 +6,14 @@ class PetsController < ApplicationController
   # GET /pets
   # GET /pets.json
   def index
-    page   = params[:page]
-    params = pet_search_params
-
-    color_query    = params.delete(:colors)
-    metadata_query = params.delete(:metadata)
-
-    pets = Pet.published.where(params).order(created_at: :desc)
-    pets = pets.with_metadata(metadata_query) if metadata_query.present?
-    pets = pets.with_colors(color_query) if color_query.present?
-
-    pets = pets.limit(params[:limit]) if params[:limit]
+    pets = pets_from_query
 
     respond_to do |format|
       format.html do
-        @pets = pets.paginate(page: page, per_page: 10)
+        @pets = pets.paginate(page: params[:page], per_page: 10)
       end
       format.json do
-        @pets = pets
+        @pets = pets.published
       end
     end
   end
@@ -103,11 +93,26 @@ class PetsController < ApplicationController
   end
 
   def pet_search_params
-    params.permit(:type, :name, :description, :gender, :colors, :needs_transit_home, :vaccinated, :user_id,
-                  :metadata)
+    params.permit(:type, :name, :description, :gender, :colors, :needs_transit_home, :vaccinated, :published, :user_id,
+                  :metadata).reject { |_, v| v.blank? }
   end
 
   def pet_create_service
     @pet_create_service ||= PetCreateService.new(current_user)
+  end
+
+  def pets_from_query
+    params = pet_search_params
+
+    color_query    = params.delete(:colors)
+    metadata_query = params.delete(:metadata)
+
+    pets = Pet.where(params).order(created_at: :desc)
+    pets = pets.with_metadata(metadata_query) if metadata_query.present?
+    pets = pets.with_colors(color_query) if color_query.present?
+
+    pets = pets.limit(params[:limit]) if params[:limit]
+
+    pets
   end
 end
