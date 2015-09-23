@@ -1,6 +1,8 @@
 class PetsController < ApplicationController
   before_action :set_pet, only: [:show, :edit, :update, :destroy]
 
+  rescue_from ActiveRecord::RecordNotFound, with: :not_found
+
   # GET /pets
   # GET /pets.json
   def index
@@ -9,7 +11,7 @@ class PetsController < ApplicationController
     color_query    = params.delete(:colors)
     metadata_query = params.delete(:metadata)
 
-    @pets = Pet.where(params).order(created_at: :desc)
+    @pets = Pet.published.where(params).order(created_at: :desc)
     @pets = @pets.with_metadata(metadata_query) if metadata_query.present?
     @pets = @pets.with_colors(color_query) if color_query.present?
 
@@ -91,7 +93,7 @@ class PetsController < ApplicationController
   end
 
   def pet_search_params
-    params.permit(:type, :name, :description, :gender, :colors, :needs_transit_home, :published, :vaccinated, :user_id,
+    params.permit(:type, :name, :description, :gender, :colors, :needs_transit_home, :vaccinated, :user_id,
                   :metadata)
   end
 
