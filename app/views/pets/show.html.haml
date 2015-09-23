@@ -19,3 +19,9 @@
         = l value, format: :short
       - else
         = value
+
+- if @pet.images.any?
+  .photos
+    %h2 Photos
+    - @pet.images.each do |pet_image|
+      %img.img-rounded{ src: asset_url(pet_image.image.url(:medium)) }
