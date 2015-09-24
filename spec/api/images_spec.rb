@@ -108,4 +108,58 @@ describe "Images API" do
 
   end
 
+  describe "DELETE /pets/:pet_id/images/:id.json" do
+
+    subject { delete pet_image_path(pet_id: pet_id, id: pet_image_id, format: :json, user_token: token) }
+    let(:pet_image) { FactoryGirl.create :pet_image }
+
+    context "when logged in" do
+      let(:token) { FactoryGirl.create(:user, :email_auth).authentication_token }
+
+      context "when pet exists" do
+        let(:pet_id) { pet_image.pet.id }
+
+        context "when image exists" do
+          let(:pet_image_id) { pet_image.id }
+
+          it "responds with 204" do
+            subject
+            expect(response.status).to eq 204
+          end
+        end
+
+        context "when image doesn't exist" do
+          let(:pet_image_id) { Forgery(:basic).number }
+
+          it "responds with 404" do
+            subject
+            expect(response.status).to eq 404
+          end
+        end
+      end
+
+      context "when pet doesn't exist" do
+        let(:pet_id) { Forgery(:basic).number }
+        let(:pet_image_id) { pet_image.id }
+
+        it "responds with 404" do
+          subject
+          expect(response.status).to eq 404
+        end
+      end
+    end
+
+    context "when not logged in" do
+      let(:pet_id) { pet_image.pet.id }
+      let(:pet_image_id) { pet_image.id }
+      let(:token) { "" }
+
+      it "responds with 401" do
+        subject
+        expect(response.status).to eq 401
+      end
+    end
+
+  end
+
 end
