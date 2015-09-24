@@ -40,7 +40,7 @@
     .col-sm-10
       = f.text_area :metadata, class: "form-control"
 
-  - %i[needs_transit_home vaccinated published].each do |attribute|
+  - %w[needs_transit_home vaccinated published].each do |attribute|
     .form-group
       .col-sm-offset-2.col-sm-10
         .checkbox

@@ -27,9 +27,9 @@ describe "Pets API" do
         context "with filters" do
           let(:pet) { FactoryGirl.create :pet, :dog, :male, :published }
 
-          %i[type gender vaccinated name].each do |attribute|
+          %w[type gender vaccinated name].each do |attribute|
             context "when pets match the filter" do
-              let(:options) { { :"#{attribute}" => pet.send(attribute) } }
+              let(:options) { { :"#{attribute}" => pet.send(attribute.to_sym) } }
 
               it "returns the matching pets" do
                 subject
@@ -39,7 +39,7 @@ describe "Pets API" do
             end
 
             context "when pets do not match the filter" do
-              let(:options) { { :"#{attribute}" => !pet.send(attribute) } }
+              let(:options) { { :"#{attribute}" => !pet.send(attribute.to_sym) } }
 
               it "returns the matching pets" do
                 subject
@@ -98,9 +98,9 @@ describe "Pets API" do
         end
       end
 
-      %i[gender type].each do |attribute|
+      %w[gender type].each do |attribute|
         context "when not specifying #{attribute}" do
-          let(:pet_params) { valid_pet_params.except(attribute) }
+          let(:pet_params) { valid_pet_params.except(attribute.to_sym) }
 
           it "responds with 422" do
             subject
@@ -249,9 +249,9 @@ describe "Pets API" do
           end
         end
 
-        %i[published vaccinated needs_transit_home].each do |attribute|
+        %w[published vaccinated needs_transit_home].each do |attribute|
           context "when updating #{attribute}" do
-            let(:pet_params) { { :"#{attribute}" => !pet.send(attribute) } }
+            let(:pet_params) { { :"#{attribute}" => !pet.send(attribute.to_sym) } }
 
             it "responds with 200" do
               subject
@@ -262,7 +262,7 @@ describe "Pets API" do
               subject
 
               expect(json["id"]).to eql(pet.id)
-              expect(json[attribute.to_s]).to eql(pet_params[attribute])
+              expect(json[attribute]).to eql(pet_params[attribute.to_sym])
             end
           end
         end

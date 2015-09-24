@@ -69,7 +69,8 @@ class Pet < ActiveRecord::Base
     tags = []
 
     # Tag pet based on type, gender and colors.
-    %i[type gender].each do |attribute|
+    %w[type gender].each do |attribute|
+      attribute = attribute.to_sym
       tags << I18n.t("pets.#{self.send(attribute).downcase}").downcase if self.send(attribute)
     end
     tags << self.colors
