@@ -22,6 +22,10 @@
               = t("shared.no_word")
             - elsif value.acts_like?(:time)
               = l value, format: :short
+            - elsif attribute == :colors
+              - value.split.each do |color|
+                = color
+                .color-box{ style: "background-color: #{color};" }
             - else
               = value
 
