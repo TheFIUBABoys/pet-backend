@@ -1,6 +1,6 @@
 class ImagesController < ApplicationController
 
-  before_action :set_pet, only: [:create]
+  before_action :set_pet, only: [:create, :show, :destroy]
   before_action :set_pet_image, only: [:show, :destroy]
 
   def show
@@ -30,7 +30,7 @@ class ImagesController < ApplicationController
   end
 
   def set_pet_image
-    @pet_image = PetImage.find(params[:id])
+    @pet_image = @pet.images.find(params[:id])
   end
 
   def image_params
