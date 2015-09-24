@@ -32,4 +32,5 @@
           %td= link_to t("shared.edit"), edit_pet_path(pet)
           %td= link_to t("shared.destroy"), pet, data: { confirm: t("shared.confirm") }, method: :delete
 
-= will_paginate @pets, renderer: BootstrapPagination::Rails
+.pagination-container
+  = will_paginate @pets, renderer: BootstrapPagination::Rails
