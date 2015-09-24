@@ -13,20 +13,22 @@
   %table.table.table-striped.table-bordered.table-hover
     %thead
       %tr
+        %th= t("activerecord.attributes.pet.id")
         %th= t("activerecord.attributes.pet.type")
         %th= t("activerecord.attributes.pet.gender")
         %th= t("activerecord.attributes.pet.name")
+        %th= t("activerecord.attributes.pet.images")
         %th= t("activerecord.attributes.pet.description")
-        %th
-        %th
-        %th
+        %th(colspan="3")= t("shared.actions")
 
     %tbody
       - @pets.each do |pet|
         %tr
+          %td= pet.id
           %td= t("pets.#{pet.type.downcase}")
           %td= t("pets.#{pet.gender}")
           %td= pet.name
+          %td= pet.images.count
           %td= pet.description
           %td= link_to t("shared.show"), pet
           %td= link_to t("shared.edit"), edit_pet_path(pet)

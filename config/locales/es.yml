@@ -10,6 +10,7 @@ es:
     confirm: "¿Está seguro?"
     logout: "Cerrar sesión"
     login: "Iniciar sesión"
+    actions: "Acciones"
   pets:
     cat: Gato
     dog: Perro
@@ -62,5 +63,6 @@ es:
         user_id: Usuario
         created_at: Creado el
         updated_at: Actualizado el
+        images: "Imágenes"
       pet_image:
         image: Imagen
