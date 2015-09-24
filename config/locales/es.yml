@@ -2,7 +2,7 @@ es:
   shared:
     yes_word: "Si"
     no_word: "No"
-    prompt: "--- Seleccione ---"
+    prompt: "- Seleccione -"
     back: "Atrás"
     show: "Detalle"
     edit: "Editar"
@@ -17,11 +17,11 @@ es:
     male: Macho
     female: Hembra
     filters:
-      type_prompt: "--- Tipo ---"
-      gender_prompt: "--- Género ---"
-      published_prompt: "--- Publicado ---"
-      vaccinated_prompt: "--- Vacunas ---"
-      needs_transit_home_prompt: "--- Necesita hogar de tránsito ---"
+      type_prompt: "- Tipo -"
+      gender_prompt: "- Género -"
+      published_prompt: "- Publicado -"
+      vaccinated_prompt: "- Vacunas -"
+      needs_transit_home_prompt: "- Hogar en tránsito -"
       submit: "Buscar"
     image_form:
       help: "Adjunte la nueva imagen aquí"
@@ -57,7 +57,7 @@ es:
         description: Descripción
         location: Coordenadas
         metadata: Metadata
-        needs_transit_home: Needs transit home
+        needs_transit_home: Necesita hogar en tránsito
         published: Publicado
         vaccinated: Vacunas
         user_id: Usuario

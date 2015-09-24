@@ -6,4 +6,8 @@
   - %w[published vaccinated needs_transit_home].each do |attribute|
     .form-group
       = select_tag attribute, boolean_options(params[attribute]), prompt: t(".#{attribute}_prompt") , class: "form-control"
+  .form-group
+    = text_field_tag :colors, nil, placeholder: t("activerecord.attributes.pet.colors") , class: "form-control"
+  .form-group
+    = text_field_tag :metadata, nil, placeholder: t("activerecord.attributes.pet.metadata") , class: "form-control"
   = submit_tag t(".submit"), class: "btn btn-primary"
