@@ -41,4 +41,9 @@ FactoryGirl.define do
     end
   end
 
+  factory :pet_image, class: PetImage do
+    association :pet, :dog, :male, :published
+    image { File.new(Rails.root + "spec/fixtures/images" + "image.png") }
+  end
+
 end
