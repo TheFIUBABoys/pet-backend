@@ -3,7 +3,7 @@
     = select_tag :type, pet_type_options(params[:type]), prompt: t(".type_prompt") , class: "form-control"
   .form-group
     = select_tag :gender, pet_gender_options(params[:gender]), prompt: t(".gender_prompt") , class: "form-control"
-  - %i[published vaccinated needs_transit_home].each do |attribute|
+  - %w[published vaccinated needs_transit_home].each do |attribute|
     .form-group
       = select_tag attribute, boolean_options(params[attribute]), prompt: t(".#{attribute}_prompt") , class: "form-control"
   = submit_tag t(".submit"), class: "btn btn-primary"
