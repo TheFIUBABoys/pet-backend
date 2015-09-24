@@ -1,6 +1,8 @@
 class ApplicationController < ActionController::Base
   respond_to :json, :html
 
+  rescue_from ActiveRecord::RecordNotFound, with: :not_found
+
   # Prevent CSRF attacks by raising an exception.
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :null_session, if: Proc.new { |c| c.request.format == "application/json" }
@@ -23,6 +25,7 @@ class ApplicationController < ActionController::Base
 
   def not_found
     respond_to do |format|
+      format.html { render "public/404" }
       format.json { render json: {}, status: :not_found }
     end
   end
