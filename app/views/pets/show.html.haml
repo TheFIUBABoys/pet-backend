@@ -26,6 +26,8 @@
               - value.split.each do |color|
                 = color
                 .color-box{ style: "background-color: #{color};" }
+            - elsif attribute == :images
+              = value.count
             - else
               = value
 
