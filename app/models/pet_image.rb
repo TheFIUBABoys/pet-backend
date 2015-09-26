@@ -1,7 +1,7 @@
 class PetImage < ActiveRecord::Base
   belongs_to :pet
   has_attached_file :image, styles: { medium: "300x300>", thumb: "100x100>" }, default_url: "/images/:style/missing.png"
-  validates_attachment_content_type :image, content_type: /\Aimage\/.*\Z/
+  validates_attachment_content_type :image
   
   before_validation(on: :create) do |file|
     if file.image_content_type == "application/octet-stream"
