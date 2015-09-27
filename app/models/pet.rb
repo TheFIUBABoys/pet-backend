@@ -20,8 +20,16 @@ class Pet < ActiveRecord::Base
   before_save :update_metadata
 
   scope :published, -> { where(published: true) }
-  scope :males,   -> { where(gender: GENDER_MALE) }
-  scope :females, -> { where(gender: GENDER_FEMALE) }
+  scope :males, ->     { where(gender: GENDER_MALE) }
+  scope :females, ->   { where(gender: GENDER_FEMALE) }
+
+  scope :near_location, ->(location, max_meters) {
+    location_ary = location.split(",").map(&:to_i)
+
+    ids = where.not(location: [nil, ""]).select { |pet| pet.distance_to(location_ary) <= max_meters }.map(&:id)
+    where(id: ids)
+  }
+
   scope :with_colors, ->(colors) { field_matches_any(:colors, colors) }
   scope :with_metadata, ->(tags) { field_matches_any(:metadata, tags) }
 
@@ -39,6 +47,26 @@ class Pet < ActiveRecord::Base
 
   def unpublish!
     self.update_attributes(published: false)
+  end
+
+  def distance_to(other_location)
+    loc1 = self.location.split(",").map(&:to_i)
+    loc2 = other_location
+
+    rad_per_deg = Math::PI/180 # PI / 180
+    rkm = 6371 # Earth radius in kilometers
+    rm = rkm * 1000 # Radius in meters
+
+    dlat_rad = (loc2[0] - loc1[0]) * rad_per_deg # Delta, converted to rad
+    dlon_rad = (loc2[1] - loc1[1]) * rad_per_deg
+
+    lat1_rad, lon1_rad = loc1.map { |i| i * rad_per_deg }
+    lat2_rad, lon2_rad = loc2.map { |i| i * rad_per_deg }
+
+    a = Math.sin(dlat_rad/2)**2 + Math.cos(lat1_rad) * Math.cos(lat2_rad) * Math.sin(dlon_rad/2)**2
+    c = 2 * Math::atan2(Math::sqrt(a), Math::sqrt(1-a))
+
+    rm * c # Delta in meters
   end
 
   private
@@ -66,8 +94,8 @@ class Pet < ActiveRecord::Base
       attribute = attribute.to_sym
       tags << I18n.t("pets.#{self.send(attribute).downcase}") if self.send(attribute)
     end
-    tags = tags.concat self.colors.split
-    tags = tags.concat self.description.split
+    tags = tags.concat self.colors.split unless self.colors.blank?
+    tags = tags.concat self.description.split unless self.description.blank?
 
     # Merge with existing tags.
     new_meta = tags.compact.map(&:downcase)
