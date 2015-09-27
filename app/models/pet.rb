@@ -64,13 +64,13 @@ class Pet < ActiveRecord::Base
     # Tag pet based on type, gender and colors.
     %w[type gender].each do |attribute|
       attribute = attribute.to_sym
-      tags << I18n.t("pets.#{self.send(attribute).downcase}").downcase if self.send(attribute)
+      tags << I18n.t("pets.#{self.send(attribute).downcase}") if self.send(attribute)
     end
-    tags << self.colors.split
-    tags << self.description.split
+    tags = tags.concat self.colors.split
+    tags = tags.concat self.description.split
 
     # Merge with existing tags.
-    new_meta = tags.compact
+    new_meta = tags.compact.map(&:downcase)
     existing_meta = self.metadata.split(" ")
 
     self.metadata = new_meta.concat(existing_meta).uniq.join(" ")
