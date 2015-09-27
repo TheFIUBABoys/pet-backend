@@ -66,7 +66,8 @@ class Pet < ActiveRecord::Base
       attribute = attribute.to_sym
       tags << I18n.t("pets.#{self.send(attribute).downcase}").downcase if self.send(attribute)
     end
-    tags << self.colors
+    tags << self.colors.split
+    tags << self.description.split
 
     # Merge with existing tags.
     new_meta = tags.compact
