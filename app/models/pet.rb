@@ -14,7 +14,7 @@ class Pet < ActiveRecord::Base
   GENDERS = [GENDER_MALE, GENDER_FEMALE]
   validates_inclusion_of :gender, in: GENDERS, allow_blank: false
 
-  TYPES = [Cat.name, Dog.name]
+  TYPES = ["Dog", "Cat"]
   validates_inclusion_of :type, in: TYPES, allow_blank: false
 
   before_save :update_metadata
