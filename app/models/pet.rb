@@ -22,26 +22,8 @@ class Pet < ActiveRecord::Base
   scope :published, -> { where(published: true) }
   scope :males,   -> { where(gender: GENDER_MALE) }
   scope :females, -> { where(gender: GENDER_FEMALE) }
-  scope :with_colors, ->(colors) {
-    full_query = nil
-
-    to_queries(colors).each do |query|
-      color_match = arel_table[:colors].matches(query)
-      full_query = full_query ? full_query.and(color_match) : color_match
-    end
-
-    where(full_query)
-  }
-  scope :with_metadata, ->(tags) {
-    full_query = nil
-
-    to_queries(tags).each do |query|
-      meta_match = arel_table[:metadata].matches(query)
-      full_query = full_query ? full_query.or(meta_match) : meta_match
-    end
-
-    where(full_query)
-  }
+  scope :with_colors, ->(colors) { field_matches_any(:colors, colors) }
+  scope :with_metadata, ->(tags) { field_matches_any(:metadata, tags) }
 
   def publish
     self.published = true
@@ -63,6 +45,17 @@ class Pet < ActiveRecord::Base
 
   def self.to_queries(query)
     query.to_s.strip.split.map { |w| "%#{w.downcase}%" }
+  end
+
+  def self.field_matches_any(field, values)
+    full_query = nil
+
+    to_queries(values).each do |query|
+      field_match = arel_table[field].matches(query)
+      full_query  = full_query ? full_query.or(field_match) : field_match
+    end
+
+    where(full_query)
   end
 
   def update_metadata
