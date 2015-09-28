@@ -42,11 +42,13 @@ class Pet < ActiveRecord::Base
   end
 
   def publish!
-    self.update_attributes(published: true)
+    self.publish
+    self.save
   end
 
   def unpublish!
-    self.update_attributes(published: false)
+    self.unpublish
+    self.save
   end
 
   def metadata_matches(values)
