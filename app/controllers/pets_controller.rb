@@ -1,3 +1,5 @@
+require "will_paginate/array"
+
 class PetsController < ApplicationController
   before_action :set_pet, only: [:show, :edit, :update, :destroy]
 
@@ -114,6 +116,10 @@ class PetsController < ApplicationController
     pets = pets.near_location(location_query, params.fetch(:location_range, 5000)) if location_query.present?
 
     pets = pets.limit(limit) if limit
+
+    if metadata_query.present?
+      pets = pets.sort { |a, b| b.metadata_matches(metadata_query) <=> a.metadata_matches(metadata_query) }
+    end
 
     pets
   end

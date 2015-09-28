@@ -49,6 +49,10 @@ class Pet < ActiveRecord::Base
     self.update_attributes(published: false)
   end
 
+  def metadata_matches(values)
+    values.split.count { |tag| self.metadata.include?(tag) }
+  end
+
   def distance_to(other_location)
     loc1 = self.location.split(",").map(&:to_i)
     loc2 = other_location

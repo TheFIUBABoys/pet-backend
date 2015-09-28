@@ -30,9 +30,10 @@
           %td= pet.name
           %td= pet.images.count
           %td
-            - pet.colors.split.each do |color|
-              = color
-              .color-box{ style: "background-color: #{color};" }
+            - unless pet.colors.blank?
+              - pet.colors.split.each do |color|
+                = color
+                .color-box{ style: "background-color: #{color};" }
           %td= link_to t("shared.show"), pet
           %td= link_to t("shared.edit"), edit_pet_path(pet)
           %td= link_to t("shared.destroy"), pet, data: { confirm: t("shared.confirm") }, method: :delete
