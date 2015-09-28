@@ -61,7 +61,7 @@ describe "Pets API" do
 
       context "when there are no pets" do
         it "returns an empty array" do
-          FactoryGirl.create :pet, :dog, :male, :unpublished
+          Pet.destroy_all
 
           subject
 
