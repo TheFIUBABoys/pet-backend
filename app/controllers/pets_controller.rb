@@ -1,3 +1,5 @@
+require "will_paginate/array"
+
 class PetsController < ApplicationController
   before_action :set_pet, only: [:show, :edit, :update, :destroy]
 
@@ -11,7 +13,7 @@ class PetsController < ApplicationController
         @pets = pets.paginate(page: params[:page], per_page: 10)
       end
       format.json do
-        @pets = pets.published
+        @pets = pets
       end
     end
   end
@@ -88,12 +90,12 @@ class PetsController < ApplicationController
   def pet_params
     params.require(:pet).
       permit(:type, :name, :description, :gender, :colors, :needs_transit_home, :published, :vaccinated, :location,
-             :metadata)
+             :metadata, :age)
   end
 
   def pet_search_params
     params.permit(:type, :name, :description, :gender, :colors, :needs_transit_home, :vaccinated, :published, :user_id,
-                  :metadata).reject { |_, v| v.blank? }
+                  :metadata, :location, :age, :limit).reject { |_, v| v.blank? }
   end
 
   def pet_create_service
@@ -102,15 +104,22 @@ class PetsController < ApplicationController
 
   def pets_from_query
     params = pet_search_params
+    limit  = params.delete(:limit)
 
     color_query    = params.delete(:colors)
     metadata_query = params.delete(:metadata)
+    location_query = params.delete(:location)
 
     pets = Pet.where(params).order(created_at: :desc)
     pets = pets.with_metadata(metadata_query) if metadata_query.present?
     pets = pets.with_colors(color_query) if color_query.present?
+    pets = pets.near_location(location_query, params.fetch(:location_range, 5000)) if location_query.present?
 
-    pets = pets.limit(params[:limit]) if params[:limit]
+    pets = pets.limit(limit) if limit
+
+    if metadata_query.present?
+      pets = pets.sort { |a, b| b.metadata_matches(metadata_query) <=> a.metadata_matches(metadata_query) }
+    end
 
     pets
   end

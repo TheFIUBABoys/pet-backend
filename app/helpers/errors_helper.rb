@@ -1,6 +1,6 @@
 module ErrorsHelper
   # Possible types: success, info, warning, danger
-  def error_messages!(resource, type: "warning")
+  def error_messages!(resource, type = "warning")
     return "" if resource.errors.empty?
 
     messages = resource.errors.full_messages.join

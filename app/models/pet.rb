@@ -14,34 +14,24 @@ class Pet < ActiveRecord::Base
   GENDERS = [GENDER_MALE, GENDER_FEMALE]
   validates_inclusion_of :gender, in: GENDERS, allow_blank: false
 
-  TYPES = [Cat.name, Dog.name]
+  TYPES = ["Dog", "Cat"]
   validates_inclusion_of :type, in: TYPES, allow_blank: false
 
   before_save :update_metadata
 
   scope :published, -> { where(published: true) }
-  scope :males,   -> { where(gender: GENDER_MALE) }
-  scope :females, -> { where(gender: GENDER_FEMALE) }
-  scope :with_colors, ->(colors) {
-    full_query = nil
+  scope :males, ->     { where(gender: GENDER_MALE) }
+  scope :females, ->   { where(gender: GENDER_FEMALE) }
 
-    to_queries(colors).each do |query|
-      color_match = arel_table[:colors].matches(query)
-      full_query = full_query ? full_query.and(color_match) : color_match
-    end
+  scope :near_location, ->(location, max_meters) {
+    location_ary = location.split(",").map(&:to_i)
 
-    where(full_query)
+    ids = where.not(location: [nil, ""]).select { |pet| pet.distance_to(location_ary) <= max_meters }.map(&:id)
+    where(id: ids)
   }
-  scope :with_metadata, ->(tags) {
-    full_query = nil
 
-    to_queries(tags).each do |query|
-      meta_match = arel_table[:metadata].matches(query)
-      full_query = full_query ? full_query.or(meta_match) : meta_match
-    end
-
-    where(full_query)
-  }
+  scope :with_colors, ->(colors) { field_matches_any(:colors, colors) }
+  scope :with_metadata, ->(tags) { field_matches_any(:metadata, tags) }
 
   def publish
     self.published = true
@@ -59,10 +49,45 @@ class Pet < ActiveRecord::Base
     self.update_attributes(published: false)
   end
 
+  def metadata_matches(values)
+    values.split.count { |tag| self.metadata.include?(tag) }
+  end
+
+  def distance_to(other_location)
+    loc1 = self.location.split(",").map(&:to_i)
+    loc2 = other_location
+
+    rad_per_deg = Math::PI/180 # PI / 180
+    rkm = 6371 # Earth radius in kilometers
+    rm = rkm * 1000 # Radius in meters
+
+    dlat_rad = (loc2[0] - loc1[0]) * rad_per_deg # Delta, converted to rad
+    dlon_rad = (loc2[1] - loc1[1]) * rad_per_deg
+
+    lat1_rad, lon1_rad = loc1.map { |i| i * rad_per_deg }
+    lat2_rad, lon2_rad = loc2.map { |i| i * rad_per_deg }
+
+    a = Math.sin(dlat_rad/2)**2 + Math.cos(lat1_rad) * Math.cos(lat2_rad) * Math.sin(dlon_rad/2)**2
+    c = 2 * Math::atan2(Math::sqrt(a), Math::sqrt(1-a))
+
+    rm * c # Delta in meters
+  end
+
   private
 
   def self.to_queries(query)
     query.to_s.strip.split.map { |w| "%#{w.downcase}%" }
+  end
+
+  def self.field_matches_any(field, values)
+    full_query = nil
+
+    to_queries(values).each do |query|
+      field_match = arel_table[field].matches(query)
+      full_query  = full_query ? full_query.or(field_match) : field_match
+    end
+
+    where(full_query)
   end
 
   def update_metadata
@@ -71,12 +96,13 @@ class Pet < ActiveRecord::Base
     # Tag pet based on type, gender and colors.
     %w[type gender].each do |attribute|
       attribute = attribute.to_sym
-      tags << I18n.t("pets.#{self.send(attribute).downcase}").downcase if self.send(attribute)
+      tags << I18n.t("pets.#{self.send(attribute).downcase}") if self.send(attribute)
     end
-    tags << self.colors
+    tags = tags.concat self.colors.split unless self.colors.blank?
+    tags = tags.concat self.description.split unless self.description.blank?
 
     # Merge with existing tags.
-    new_meta = tags.compact
+    new_meta = tags.compact.map(&:downcase)
     existing_meta = self.metadata.split(" ")
 
     self.metadata = new_meta.concat(existing_meta).uniq.join(" ")
