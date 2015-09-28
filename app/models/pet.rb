@@ -24,7 +24,7 @@ class Pet < ActiveRecord::Base
   scope :females, ->   { where(gender: GENDER_FEMALE) }
 
   scope :near_location, ->(location, max_meters) {
-    location_ary = location.split(",").map(&:to_i)
+    location_ary = location.split(",").map(&:to_f)
 
     ids = where.not(location: [nil, ""]).select { |pet| pet.distance_to(location_ary) <= max_meters }.map(&:id)
     where(id: ids)
