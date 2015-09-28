@@ -56,7 +56,7 @@ class Pet < ActiveRecord::Base
   end
 
   def distance_to(other_location)
-    loc1 = self.location.split(",").map(&:to_i)
+    loc1 = self.location.split(",").map(&:to_f)
     loc2 = other_location
 
     rad_per_deg = Math::PI/180 # PI / 180
