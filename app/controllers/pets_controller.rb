@@ -13,7 +13,7 @@ class PetsController < ApplicationController
         @pets = pets.paginate(page: params[:page], per_page: 10)
       end
       format.json do
-        @pets = pets.published
+        @pets = pets
       end
     end
   end
