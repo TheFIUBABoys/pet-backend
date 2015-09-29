@@ -42,6 +42,8 @@ describe "Pets API" do
               let(:options) { { :"#{attribute}" => !pet.send(attribute.to_sym) } }
 
               it "returns the matching pets" do
+                Pet.destroy_all
+
                 subject
 
                 expect(json).to be_empty
@@ -53,6 +55,8 @@ describe "Pets API" do
 
       context "when there are no published pets" do
         it "returns an empty array" do
+          Pet.update_all(published: false)
+
           subject
 
           expect(json).to be_empty

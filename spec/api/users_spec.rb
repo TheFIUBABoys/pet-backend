@@ -104,6 +104,84 @@ describe "Users API" do
 
   end
 
+  describe "PUT /users.json" do
+
+    subject { put user_registration_path(format: :json, user_token: token), { user: user_params } }
+
+    context "when logged in" do
+      let(:token) { FactoryGirl.create(:user, :email_auth).authentication_token }
+
+      %w[first_name last_name].each do |attribute|
+        context "when updating #{attribute}" do
+          let(:user_params) { { "#{attribute}" => Forgery(:name).send(attribute.to_sym) } }
+
+          it "responds with 200" do
+            subject
+            expect(response.status).to eq 200
+          end
+
+          it "responds with the user with the changed #{attribute}" do
+            subject
+            expect(json["#{attribute}"]).to eql user_params["#{attribute}"]
+          end
+        end
+      end
+
+      context "when updating email" do
+        let(:user_params) { { "email" => Forgery(:internet).email_address } }
+
+        it "responds with 200" do
+          subject
+          expect(response.status).to eq 200
+        end
+
+        it "responds with the user with the changed email" do
+          subject
+          expect(json["email"]).to eql user_params["email"]
+        end
+      end
+
+      context "when updating phone" do
+        let(:user_params) { { "phone" => Forgery(:address).phone } }
+
+        it "responds with 200" do
+          subject
+          expect(response.status).to eq 200
+        end
+
+        it "responds with the user with the changed phone" do
+          subject
+          expect(json["phone"]).to eql user_params["phone"]
+        end
+      end
+
+      context "when updating location" do
+        let(:user_params) { { "location" => "#{Forgery(:geo).latitude},#{Forgery(:geo).longitude}" } }
+
+        it "responds with 200" do
+          subject
+          expect(response.status).to eq 200
+        end
+
+        it "responds with the user with the changed location" do
+          subject
+          expect(json["location"]).to eql user_params["location"]
+        end
+      end
+    end
+
+    context "when not logged in" do
+      let(:token) { "" }
+      let(:user_params) { {} }
+
+      it "responds with 401" do
+        subject
+        expect(response.status).to eq 401
+      end
+    end
+
+  end
+
   describe "POST /users/sign_in.json" do
 
     subject { post user_session_path(format: :json), { user: user_params } }

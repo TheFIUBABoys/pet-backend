@@ -43,6 +43,40 @@ version: v0.1
               { "errors":{ "email":["can't be blank"]}}
               { "errors":{ "facebook_id":["has already been taken"]}}
               { "errors":{ "facebook_id":["can't be blank"]}}
+  put:
+    description: Update the user given by the user_token.
+    body:
+      application/json:
+        example: |
+          {
+            "user":
+              {
+                "email": "gonchu.b@gmail.com",
+                "phone": "12345678",
+                "location": "12.0,11.876",
+                "first_name": "Gonzalo",
+                "last_name": "Beviglia"
+              }
+           }
+    responses:
+      200:
+        body:
+          application/json:
+              example: |
+                {
+                  "id": 1,
+                  "created_at": "2015-09-15T02:53:04.119Z",
+                  "email": "gonchu.b@gmail.com",
+                  "facebook_id": null,
+                  "authentication_token": "mwknzg6sExqRh-wAsF1s",
+                  "full_name": "Gonzalo Beviglia",
+                  "first_name": "Gonzalo",
+                  "last_name": "Beviglia",
+                  "location": "12.0,11.876",
+                  "phone": "12345678"
+                }
+      401:
+        description: Will return error code 401 when no user is found with the given token.
   /sign_in:
     post:
       description: Sign In to the app using email and password or facebook_token and facebook_id
