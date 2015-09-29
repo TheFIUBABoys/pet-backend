@@ -25,6 +25,12 @@ class User < ActiveRecord::Base
     end
   end
 
+  def full_name
+    return "" if self.first_name.blank? && self.last_name.blank?
+
+    [self.first_name, self.last_name].reject(&:blank?).join(" ")
+  end
+
   private
 
   def generate_authentication_token
