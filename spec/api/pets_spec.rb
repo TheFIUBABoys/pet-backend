@@ -27,7 +27,7 @@ describe "Pets API" do
         context "with filters" do
           let(:pet) { FactoryGirl.create :pet, :dog, :male, :published }
 
-          %w[type gender vaccinated name].each do |attribute|
+          %w[type gender vaccinated name needs_transit_home pet_friendly children_friendly].each do |attribute|
             context "when pets match the filter" do
               let(:options) { { :"#{attribute}" => pet.send(attribute.to_sym) } }
 
