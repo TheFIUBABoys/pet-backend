@@ -1,4 +1,4 @@
-require "will_paginate/array"
+# require "will_paginate/array"
 
 class PetsController < ApplicationController
   before_action :set_pet, only: [:show, :edit, :update, :destroy]
@@ -13,7 +13,7 @@ class PetsController < ApplicationController
         @pets = pets.paginate(page: params[:page], per_page: 10)
       end
       format.json do
-        @pets = pets
+        @pets = pets.published
       end
     end
   end
@@ -117,9 +117,9 @@ class PetsController < ApplicationController
 
     pets = pets.limit(limit) if limit
 
-    if metadata_query.present?
-      pets = pets.sort { |a, b| b.metadata_matches(metadata_query) <=> a.metadata_matches(metadata_query) }
-    end
+    # if metadata_query.present?
+      # pets = pets.sort { |a, b| b.metadata_matches(metadata_query) <=> a.metadata_matches(metadata_query) }
+    # end
 
     pets
   end
