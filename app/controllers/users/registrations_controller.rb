@@ -30,8 +30,12 @@ class Users::RegistrationsController < Devise::RegistrationsController
         super
       end
       format.json do
-        super
-        @user = User.find(current_user.id)
+        if current_user
+          super
+          @user = User.find_by(id: current_user.id)
+        else
+          render json: {}, status: :unauthorized
+        end
       end
     end
   end
