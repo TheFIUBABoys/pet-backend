@@ -12,11 +12,11 @@ class User < ActiveRecord::Base
   has_many :pets
 
   def email_required?
-    facebook_token.blank?
+    email_and_password_required?
   end
 
   def password_required?
-    facebook_token.blank?
+    email_and_password_required?
   end
 
   def ensure_authentication_token
@@ -32,6 +32,10 @@ class User < ActiveRecord::Base
       token = Devise.friendly_token
       break token unless User.where(authentication_token: token).first
     end
+  end
+
+  def email_and_password_required?
+    self.facebook_token.blank? && !self.persisted?
   end
 
 end
