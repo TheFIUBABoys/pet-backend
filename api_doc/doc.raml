@@ -262,20 +262,60 @@ version: v0.1
             application/json:
               example: |
                 {
-                  "id":11,
-                  "type":"Cat",
-                  "name":"John",
-                  "description":"hlo",
-                  "published":true,
-                  "vaccinated":true,
-                  "needs_transit_home":false,
-                  "created_at":"2015-09-15T04:21:52.311Z",
-                  "updated_at":"2015-09-23T00:17:52.432Z",
-                  "user_id":1,
-                  "location":"127,2",
-                  "metadata":"gato macho black gray handsome",
-                  "colors":"black gray",
-                  "gender":"male"
+                  "id": 2,
+                  "type": "Cat",
+                  "name": "John",
+                  "age": null,
+                  "description": "Very nice cat.",
+                  "published": true,
+                  "vaccinated": false,
+                  "needs_transit_home": false,
+                  "created_at": "2015-10-04T16:13:20.671Z",
+                  "updated_at": "2015-10-04T16:13:20.671Z",
+                  "user_id": 3,
+                  "location": "",
+                  "metadata": "gato macho very nice cat.",
+                  "colors": "",
+                  "gender": "male",
+                  "images": [
+                    {
+                      "id": 2,
+                      "original_url": "http://localhost:8000/system/pet_images/images/000/000/002/original/Front.png?1443975218",
+                      "medium_url": "http://localhost:8000/system/pet_images/images/000/000/002/medium/Front.png?1443975218",
+                      "thumb_url": "http://localhost:8000/system/pet_images/images/000/000/002/thumb/Front.png?1443975218"
+                    }
+                  ],
+                  "videos": [
+                    {
+                      "id": 5,
+                      "url": "https://www.youtube.com/watch?v=TwyDC1ib8dc"
+                    }
+                  ],
+                  "questions": [
+                    {
+                      "id": 1,
+                      "body": "Consume alimento especial?",
+                      "created_at": "2015-10-04T16:15:37.305Z",
+                      "user": {
+                        "id": 3,
+                        "full_name": "Gonzalo Beviglia"
+                      }
+                    },
+                    {
+                      "id": 2,
+                      "body": "Consume alimento especial?",
+                      "created_at": "2015-10-04T16:16:17.365Z",
+                      "user": {
+                        "id": 3,
+                        "full_name": "Gonzalo Beviglia"
+                      },
+                      "answer": {
+                        "id": 1,
+                        "body": "No",
+                        "created_at": "2015-10-04T16:25:03.284Z"
+                      }
+                    }
+                  ]
                 }
         404:
           description: Will return a 404 status if the pet is not found.
