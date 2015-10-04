@@ -129,6 +129,7 @@ version: v0.1
               "description": "Very nice cat.",
               "published": true,
               "gender": "male"
+              "videos": ["https://www.youtube.com/watch?v=TwyDC1ib8dc"]
             }
           }
 
@@ -157,7 +158,14 @@ version: v0.1
                   "published":false,
                   "needs_transit_home":false,
                   "created_at": "2015-09-15T03:02:16.890Z",
-                  "updated_at": "2015-09-15T03:02:16.890Z"
+                  "updated_at": "2015-09-15T03:02:16.890Z",
+                  "images": [],
+                  "videos": [
+                    {
+                      "id": 5,
+                      "url": "https://www.youtube.com/watch?v=TwyDC1ib8dc"
+                    }
+                  ]
                 }
   get:
     description: Search for pets (only shows published pets)
@@ -235,7 +243,14 @@ version: v0.1
                 "published": false,
                 "needs_transit_home": false,
                 "created_at": "2015-09-15T03:02:16.890Z",
-                "updated_at": "2015-09-15T03:02:16.890Z"
+                "updated_at": "2015-09-15T03:02:16.890Z",
+                "images": [],
+                "videos": [
+                  {
+                    "id": 5,
+                    "url": "https://www.youtube.com/watch?v=TwyDC1ib8dc"
+                  }
+                ]
               }
   /{id}:
     get:

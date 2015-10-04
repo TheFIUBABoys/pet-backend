@@ -4,6 +4,7 @@ class Pet < ActiveRecord::Base
   validates :user, presence: true
 
   has_many :images, class_name: PetImage
+  has_many :videos, class_name: PetVideo
 
   validates_format_of :location, with: /[-+]?([1-8]?\d(\.\d+)?|90(\.0+)?),\s*[-+]?(180(\.0+)?|((1[0-7]\d)|([1-9]?\d))(\.\d+)?)/, if: :location?
 
