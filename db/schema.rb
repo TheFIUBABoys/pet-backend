@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151004144117) do
+ActiveRecord::Schema.define(version: 20151004150350) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -57,10 +57,10 @@ ActiveRecord::Schema.define(version: 20151004144117) do
     t.string   "colors",             default: ""
     t.string   "gender"
     t.text     "metadata",           default: ""
-    t.boolean  "vaccinated"
+    t.boolean  "vaccinated",         default: false
     t.integer  "age"
-    t.boolean  "pet_friendly"
-    t.boolean  "children_friendly"
+    t.boolean  "pet_friendly",       default: false
+    t.boolean  "children_friendly",  default: false
   end
 
   add_index "pets", ["type"], name: "index_pets_on_type", using: :btree
