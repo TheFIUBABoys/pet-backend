@@ -7,7 +7,9 @@ Rails.application.routes.draw do
     end
 
     resources :images, only: [:show, :create, :destroy]
-    resources :questions, only: [:show, :create]
+    resources :questions, only: [:show, :create] do
+      post "answer"
+    end
   end
 
   root "pets#index"
