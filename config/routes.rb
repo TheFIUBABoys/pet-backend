@@ -7,6 +7,7 @@ Rails.application.routes.draw do
     end
 
     resources :images, only: [:show, :create, :destroy]
+    resources :questions, only: [:show, :create]
   end
 
   root "pets#index"

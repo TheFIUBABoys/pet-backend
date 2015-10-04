@@ -9,6 +9,7 @@ Dir[Rails.root.join("spec/support/**/*.rb")].each { |f| require f }
 
 # See http://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
 RSpec.configure do |config|
+  config.include ForgeryHelpers
   config.include Requests::JsonHelpers, type: :request
 
   config.expect_with :rspec do |expectations|

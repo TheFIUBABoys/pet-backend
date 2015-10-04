@@ -7,11 +7,11 @@ class ImagesController < ApplicationController
   end
 
   def create
-    pet_photo = @pet.images.create(image: image_params[:image])
+    @pet_image = @pet.images.create(image: image_params[:image])
 
     respond_to do |format|
       format.html { redirect_to @pet, notice: I18n.t("pets.edit.image_created") }
-      format.json { @pet_photo = pet_photo }
+      format.json { render :show }
     end
   end
 
