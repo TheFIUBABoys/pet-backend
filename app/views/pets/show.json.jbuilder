@@ -16,7 +16,7 @@ json.videos do
 end
 
 json.questions do
-  json.array! @pet.questions do |question|
+  json.array! @pet.questions.order(created_at: :desc) do |question|
     json.extract! question, :id, :body, :created_at
     json.user   { json.extract! question.user, :id, :full_name }
     json.answer { json.extract! question.answer, :id, :body, :created_at } if question.answer.present?
