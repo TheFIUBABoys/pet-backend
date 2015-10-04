@@ -96,9 +96,28 @@ describe "Pets API" do
       context "when specifying all required parameters" do
         let(:pet_params) { valid_pet_params }
 
-        it "responds with 201" do
-          subject
-          expect(response.status).to eq 201
+        context "when providing videos" do
+          let(:videos) { [Forgery(:internet).domain_name] }
+          let(:pet_params) { valid_pet_params.merge(videos: videos) }
+
+          it "responds with 201" do
+            subject
+            expect(response.status).to eq 201
+          end
+
+          it "returns the pet with videos array" do
+            subject
+            expect(json["videos"]).not_to be_empty
+          end
+        end
+
+        context "when not providing videos" do
+          let(:pet_params) { valid_pet_params }
+
+          it "responds with 201" do
+            subject
+            expect(response.status).to eq 201
+          end
         end
       end
 

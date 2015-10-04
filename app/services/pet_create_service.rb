@@ -8,7 +8,7 @@ class PetCreateService < BaseService
     pet_videos = pet_attributes.delete(:videos)
 
     pet = @user.pets.create(pet_attributes)
-    pet = create_videos(pet, pet_videos)
+    pet = create_videos(pet, pet_videos) if pet_videos.present?
 
     pet.publish! if publish
 
