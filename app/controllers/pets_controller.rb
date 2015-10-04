@@ -77,6 +77,8 @@ class PetsController < ApplicationController
 
   def top
     @pets = Pet.all.order(created_at: :desc).limit(5)
+
+    render :index
   end
 
   private
