@@ -31,6 +31,10 @@ class User < ActiveRecord::Base
     [self.first_name, self.last_name].reject(&:blank?).join(" ")
   end
 
+  def profile_complete?
+    %w[phone first_name last_name location email].all? { |attribute| self.send(attribute).present? }
+  end
+
   private
 
   def generate_authentication_token
