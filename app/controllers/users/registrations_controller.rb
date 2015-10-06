@@ -60,7 +60,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
   def configure_sign_up_params
     devise_parameter_sanitizer.for(:sign_up) do |u|
       u.permit(:facebook_id, :facebook_token, :email, :password, :password_confirmation, :first_name, :last_name,
-               :location, :phone)
+               :location, :phone, :device_id)
     end
   end
 
@@ -75,7 +75,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
   # If you have extra params to permit, append them to the sanitizer.
   def configure_account_update_params
     devise_parameter_sanitizer.for(:account_update) do |u|
-      u.permit(:facebook_id, :facebook_token, :email, :first_name, :last_name, :location, :phone)
+      u.permit(:facebook_id, :facebook_token, :email, :first_name, :last_name, :location, :phone, :device_id)
     end
   end
 

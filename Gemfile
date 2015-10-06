@@ -1,3 +1,7 @@
+# Specify Ruby version
+ruby "2.2.1"
+
+# Specify gems repository
 source "https://rubygems.org"
 
 # Back end
@@ -39,8 +43,7 @@ group :doc do
   gem "sdoc", "~> 0.4.0"  
 end
 
+# Production
 group :production do
   gem "rails_12factor"
 end
-
-ruby "2.2.1"

@@ -8,3 +8,10 @@ json.images do
     json.thumb_url asset_url(image.image.url(:thumb))
   end
 end
+
+json.videos do
+  json.array! @pet.videos do |video|
+    json.id video.id
+    json.url video.url
+  end
+end
