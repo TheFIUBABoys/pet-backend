@@ -191,9 +191,9 @@ describe "Users API" do
       let(:user_params) { { email: user.email, password: user.password } }
 
       context "when email matches password" do
-        it "responds with 201" do
+        it "responds with 200" do
           subject
-          expect(response.status).to eq 201
+          expect(response.status).to eq 200
         end
 
         it "returns the user with an authentication token" do

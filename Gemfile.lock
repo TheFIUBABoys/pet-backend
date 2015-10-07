@@ -73,6 +73,9 @@ GEM
       factory_girl (~> 4.5.0)
       railties (>= 3.0.0)
     forgery (0.6.0)
+    gcm (0.1.0)
+      httparty
+      json
     haml (4.0.7)
       tilt
     haml-rails (0.9.0)
@@ -86,6 +89,9 @@ GEM
       haml (~> 4.0.0)
       nokogiri (~> 1.6.0)
       ruby_parser (~> 3.5)
+    httparty (0.13.7)
+      json (~> 1.8)
+      multi_xml (>= 0.5.2)
     i18n (0.7.0)
     jbuilder (2.3.1)
       activesupport (>= 3.0.0, < 5)
@@ -103,6 +109,7 @@ GEM
     mini_portile (0.6.2)
     minitest (5.8.0)
     multi_json (1.11.2)
+    multi_xml (0.5.5)
     nokogiri (1.6.6.2)
       mini_portile (~> 0.6.0)
     orm_adapter (0.5.0)
@@ -222,6 +229,7 @@ DEPENDENCIES
   erb2haml
   factory_girl_rails (~> 4.0)
   forgery
+  gcm
   haml-rails
   jbuilder (~> 2.0)
   jquery-rails
