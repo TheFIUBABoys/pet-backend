@@ -26,7 +26,7 @@ describe "Images API" do
       end
 
       context "when pet doesn't exist" do
-        let(:pet) { double(id: Forgery(:basic).number) }
+        let(:pet) { double(id: forged_id) }
 
         it "responds with 404" do
           subject
@@ -75,7 +75,7 @@ describe "Images API" do
         end
 
         context "when image doesn't exist" do
-          let(:pet_image_id) { Forgery(:basic).number }
+          let(:pet_image_id) { forged_id }
 
           it "responds with 404" do
             subject
@@ -85,7 +85,7 @@ describe "Images API" do
       end
 
       context "when pet doesn't exist" do
-        let(:pet_id) { Forgery(:basic).number }
+        let(:pet_id) { forged_id }
         let(:pet_image_id) { pet_image.id }
 
         it "responds with 404" do
@@ -129,7 +129,7 @@ describe "Images API" do
         end
 
         context "when image doesn't exist" do
-          let(:pet_image_id) { Forgery(:basic).number }
+          let(:pet_image_id) { forged_id }
 
           it "responds with 404" do
             subject
@@ -139,7 +139,7 @@ describe "Images API" do
       end
 
       context "when pet doesn't exist" do
-        let(:pet_id) { Forgery(:basic).number }
+        let(:pet_id) { forged_id }
         let(:pet_image_id) { pet_image.id }
 
         it "responds with 404" do

@@ -29,6 +29,8 @@ es:
       title: "Editar mascota"
       image_created: "La imagen fue creada exitosamente."
       image_destroyed: "La imagen fue borrada exitosamente."
+      question_created: "La pregunta se ha creado existosamente."
+      answer_created: "La pregunta ha sido contestada exitosamente."
     index:
       new_pet: "Nueva mascota"
       title: "Mascotas"

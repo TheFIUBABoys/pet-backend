@@ -5,8 +5,9 @@ class Pet < ActiveRecord::Base
 
   has_many :images, class_name: PetImage
   has_many :videos, class_name: PetVideo
+  has_many :questions, class_name: PetQuestion
 
-  validates_format_of :location, with: /[-+]?([1-8]?\d(\.\d+)?|90(\.0+)?),\s*[-+]?(180(\.0+)?|((1[0-7]\d)|([1-9]?\d))(\.\d+)?)/, if: :location?
+  # validates_format_of :location, with: /[-+]?([1-8]?\d(\.\d+)?|90(\.0+)?),\s*[-+]?(180(\.0+)?|((1[0-7]\d)|([1-9]?\d))(\.\d+)?)/, if: :location?
 
   %w[male female].each do |gender|
     const_set "gender_#{gender}".upcase, gender

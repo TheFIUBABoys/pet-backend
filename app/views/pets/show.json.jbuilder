@@ -11,7 +11,14 @@ end
 
 json.videos do
   json.array! @pet.videos do |video|
-    json.id video.id
-    json.url video.url
+    json.extract! video, :id, :url
+  end
+end
+
+json.questions do
+  json.array! @pet.questions.order(created_at: :desc) do |question|
+    json.extract! question, :id, :body, :created_at
+    json.user   { json.extract! question.user, :id, :full_name }
+    json.answer { json.extract! question.answer, :id, :body, :created_at } if question.answer.present?
   end
 end
