@@ -11,16 +11,21 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151004160813) do
+ActiveRecord::Schema.define(version: 20151013033116) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "devices", force: true do |t|
-    t.string   "token"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+  create_table "adoption_requests", force: true do |t|
+    t.integer  "pet_id"
+    t.integer  "user_id"
+    t.boolean  "approved"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
+
+  add_index "adoption_requests", ["pet_id"], name: "index_adoption_requests_on_pet_id", using: :btree
+  add_index "adoption_requests", ["user_id"], name: "index_adoption_requests_on_user_id", using: :btree
 
   create_table "pet_images", force: true do |t|
     t.integer  "pet_id"
