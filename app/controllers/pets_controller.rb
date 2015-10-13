@@ -96,8 +96,10 @@ class PetsController < ApplicationController
   end
 
   def pet_search_params
-    params.permit(:type, :name, :description, :gender, :colors, :needs_transit_home, :vaccinated, :published, :user_id,
-                  :metadata, :location, :age, :limit, :children_friendly, :pet_friendly).reject { |_, v| v.blank? }
+    params.
+      permit(:type, :name, :description, :gender, :colors, :needs_transit_home, :vaccinated, :published, :user_id,
+             :metadata, :location, :age, :limit, :children_friendly, :pet_friendly, :with_adoption_requests).
+      reject { |_, v| v.blank? }
   end
 
   def pet_create_service
@@ -112,10 +114,13 @@ class PetsController < ApplicationController
     metadata_query = params.delete(:metadata)
     location_query = params.delete(:location)
 
+    with_adoption_requests = params.delete(:with_adoption_requests)
+
     pets = Pet.where(params).order(created_at: :desc)
     pets = pets.with_metadata(metadata_query) if metadata_query.present?
     pets = pets.with_colors(color_query) if color_query.present?
     pets = pets.near_location(location_query, params.fetch(:location_range, 5000)) if location_query.present?
+    pets = pets.joins(:adoption_requests) if with_adoption_requests.present?
 
     pets = pets.limit(limit) if limit
 
