@@ -8,6 +8,7 @@ class AdoptionRequestsController < ApplicationController
 
   def create
     @adoption_request = @pet.adoption_requests.first_or_create(user: current_user)
+    head :created
   end
 
   private
