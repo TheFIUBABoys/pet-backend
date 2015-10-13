@@ -10,6 +10,7 @@ class User < ActiveRecord::Base
   validates_presence_of :facebook_token, unless: :email?
 
   has_many :pets
+  has_many :adoption_requests
 
   def email_required?
     email_and_password_required?

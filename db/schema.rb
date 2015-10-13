@@ -19,9 +19,9 @@ ActiveRecord::Schema.define(version: 20151013033116) do
   create_table "adoption_requests", force: true do |t|
     t.integer  "pet_id"
     t.integer  "user_id"
-    t.boolean  "approved"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.boolean  "approved",   default: false, null: false
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
   end
 
   add_index "adoption_requests", ["pet_id"], name: "index_adoption_requests_on_pet_id", using: :btree
