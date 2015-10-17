@@ -1,7 +1,11 @@
 class QuestionsController < ApplicationController
 
-  before_action :set_pet, only: [:create, :show, :answer]
+  before_action :set_pet, only: [:index, :create, :show, :answer]
   before_action :set_pet_question, only: [:show, :answer]
+
+  def index
+    @pet_questions = @pet.questions
+  end
 
   def show
   end

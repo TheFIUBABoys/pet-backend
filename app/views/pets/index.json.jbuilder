@@ -16,5 +16,4 @@ json.array!(@pets) do |pet|
       json.url video.url
     end
   end
-  
 end

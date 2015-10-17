@@ -8,7 +8,7 @@ Rails.application.routes.draw do
 
     resources :images, only: [:show, :create, :destroy]
     resources :adoption_requests, only: [:index, :create]
-    resources :questions, only: [:show, :create] do
+    resources :questions, only: [:index, :show, :create] do
       post "answer"
     end
   end

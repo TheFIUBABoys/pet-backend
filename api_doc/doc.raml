@@ -408,6 +408,38 @@ version: v0.1
             404:
               description: Will return a 404 status if the photo is not found.
     /questions:
+      get:
+        description: Get questions belonging to the pet.
+        responses:
+          200:
+            body:
+              application/json:
+                example: |
+                  [
+                    {
+                      "id": 1,
+                      "body": "Consume alimento especial?",
+                      "created_at": "2015-10-04T16:15:37.305Z",
+                      "user": {
+                        "id": 3,
+                        "full_name": "Gonzalo Beviglia"
+                      }
+                    },
+                    {
+                      "id": 2,
+                      "body": "Consume alimento especial?",
+                      "created_at": "2015-10-04T16:16:17.365Z",
+                      "user": {
+                        "id": 3,
+                        "full_name": "Gonzalo Beviglia"
+                      },
+                      "answer": {
+                        "id": 1,
+                        "body": "No",
+                        "created_at": "2015-10-04T16:25:03.284Z"
+                      }
+                    }
+                  ]
       post:
         description: Ask a question about a pet.
         body:
