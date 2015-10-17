@@ -4,6 +4,7 @@
 password = Forgery(:basic).text(at_least: 8)
 user_1 = User.create(email: Forgery(:internet).email_address, password: password, password_confirmation: password)
 user_2 = User.create(email: Forgery(:internet).email_address, password: password, password_confirmation: password)
+user_3 = User.create(email: Forgery(:internet).email_address, password: password, password_confirmation: password)
 
 20.times do
   type   = Pet::TYPES.sample
@@ -23,5 +24,8 @@ user_2 = User.create(email: Forgery(:internet).email_address, password: password
 
   question_1 = PetQuestion.create(pet: pet, user: user_2, body: Forgery(:lorem_ipsum).text)
   question_2 = PetQuestion.create(pet: pet, user: user_2, body: Forgery(:lorem_ipsum).text)
-  answer     = PetQuestionAnswer.create(pet_question: question_1, body: Forgery(:lorem_ipsum).text)
+  answer_1   = PetQuestionAnswer.create(pet_question: question_1, body: Forgery(:lorem_ipsum).text)
+
+  request_1 = AdoptionRequest.create(user: user_2, pet: pet, approved: false)
+  request_2 = AdoptionRequest.create(user: user_3, pet: pet, approved: false)
 end
