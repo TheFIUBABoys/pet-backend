@@ -88,41 +88,6 @@ ActiveRecord::Schema.define(version: 20151013033116) do
   add_index "pets", ["type"], name: "index_pets_on_type", using: :btree
   add_index "pets", ["user_id"], name: "index_pets_on_user_id", using: :btree
 
-  create_table "rails_push_notifications_apns_apps", force: true do |t|
-    t.text     "apns_dev_cert"
-    t.text     "apns_prod_cert"
-    t.boolean  "sandbox_mode"
-    t.datetime "created_at",     null: false
-    t.datetime "updated_at",     null: false
-  end
-
-  create_table "rails_push_notifications_gcm_apps", force: true do |t|
-    t.string   "gcm_key"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
-  create_table "rails_push_notifications_mpns_apps", force: true do |t|
-    t.text     "cert"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
-  create_table "rails_push_notifications_notifications", force: true do |t|
-    t.text     "destinations"
-    t.integer  "app_id"
-    t.string   "app_type"
-    t.text     "data"
-    t.text     "results"
-    t.integer  "success"
-    t.integer  "failed"
-    t.boolean  "sent",         default: false
-    t.datetime "created_at",                   null: false
-    t.datetime "updated_at",                   null: false
-  end
-
-  add_index "rails_push_notifications_notifications", ["app_id", "app_type", "sent"], name: "app_and_sent_index_on_rails_push_notifications", using: :btree
-
   create_table "users", force: true do |t|
     t.string   "email",                  default: ""
     t.string   "encrypted_password",     default: ""
