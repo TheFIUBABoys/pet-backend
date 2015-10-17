@@ -6,4 +6,10 @@ class BaseService
     end
 
   end
+
+  private
+
+  def read_config(filename)
+    YAML.load_file(Rails.root + 'config' + "#{filename}.yml")[Rails.env]
+  end
 end

@@ -1,0 +1,11 @@
+defaults: &defaults
+  api_key: 'AIzaSyAT341Id-gMu465TNTeibQjbl22RqKuYOg'
+
+development:
+  <<: *defaults
+
+test:
+  <<: *defaults
+
+production:
+  <<: *defaults
