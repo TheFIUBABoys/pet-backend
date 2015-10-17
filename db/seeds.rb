@@ -21,6 +21,7 @@ user_2 = User.create(email: Forgery(:internet).email_address, password: password
     vaccinated: Forgery(:basic).boolean,
     needs_transit_home: Forgery(:basic).boolean)
 
-  question = PetQuestion.create(pet: pet, user: user_2, body: Forgery(:lorem_ipsum).text)
-  answer   = PetQuestionAnswer.create(pet_question: question, body: Forgery(:lorem_ipsum).text)
+  question_1 = PetQuestion.create(pet: pet, user: user_2, body: Forgery(:lorem_ipsum).text)
+  question_2 = PetQuestion.create(pet: pet, user: user_2, body: Forgery(:lorem_ipsum).text)
+  answer     = PetQuestionAnswer.create(pet_question: question_1, body: Forgery(:lorem_ipsum).text)
 end
