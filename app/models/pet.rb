@@ -46,12 +46,12 @@ class Pet < ActiveRecord::Base
 
   def publish!
     self.publish
-    self.save
+    self.save!
   end
 
   def unpublish!
     self.unpublish
-    self.save
+    self.save!
   end
 
   def metadata_matches(values)
