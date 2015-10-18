@@ -17,7 +17,7 @@ class SendPushNotificationService < BaseService
   private
 
   def api_key
-    @api_key ||= gcm_config[:api_key]
+    @api_key ||= gcm_config["api_key"]
   end
 
   def gcm_config
