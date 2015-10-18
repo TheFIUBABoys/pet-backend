@@ -4,7 +4,7 @@ class QuestionsController < ApplicationController
   before_action :set_pet_question, only: [:show, :answer]
 
   def index
-    @pet_questions = @pet.questions
+    @pet_questions = @pet.questions.order(created_at: :desc)
   end
 
   def show
