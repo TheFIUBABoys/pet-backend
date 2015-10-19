@@ -14,6 +14,7 @@ user_3 = User.create(email: Forgery(:internet).email_address, password: password
     user: user_1,
     type: type,
     gender: gender,
+    age: Forgery(:basic).number(at_most: 10),
     name: Forgery(:name).first_name,
     published: true,
     description: Forgery(:lorem_ipsum).text,
