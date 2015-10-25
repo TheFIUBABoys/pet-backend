@@ -1,6 +1,7 @@
 class AdoptionRequestsController < ApplicationController
 
-  before_action :set_pet, only: [:index, :create]
+  before_action :set_pet, only: [:index, :create, :accept]
+  before_action :set_adoption_request, only: [:accept]
 
   def index
     @adoption_requests = @pet.adoption_requests
@@ -17,10 +18,20 @@ class AdoptionRequestsController < ApplicationController
     head :created
   end
 
+  def accept
+    @adoption_request.update_attributes(approved: true)
+
+    head :created
+  end
+
   private
 
   def set_pet
     @pet = Pet.find(params[:pet_id])
+  end
+
+  def set_adoption_request
+    @adoption_request = @pet.adoption_requests.find(params[:id])
   end
 
   def notification_options

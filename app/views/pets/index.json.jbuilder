@@ -1,6 +1,10 @@
 json.array!(@pets) do |pet|
   json.extract! pet, :id, :type, :name, :age, :description, :published, :vaccinated, :needs_transit_home, :pet_friendly, :children_friendly, :created_at, :updated_at, :user_id, :location, :metadata, :colors, :gender
+
+  json.adopted pet.adoption_requests.any? { |r| r.approved == true }
+
   json.url pet_url(pet, format: :json)
+
   json.images do
     json.array! pet.images do |image|
       json.id image.id
