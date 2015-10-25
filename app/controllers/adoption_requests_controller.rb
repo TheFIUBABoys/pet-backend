@@ -21,6 +21,8 @@ class AdoptionRequestsController < ApplicationController
   def accept
     @adoption_request.update_attributes(approved: true)
 
+    notification_service.call(@adoption_request.user, notification_options)
+
     head :created
   end
 
@@ -35,7 +37,9 @@ class AdoptionRequestsController < ApplicationController
   end
 
   def notification_options
-    { data: { pet_id: @pet.id, user_id: current_user.id }, collapse_key: 'adoption_requested' }
+    notification_type = "#{action_name}_adoption_request"
+
+    { data: { pet_id: @pet.id, user_id: current_user.id, type: notification_type }, collapse_key: notification_type }
   end
 
   def notification_service
