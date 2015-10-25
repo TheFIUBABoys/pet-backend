@@ -7,7 +7,9 @@ Rails.application.routes.draw do
     end
 
     resources :images, only: [:show, :create, :destroy]
-    resources :adoption_requests, only: [:index, :create, :accept]
+    resources :adoption_requests, only: [:index, :create] do
+      post "accept", on: :member
+    end
     resources :questions, only: [:index, :show, :create] do
       post "answer"
     end
