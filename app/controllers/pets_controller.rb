@@ -98,7 +98,7 @@ class PetsController < ApplicationController
   def pet_search_params
     params.
       permit(:type, :name, :description, :gender, :colors, :needs_transit_home, :vaccinated, :published, :user_id,
-             :metadata, :location, :age, :limit, :children_friendly, :pet_friendly, :with_adoption_requests).
+             :metadata, :location, :age, :limit, :children_friendly, :pet_friendly, :with_adoption_requests, :adopted).
       reject { |_, v| v.blank? }
   end
 
@@ -113,6 +113,7 @@ class PetsController < ApplicationController
     color_query    = params.delete(:colors)
     metadata_query = params.delete(:metadata)
     location_query = params.delete(:location)
+    adopted        = params.delete(:adopted)
 
     with_adoption_requests = params.delete(:with_adoption_requests)
 
@@ -120,7 +121,8 @@ class PetsController < ApplicationController
     pets = pets.with_metadata(metadata_query) if metadata_query.present?
     pets = pets.with_colors(color_query) if color_query.present?
     pets = pets.near_location(location_query, params.fetch(:location_range, 5000)) if location_query.present?
-    pets = pets.joins(:adoption_requests) if with_adoption_requests.present?
+    pets = pets.includes(:adoption_requests) if with_adoption_requests.present?
+    pets = pets.includes(:adoption_requests).where(adoption_requests: { approved: true }) if adopted.present?
 
     pets = pets.limit(limit) if limit
 
