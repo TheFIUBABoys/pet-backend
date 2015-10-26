@@ -96,7 +96,7 @@ class PetsController < ApplicationController
   def pet_search_params
     params.
       permit(:type, :name, :description, :gender, :colors, :needs_transit_home, :vaccinated, :published, :user_id,
-             :metadata, :location, :age, :limit, :children_friendly, :pet_friendly, :with_adoption_requests, :adopted).
+             :metadata, :location, :age, :limit, :children_friendly, :pet_friendly, :with_adoption_requests, :adopted, :adopted_by_me).
       reject { |_, v| v.blank? }
   end
 
@@ -112,6 +112,7 @@ class PetsController < ApplicationController
     metadata_query = params.delete(:metadata)
     location_query = params.delete(:location)
     adopted        = params.delete(:adopted)
+    adopted_by_me  = params.delete(:adopted_by_me)
 
     with_adoption_requests = params.delete(:with_adoption_requests)
 
@@ -123,9 +124,10 @@ class PetsController < ApplicationController
     # May return unpublished pets.
     pets = pets.includes(:adoption_requests) if with_adoption_requests.present?
     pets = pets.includes(:adoption_requests).where(adoption_requests: { approved: true }) if adopted.present?
+    pets = pets.includes(:adoption_requests).where(adoption_requests: { approved: true, user_id: current_user.id }) if adopted_by_me.present?
 
     # Published pets by default.
-    pets = pets.published unless adopted.present? || with_adoption_requests.present?
+    pets = pets.published unless adopted.present? || adopted_by_me.present? || with_adoption_requests.present?
 
     pets = pets.limit(limit) if limit
 
