@@ -20,6 +20,7 @@ class AdoptionRequestsController < ApplicationController
 
   def accept
     @adoption_request.update_attributes(approved: true)
+    @pet.unpublish!
 
     notification_service.call(@adoption_request.user, notification_options)
 
