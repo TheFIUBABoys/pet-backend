@@ -4,7 +4,7 @@ class LostPetMatchService < BaseService
     return unless Pet::LOST_AND_FOUND.include?(pet.publication_type)
     publication_type = Pet::LOST_AND_FOUND - [pet.publication_type]
 
-    matches = Pet.where.not(id: pet.id).
+    matches = Pet.where.not(user_id: pet.user.id).
       where(publication_type: publication_type).
       where(pet.attributes.slice(*match_params)).
       near_location(pet.location, 5000)
