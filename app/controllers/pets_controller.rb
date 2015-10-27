@@ -122,12 +122,12 @@ class PetsController < ApplicationController
     pets = pets.near_location(location_query, params.fetch(:location_range, 5000)) if location_query.present?
 
     # May return unpublished pets.
-    pets = pets.includes(:adoption_requests) if with_adoption_requests.present?
+    pets = pets.includes(:adoption_requests).where(adoption_requests: { approved: [true, false] }) if with_adoption_requests.present?
     pets = pets.includes(:adoption_requests).where(adoption_requests: { approved: true }) if adopted.present?
     pets = pets.includes(:adoption_requests).where(adoption_requests: { approved: true, user_id: current_user.id }) if adopted_by_me.present?
 
     # Published pets by default.
-    pets = pets.published unless adopted.present? || adopted_by_me.present? || with_adoption_requests.present?
+    pets = pets.published unless adopted.present? || adopted_by_me.present?
 
     pets = pets.limit(limit) if limit
 
