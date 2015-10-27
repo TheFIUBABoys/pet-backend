@@ -38,7 +38,7 @@ class AdoptionRequestsController < ApplicationController
   end
 
   def notification_options
-    notification_type = "#{action_name}_adoption_request"
+    notification_type = "#{action_name}_#{@pet.publication_type}"
 
     { data: { pet_id: @pet.id, user_id: current_user.id, type: notification_type }, collapse_key: notification_type }
   end
