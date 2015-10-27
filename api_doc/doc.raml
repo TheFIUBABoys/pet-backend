@@ -74,7 +74,10 @@ version: v0.1
                   "first_name": "Gonzalo",
                   "last_name": "Beviglia",
                   "location": "12.0,11.876",
-                  "phone": "12345678"
+                  "phone": "12345678",
+                  "reported": false,
+                  "blocked": false,
+                  "profile_complete": false
                 }
       401:
         description: Will return error code 401 when no user is found with the given token.
@@ -520,7 +523,10 @@ version: v0.1
                         "first_name": null,
                         "last_name": null,
                         "location": null,
-                        "phone": null
+                        "phone": null,
+                        "reported": false,
+                        "blocked": false,
+                        "profile_complete": false
                       }
                     }
                   ]
