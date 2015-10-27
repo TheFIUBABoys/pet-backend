@@ -90,13 +90,13 @@ class PetsController < ApplicationController
   def pet_params
     params.require(:pet).
       permit(:type, :name, :description, :gender, :colors, :needs_transit_home, :published, :vaccinated, :location,
-             :metadata, :age, :children_friendly, :pet_friendly, videos: [])
+             :metadata, :age, :children_friendly, :pet_friendly, :publication_type, videos: [])
   end
 
   def pet_search_params
     params.
       permit(:type, :name, :description, :gender, :colors, :needs_transit_home, :vaccinated, :published, :user_id,
-             :metadata, :location, :age, :limit, :children_friendly, :pet_friendly, :with_adoption_requests, :adopted, :adopted_by_me).
+             :metadata, :location, :age, :limit, :children_friendly, :pet_friendly, :with_adoption_requests, :adopted, :adopted_by_me, :publication_type).
       reject { |_, v| v.blank? }
   end
 

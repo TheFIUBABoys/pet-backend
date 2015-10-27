@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151013033116) do
+ActiveRecord::Schema.define(version: 20151027022258) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -70,10 +70,10 @@ ActiveRecord::Schema.define(version: 20151013033116) do
     t.string   "type"
     t.string   "name"
     t.text     "description"
-    t.datetime "created_at",                         null: false
-    t.datetime "updated_at",                         null: false
-    t.boolean  "needs_transit_home", default: false, null: false
-    t.boolean  "published",          default: false, null: false
+    t.datetime "created_at",                              null: false
+    t.datetime "updated_at",                              null: false
+    t.boolean  "needs_transit_home", default: false,      null: false
+    t.boolean  "published",          default: false,      null: false
     t.integer  "user_id"
     t.string   "location",           default: ""
     t.string   "colors",             default: ""
@@ -83,6 +83,7 @@ ActiveRecord::Schema.define(version: 20151013033116) do
     t.integer  "age"
     t.boolean  "pet_friendly",       default: false
     t.boolean  "children_friendly",  default: false
+    t.string   "publication_type",   default: "adoption"
   end
 
   add_index "pets", ["type"], name: "index_pets_on_type", using: :btree
