@@ -247,6 +247,12 @@ version: v0.1
         description: Metadata to search pets. If it matches any of the metadata words, the pet is returned.
         example: "gato macho"
         required: false
+      publication_type:
+        displayName: publication_type
+        type: string
+        description: Type of publication. Could be one of: "adoption", "lost", "found"
+        example: "lost"
+        required: false
       with_adoption_requests:
         displayName: with_adoption_requests
         type: boolean
