@@ -35,6 +35,7 @@ class PetsController < ApplicationController
   # POST /pets.json
   def create
     pet_response = pet_create_service.call(pet_params)
+    lost_pet_match_service.call(pet_response)
 
     @pet = pet_response
 
@@ -102,6 +103,10 @@ class PetsController < ApplicationController
 
   def pet_create_service
     @pet_create_service ||= PetCreateService.new(current_user)
+  end
+
+  def lost_pet_match_service
+    @lost_pet_match_service ||= LostPetMatchService.new
   end
 
   def pets_from_query

@@ -17,6 +17,14 @@ class Pet < ActiveRecord::Base
   GENDERS = [GENDER_MALE, GENDER_FEMALE]
   validates_inclusion_of :gender, in: GENDERS, allow_blank: false
 
+  %w[adoption lost found].each do |publication_type|
+    const_set "PUBLICATION_TYPE_#{publication_type}".upcase, publication_type
+  end
+
+  LOST_AND_FOUND    = [PUBLICATION_TYPE_LOST, PUBLICATION_TYPE_FOUND]
+  PUBLICATION_TYPES = [PUBLICATION_TYPE_ADOPTION] + LOST_AND_FOUND
+  validates_inclusion_of :publication_type, in: PUBLICATION_TYPES, allow_blank: true
+
   TYPES = ["Dog", "Cat"]
   validates_inclusion_of :type, in: TYPES, allow_blank: false
 
