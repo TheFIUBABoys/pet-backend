@@ -15,6 +15,31 @@ class Users::SessionsController < Devise::SessionsController
     end
   end
 
+  # GET /users/profile
+  def show
+    @user = User.find_by(id: current_user.id)
+    render json: @user
+  end
+
+  # PUT /users/profile
+  def update
+    @user = User.find_by(id: current_user.id)
+    respond_to do |format|
+      if @user.update(user_params)
+        format.html { redirect_to @user, notice: I18n.t("pets.show.updated") }
+        format.json { render json: params, status: :ok }
+      else
+        format.html { render :edit }
+        format.json { render json: @user.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
+  def user_params
+    params.require(:user).
+        permit(:first_name, :last_name, :email, :phone)
+  end
+
   # DELETE /users/sign_out
   # def destroy
   #   super
@@ -25,7 +50,7 @@ class Users::SessionsController < Devise::SessionsController
   # If you have extra params to permit, append them to the sanitizer.
   def configure_sign_in_params
     devise_parameter_sanitizer.for(:sign_in) do |u|
-      u.permit(:email, :password, :facebook_id, :facebook_token)
+      u.permit(:email, :first_name, :last_name, :phone, :password, :facebook_id, :facebook_token)
     end
   end
 

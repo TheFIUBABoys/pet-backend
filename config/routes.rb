@@ -1,6 +1,14 @@
 Rails.application.routes.draw do
   devise_for :users, controllers: { sessions: "users/sessions", registrations: "users/registrations" }
 
+  devise_scope :user do
+    get "/users/profile" => "users/sessions#show"
+  end
+
+  devise_scope :user do
+    put "/users/profile" => "users/sessions#update"
+  end
+
   resources :pets do
     collection do
       get "top"
