@@ -37,6 +37,15 @@ ActiveRecord::Schema.define(version: 20151027033948) do
 
   add_index "pet_images", ["pet_id"], name: "index_pet_images_on_pet_id", using: :btree
 
+  create_table "pet_photos", force: true do |t|
+    t.integer  "pet_id"
+    t.string   "file"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "pet_photos", ["pet_id"], name: "index_pet_photos_on_pet_id", using: :btree
+
   create_table "pet_question_answers", force: true do |t|
     t.integer  "pet_question_id"
     t.text     "body",            default: "", null: false
