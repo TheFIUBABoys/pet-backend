@@ -274,6 +274,12 @@ version: v0.1
         description: Only retrieve pets that the current user has requested adoption and were approved.
         example: true
         required: false
+      adopted_by_me:
+        displayName: requested_by_me
+        type: boolean
+        description: Only retrieve pets that the current user has requested adoption.
+        example: true
+        required: false
     responses:
       200:
         body:
