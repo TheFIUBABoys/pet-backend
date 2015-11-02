@@ -75,7 +75,7 @@ class PetsController < ApplicationController
   end
 
   def top
-    @pets = Pet.all.order(created_at: :desc).limit(5)
+    @pets = Pet.where(:published => true).order(created_at: :desc).limit(5)
 
     render :index
   end
