@@ -23,5 +23,6 @@ Rails.application.routes.draw do
     end
   end
 
-  root "pets#index"
+  resources :reports, only: [:index]
+  root "reports#index"
 end

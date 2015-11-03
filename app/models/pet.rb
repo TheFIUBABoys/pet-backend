@@ -44,6 +44,11 @@ class Pet < ActiveRecord::Base
   scope :with_colors, ->(colors) { field_matches_any(:colors, colors) }
   scope :with_metadata, ->(tags) { field_matches_any(:metadata, tags) }
 
+  scope :approved, -> { includes(:adoption_requests).where(adoption_requests: { approved: true }) }
+  scope :lost, -> { where(publication_type: PUBLICATION_TYPE_LOST) }
+  scope :found, -> { where(publication_type: PUBLICATION_TYPE_FOUND) }
+  scope :for_adoption, -> { where(publication_type: PUBLICATION_TYPE_ADOPTION) }
+
   def publish
     self.published = true
   end

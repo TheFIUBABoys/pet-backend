@@ -11,6 +11,7 @@ es:
     logout: "Cerrar sesión"
     login: "Iniciar sesión"
     actions: "Acciones"
+    hours: "horas"
   pets:
     cat: Gato
     dog: Perro
@@ -68,3 +69,12 @@ es:
         images: "Imágenes"
       pet_image:
         image: Imagen
+  reports:
+    index:
+      title: "Reportes"
+      published: "En adopción"
+      adopted: "Adoptadas"
+      lost: "Perdidas"
+      found: "Encontradas"
+      average_adoption_time: "Tiempo promedio de adopción"
+      average_found_time: "Tiempo promedio de mascota encontrada"

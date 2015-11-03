@@ -1,0 +1,14 @@
+.page-header
+  %h1= t(".title")
+
+= column_chart @data
+
+%h3= t(".average_adoption_time")
+%h4
+  = (@avg_adoption_time / 3600.0).round
+  = t("shared.hours")
+
+%h3= t(".average_found_time")
+%h4
+  = (@avg_found_time / 3600.0).round
+  = t("shared.hours")
