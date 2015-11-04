@@ -20,8 +20,11 @@ class ReportsController < ApplicationController
   private
 
   def date_range
-    from = Date.parse(params.fetch(:from, 1.month.ago.to_s))
-    to   = Date.parse(params.fetch(:to, Date.today.to_s))
+    @from = params.fetch(:from, 1.month.ago.to_date.to_s)
+    @to   = params.fetch(:to, Date.today.to_s)
+
+    from = Date.parse(@from)
+    to   = Date.parse(@to)
 
     [from..to]
   end

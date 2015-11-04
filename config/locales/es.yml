@@ -78,3 +78,7 @@ es:
       found: "Encontradas"
       average_adoption_time: "Tiempo promedio de adopción"
       average_found_time: "Tiempo promedio de mascota encontrada"
+      from: "Desde"
+      to: "Hasta"
+      submit: "Graficar"
+      no_results: "No hay datos para mostrar para estas fechas."

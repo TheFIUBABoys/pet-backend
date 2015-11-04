@@ -1,14 +1,29 @@
 .page-header
   %h1= t(".title")
 
+= form_for :report, url: reports_path, method: :GET do
+  .row
+    .col-xs-3
+    .col-xs-2
+      = label_tag :from, t(".from"), class: "control-label"
+      = text_field_tag :from, @from, date_picker_options
+    .col-xs-2
+      = label_tag :to, t(".to"), class: "control-label"
+      = text_field_tag :to, @to, date_picker_options
+    .col-xs-2
+      = submit_tag t(".submit"), class: "btn btn-info", style: "margin-top: 25px;width: 100%;"
+
 = column_chart @data
 
-%h3= t(".average_adoption_time")
-%h4
-  = (@avg_adoption_time / 3600.0).round
-  = t("shared.hours")
+.row
+  .col-xs-6
+    %h3= t(".average_adoption_time")
+    %h4
+      = (@avg_adoption_time / 3600.0).round
+      = t("shared.hours")
 
-%h3= t(".average_found_time")
-%h4
-  = (@avg_found_time / 3600.0).round
-  = t("shared.hours")
+  .col-xs-6
+    %h3= t(".average_found_time")
+    %h4
+      = (@avg_found_time / 3600.0).round
+      = t("shared.hours")

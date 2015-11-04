@@ -26,6 +26,7 @@ gem "coffee-rails", "~> 4.1.0"
 gem "bootstrap-generators", "~> 3.3.4"
 gem "jquery-rails"
 gem "chartkick"
+gem "bootstrap-datepicker-rails"
 
 # Development
 group :development, :test do
