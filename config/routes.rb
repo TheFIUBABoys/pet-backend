@@ -10,8 +10,13 @@ Rails.application.routes.draw do
   end
 
   resources :pets do
+    member do
+      put "report"
+      put "block"
+    end
     collection do
       get "top"
+      get "reported"
     end
 
     resources :images, only: [:show, :create, :destroy]

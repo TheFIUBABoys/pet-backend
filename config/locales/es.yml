@@ -12,6 +12,7 @@ es:
     login: "Iniciar sesión"
     actions: "Acciones"
     hours: "horas"
+    block: "Bloquear"
   pets:
     cat: Gato
     dog: Perro
@@ -43,6 +44,9 @@ es:
       photos: "Fotos de la mascota"
       created: "La mascota fue creada con éxito"
       updated: "La mascota fue actualizada exitosamente."
+    reported:
+      title: "Mascotas reportadas"
+    blocked: "La publicación ha sido bloqueda"
   will_paginate:
     previous_label: Anterior
     next_label: Siguiente

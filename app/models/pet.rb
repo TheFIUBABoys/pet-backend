@@ -31,6 +31,7 @@ class Pet < ActiveRecord::Base
   before_save :update_metadata
 
   scope :published, -> { where(published: true) }
+  scope :reported,  -> { where(reported: true) }
   scope :males, ->     { where(gender: GENDER_MALE) }
   scope :females, ->   { where(gender: GENDER_FEMALE) }
 
@@ -53,16 +54,35 @@ class Pet < ActiveRecord::Base
     self.published = true
   end
 
-  def unpublish
-    self.published = false
-  end
-
   def publish!
     self.publish
     self.save!
   end
 
+  def unpublish
+    self.published = false
+  end
+
   def unpublish!
+    self.unpublish
+    self.save!
+  end
+
+  def report
+    self.reported = true
+  end
+
+  def report!
+    self.report
+    self.save!
+  end
+
+  def block
+    self.blocked = true
+  end
+
+  def block!
+    self.block
     self.unpublish
     self.save!
   end

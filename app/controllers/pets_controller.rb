@@ -1,5 +1,5 @@
 class PetsController < ApplicationController
-  before_action :set_pet, only: [:show, :edit, :update, :destroy]
+  before_action :set_pet, only: [:show, :edit, :update, :destroy, :report, :block]
 
   # GET /pets
   # GET /pets.json
@@ -70,6 +70,28 @@ class PetsController < ApplicationController
     @pet.destroy
     respond_to do |format|
       format.html { redirect_to pets_url, notice: I18n.t("pets.index.destroyed") }
+      format.json { head :no_content }
+    end
+  end
+
+  def reported
+    pets = Pet.published.reported
+
+    @pets = pets.paginate(page: params[:page], per_page: 10)
+  end
+
+  # POST /pets/1/report.json
+  def report
+    @pet.report!
+    head :no_content
+  end
+
+  # POST /pets/1/report.json
+  def block
+    @pet.block!
+
+    respond_to do |format|
+      format.html { redirect_to reported_pets_path, notice: I18n.t("pets.blocked") }
       format.json { head :no_content }
     end
   end

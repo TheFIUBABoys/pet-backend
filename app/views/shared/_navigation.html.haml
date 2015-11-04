@@ -10,7 +10,7 @@
     #navbar.collapse.navbar-collapse
       %ul.nav.navbar-nav
         %li.active
-          %a{ href: pets_path }= t("pets.index.title")
+          %a{ href: reported_pets_path }= t("pets.reported.title")
         - if user_signed_in?
           %li
             = link_to t("shared.logout"), destroy_user_session_path, method: :delete

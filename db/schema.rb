@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151027033948) do
+ActiveRecord::Schema.define(version: 20151104215512) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -36,15 +36,6 @@ ActiveRecord::Schema.define(version: 20151027033948) do
   end
 
   add_index "pet_images", ["pet_id"], name: "index_pet_images_on_pet_id", using: :btree
-
-  create_table "pet_photos", force: true do |t|
-    t.integer  "pet_id"
-    t.string   "file"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "pet_photos", ["pet_id"], name: "index_pet_photos_on_pet_id", using: :btree
 
   create_table "pet_question_answers", force: true do |t|
     t.integer  "pet_question_id"
@@ -93,6 +84,8 @@ ActiveRecord::Schema.define(version: 20151027033948) do
     t.boolean  "pet_friendly",       default: false
     t.boolean  "children_friendly",  default: false
     t.string   "publication_type",   default: "adoption"
+    t.boolean  "reported",           default: false
+    t.boolean  "blocked",            default: false
   end
 
   add_index "pets", ["type"], name: "index_pets_on_type", using: :btree
