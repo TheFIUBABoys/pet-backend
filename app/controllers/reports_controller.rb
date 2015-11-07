@@ -3,7 +3,7 @@ class ReportsController < ApplicationController
   def index
     @data = {}
 
-    pets = Pet.where(created_at: date_range, published: true)
+    pets = Pet.where(created_at: date_range)
 
     @data[I18n.t("reports.index.published")] = pets.for_adoption.count
     @data[I18n.t("reports.index.adopted")]   = pets.for_adoption.approved.count
