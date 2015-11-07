@@ -36,6 +36,19 @@ class User < ActiveRecord::Base
     %w[phone first_name last_name location email].all? { |attribute| self.send(attribute).present? }
   end
 
+  def blocked?
+    self.blocked_until.present? && self.blocked_until > Time.now
+  end
+
+  def block
+    self.blocked_until = 1.week.from_now
+  end
+
+  def block!
+    self.block
+    self.save!
+  end
+
   private
 
   def generate_authentication_token

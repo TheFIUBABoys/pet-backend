@@ -47,6 +47,7 @@ es:
     reported:
       title: "Mascotas reportadas"
     blocked: "La publicación ha sido bloqueda"
+    blocked_user: "El usuario ha sido bloquedo."
   will_paginate:
     previous_label: Anterior
     next_label: Siguiente

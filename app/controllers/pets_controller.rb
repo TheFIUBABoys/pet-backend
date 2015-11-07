@@ -86,12 +86,22 @@ class PetsController < ApplicationController
     head :no_content
   end
 
-  # POST /pets/1/report.json
+  # POST /pets/1/block.json
   def block
     @pet.block!
 
     respond_to do |format|
       format.html { redirect_to reported_pets_path, notice: I18n.t("pets.blocked") }
+      format.json { head :no_content }
+    end
+  end
+
+  # POST /pets/1/block_owner.json
+  def block_owner
+    @pet.user.block!
+
+    respond_to do |format|
+      format.html { redirect_to reported_pets_path, notice: I18n.t("pets.blocked_user") }
       format.json { head :no_content }
     end
   end
