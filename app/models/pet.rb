@@ -32,6 +32,7 @@ class Pet < ActiveRecord::Base
 
   scope :published, -> { where(published: true) }
   scope :reported,  -> { where(reported: true) }
+  scope :unblocked, -> { where(blocked: false) }
   scope :males, ->     { where(gender: GENDER_MALE) }
   scope :females, ->   { where(gender: GENDER_FEMALE) }
 

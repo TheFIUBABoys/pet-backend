@@ -9,7 +9,7 @@
         %th= t("activerecord.attributes.user.first_name")
         %th= t("activerecord.attributes.user.last_name")
         %th= t(".reported_publications")
-        %th= t("shared.actions")
+        %th(colspan="2")= t("shared.actions")
 
     %tbody
       - @users.each do |user|
@@ -18,10 +18,12 @@
           %td= user.first_name
           %td= user.last_name
           %td
-            - user.pets.reported.each do |pet|
+            - user.pets.reported.unblocked.each do |pet|
               = link_to pet.name, pet_path(pet)
           %td
             = link_to t("shared.block"), block_owner_pet_path(user.pets.first), data: { confirm: t("shared.confirm") }, method: :put
+          %td
+            = link_to t("shared.block_all"), block_owner_publications_pets_path(id: user.id), data: { confirm: t("shared.confirm") }, method: :post
 
 .pagination-container
   = will_paginate @users, renderer: BootstrapPagination::Rails

@@ -19,6 +19,7 @@ Rails.application.routes.draw do
       get "top"
       get "reported"
       get "reported_users"
+      post "block_owner_publications"
     end
 
     resources :images, only: [:show, :create, :destroy]

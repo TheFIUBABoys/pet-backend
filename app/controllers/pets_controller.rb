@@ -1,5 +1,5 @@
 class PetsController < ApplicationController
-  before_action :set_pet, only: [:show, :edit, :update, :destroy, :report, :block]
+  before_action :set_pet, only: [:show, :edit, :update, :destroy, :report, :block, :block_owner]
 
   # GET /pets
   # GET /pets.json
@@ -75,13 +75,13 @@ class PetsController < ApplicationController
   end
 
   def reported
-    pets = pets_from_query(Pet.published.reported)
+    pets = pets_from_query(Pet.published.reported.unblocked)
 
     @pets = pets.paginate(page: params[:page], per_page: 10)
   end
 
   def reported_users
-    users = User.where(reported: true)
+    users = User.where(reported: true).where("blocked_until < ?", Time.now)
 
     @users = users.paginate(page: params[:page], per_page: 10)
   end
@@ -107,7 +107,17 @@ class PetsController < ApplicationController
     @pet.user.block!
 
     respond_to do |format|
-      format.html { redirect_to reported_pets_path, notice: I18n.t("pets.blocked_user") }
+      format.html { redirect_to reported_users_pets_path, notice: I18n.t("pets.blocked_user") }
+      format.json { head :no_content }
+    end
+  end
+
+  # POST /pets/block_owner_publications.json
+  def block_owner_publications
+    User.find(params[:id]).pets.each { |pet| pet.block! }
+
+    respond_to do |format|
+      format.html { redirect_to reported_users_pets_path, notice: I18n.t("pets.blocked_user") }
       format.json { head :no_content }
     end
   end

@@ -23,6 +23,7 @@
           %td= pet.name
           %td
             = link_to t("shared.show"), pet_path(pet)
+          %td
             = link_to t("shared.block"), block_pet_path(pet), data: { confirm: t("shared.confirm") }, method: :put
 
 .pagination-container

@@ -16,6 +16,7 @@ es:
     days: "días"
     minutes: "minutos"
     seconds: "segundos"
+    block_all: "Ocultar publicaciones"
   pets:
     cat: Gato
     dog: Perro
