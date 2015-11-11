@@ -1,0 +1,27 @@
+.page-header
+  %h1= t(".title")
+
+.table-responsive
+  %table.table.table-striped.table-bordered.table-hover
+    %thead
+      %tr
+        %th= t("activerecord.attributes.user.id")
+        %th= t("activerecord.attributes.user.first_name")
+        %th= t("activerecord.attributes.user.last_name")
+        %th= t(".reported_publications")
+        %th= t("shared.actions")
+
+    %tbody
+      - @users.each do |user|
+        %tr
+          %td= user.id
+          %td= user.first_name
+          %td= user.last_name
+          %td
+            - user.pets.reported.each do |pet|
+              = link_to pet.name, pet_path(pet)
+          %td
+            = link_to t("shared.block"), block_owner_pet_path(user.pets.first), data: { confirm: t("shared.confirm") }, method: :put
+
+.pagination-container
+  = will_paginate @users, renderer: BootstrapPagination::Rails

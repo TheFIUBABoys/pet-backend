@@ -12,7 +12,7 @@
         %th= t("activerecord.attributes.pet.type")
         %th= t("activerecord.attributes.pet.gender")
         %th= t("activerecord.attributes.pet.name")
-        %th= t("shared.actions")
+        %th(colspan="2")= t("shared.actions")
 
     %tbody
       - @pets.each do |pet|
@@ -21,7 +21,9 @@
           %td= t("pets.#{pet.type.downcase}")
           %td= t("pets.#{pet.gender}")
           %td= pet.name
-          %td= link_to t("shared.block"), block_pet_path(pet), data: { confirm: t("shared.confirm") }, method: :put
+          %td
+            = link_to t("shared.show"), pet_path(pet)
+            = link_to t("shared.block"), block_pet_path(pet), data: { confirm: t("shared.confirm") }, method: :put
 
 .pagination-container
   = will_paginate @pets, renderer: BootstrapPagination::Rails

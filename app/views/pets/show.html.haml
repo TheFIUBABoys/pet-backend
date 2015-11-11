@@ -1,8 +1,8 @@
 .page-header
-  = link_to pets_path, class: 'btn btn-default' do
+  = link_to :back, class: 'btn btn-default' do
     %span.glyphicon.glyphicon-list-alt
     = t("shared.back")
-  = link_to edit_pet_path(@pet), class: 'btn btn-primary' do
+  -#= link_to edit_pet_path(@pet), class: 'btn btn-primary' do
     %span.glyphicon.glyphicon-pencil
     = t("shared.edit")
   %h1= t(".title")

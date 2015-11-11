@@ -52,6 +52,9 @@ es:
       title: "Mascotas reportadas"
     blocked: "La publicación ha sido bloqueda"
     blocked_user: "El usuario ha sido bloquedo."
+    reported_users:
+      title: "Usuarios reportados"
+      reported_publications: "Publicaciones reportadas"
   will_paginate:
     previous_label: Anterior
     next_label: Siguiente
@@ -65,19 +68,27 @@ es:
         type: Tipo
         gender: Género
         name: Nombre
+        age: Edad
         colors: Colores
         description: Descripción
         location: Coordenadas
         metadata: Metadata
         needs_transit_home: Necesita hogar en tránsito
+        pet_friendly: Buena con otras mascotas
+        children_friendly: Buena con niños
         published: Publicado
         vaccinated: Vacunas
         user_id: Usuario
         created_at: Creado el
         updated_at: Actualizado el
         images: "Imágenes"
+        reported: Reportada
       pet_image:
         image: Imagen
+      user:
+        id: "Id"
+        first_name: "Nombre"
+        last_name: "Apellido"
   reports:
     index:
       title: "Reportes"

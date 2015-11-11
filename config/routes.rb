@@ -13,10 +13,12 @@ Rails.application.routes.draw do
     member do
       put "report"
       put "block"
+      put "block_owner"
     end
     collection do
       get "top"
       get "reported"
+      get "reported_users"
     end
 
     resources :images, only: [:show, :create, :destroy]
