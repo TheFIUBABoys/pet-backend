@@ -1,29 +1,39 @@
 .page-header
   %h1= t(".title")
 
-.table-responsive
-  %table.table.table-striped.table-bordered.table-hover
-    %thead
-      %tr
-        %th= t("activerecord.attributes.user.id")
-        %th= t("activerecord.attributes.user.first_name")
-        %th= t("activerecord.attributes.user.last_name")
-        %th= t(".reported_publications")
-        %th(colspan="2")= t("shared.actions")
+.filters
+  = render "user_filters", filter_path: reported_users_pets_path
 
-    %tbody
-      - @users.each do |user|
+- if @users.any?
+  .table-responsive
+    %table.table.table-striped.table-bordered.table-hover
+      %thead
         %tr
-          %td= user.id
-          %td= user.first_name
-          %td= user.last_name
-          %td
-            - user.pets.reported.unblocked.each do |pet|
-              = link_to pet.name, pet_path(pet)
-          %td
-            = link_to t("shared.block"), block_owner_pet_path(user.pets.first), data: { confirm: t("shared.confirm") }, method: :put
-          %td
-            = link_to t("shared.block_all"), block_owner_publications_pets_path(id: user.id), data: { confirm: t("shared.confirm") }, method: :post
+          %th= t("activerecord.attributes.user.id")
+          %th= t("activerecord.attributes.user.first_name")
+          %th= t("activerecord.attributes.user.last_name")
+          %th= t(".reported_publications")
+          %th(colspan="2")= t("shared.actions")
 
-.pagination-container
-  = will_paginate @users, renderer: BootstrapPagination::Rails
+      %tbody
+        - @users.each do |user|
+          %tr
+            %td= user.id
+            %td= user.first_name
+            %td= user.last_name
+            %td
+              - user.pets.reported.unblocked.each do |pet|
+                = link_to pet.name, pet_path(pet)
+            %td
+              - if user.blocked?
+                = link_to t("shared.unblock"), unblock_owner_pet_path(user.pets.first), data: { confirm: t("shared.confirm") }, method: :put
+              - else
+                = link_to t("shared.block"), block_owner_pet_path(user.pets.first), data: { confirm: t("shared.confirm") }, method: :put
+            %td
+              = link_to t("shared.block_all"), block_owner_publications_pets_path(id: user.id), data: { confirm: t("shared.confirm") }, method: :post
+
+  .pagination-container
+    = will_paginate @users, renderer: BootstrapPagination::Rails
+
+- else
+  .alert.alert-info= t(".no_results")

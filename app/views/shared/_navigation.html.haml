@@ -9,9 +9,11 @@
       = link_to "Hogar Grupo 7", "#", class: "navbar-brand"
     #navbar.collapse.navbar-collapse
       %ul.nav.navbar-nav
-        %li
-          %a{ href: reported_pets_path }= t("pets.reported.title")
         - if user_signed_in?
+          %li
+            %a{ href: reported_pets_path }= t("pets.reported.title")
+          %li
+            %a{ href: reported_users_pets_path }= t("pets.reported_users.title")
           %li
             = link_to t("shared.logout"), destroy_user_session_path, method: :delete
         - else

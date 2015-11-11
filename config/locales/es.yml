@@ -17,6 +17,7 @@ es:
     minutes: "minutos"
     seconds: "segundos"
     block_all: "Ocultar publicaciones"
+    unblock: "Desbloquear"
   pets:
     cat: Gato
     dog: Perro
@@ -51,11 +52,18 @@ es:
       updated: "La mascota fue actualizada exitosamente."
     reported:
       title: "Mascotas reportadas"
+      no_results: "No se encontraron publicaciones reportadas."
     blocked: "La publicación ha sido bloqueda"
     blocked_user: "El usuario ha sido bloquedo."
     reported_users:
       title: "Usuarios reportados"
       reported_publications: "Publicaciones reportadas"
+      no_results: "No se encontraron usuarios reportados."
+    user_filters:
+      submit: "Buscar"
+      order_by_prompt: "- Ordenar por -"
+    unblocked: "La mascota fue desbloqueada."
+    unblocked_user: "El usuario ha sido desbloqueado"
   will_paginate:
     previous_label: Anterior
     next_label: Siguiente

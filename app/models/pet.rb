@@ -88,6 +88,20 @@ class Pet < ActiveRecord::Base
     self.save!
   end
 
+  def unblock
+    self.blocked = false
+  end
+
+  def unblock!
+    self.unblock
+    self.publish
+    self.save!
+  end
+
+  def blocked?
+    self.blocked == true
+  end
+
   def metadata_matches(values)
     values.split.count { |tag| self.metadata.include?(tag) }
   end

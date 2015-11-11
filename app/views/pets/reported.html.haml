@@ -4,27 +4,34 @@
 .filters
   = render "filters", filter_path: reported_pets_path
 
-.table-responsive
-  %table.table.table-striped.table-bordered.table-hover
-    %thead
-      %tr
-        %th= t("activerecord.attributes.pet.id")
-        %th= t("activerecord.attributes.pet.type")
-        %th= t("activerecord.attributes.pet.gender")
-        %th= t("activerecord.attributes.pet.name")
-        %th(colspan="2")= t("shared.actions")
-
-    %tbody
-      - @pets.each do |pet|
+- if @pets.any?
+  .table-responsive
+    %table.table.table-striped.table-bordered.table-hover
+      %thead
         %tr
-          %td= pet.id
-          %td= t("pets.#{pet.type.downcase}")
-          %td= t("pets.#{pet.gender}")
-          %td= pet.name
-          %td
-            = link_to t("shared.show"), pet_path(pet)
-          %td
-            = link_to t("shared.block"), block_pet_path(pet), data: { confirm: t("shared.confirm") }, method: :put
+          %th= t("activerecord.attributes.pet.id")
+          %th= t("activerecord.attributes.pet.type")
+          %th= t("activerecord.attributes.pet.gender")
+          %th= t("activerecord.attributes.pet.name")
+          %th(colspan="2")= t("shared.actions")
 
-.pagination-container
-  = will_paginate @pets, renderer: BootstrapPagination::Rails
+      %tbody
+        - @pets.each do |pet|
+          %tr
+            %td= pet.id
+            %td= t("pets.#{pet.type.downcase}")
+            %td= t("pets.#{pet.gender}")
+            %td= pet.name
+            %td
+              = link_to t("shared.show"), pet_path(pet)
+            %td
+              - if pet.blocked?
+                = link_to t("shared.unblock"), unblock_pet_path(pet), data: { confirm: t("shared.confirm") }, method: :put
+              - else
+                = link_to t("shared.block"), block_pet_path(pet), data: { confirm: t("shared.confirm") }, method: :put
+
+  .pagination-container
+    = will_paginate @pets, renderer: BootstrapPagination::Rails
+
+- else
+  .alert.alert-info= t(".no_results")

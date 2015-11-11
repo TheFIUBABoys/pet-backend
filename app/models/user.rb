@@ -49,6 +49,15 @@ class User < ActiveRecord::Base
     self.save!
   end
 
+  def unblock
+    self.blocked_until = nil
+  end
+
+  def unblock!
+    self.unblock
+    self.save!
+  end
+
   private
 
   def generate_authentication_token

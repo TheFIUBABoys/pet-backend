@@ -1,5 +1,5 @@
 class PetsController < ApplicationController
-  before_action :set_pet, only: [:show, :edit, :update, :destroy, :report, :block, :block_owner]
+  before_action :set_pet, only: [:show, :edit, :update, :destroy, :report, :block, :unblock, :block_owner, :unblock_owner]
 
   # GET /pets
   # GET /pets.json
@@ -75,13 +75,17 @@ class PetsController < ApplicationController
   end
 
   def reported
-    pets = pets_from_query(Pet.published.reported.unblocked)
+    pets = pets_from_query(Pet.reported, true)
 
     @pets = pets.paginate(page: params[:page], per_page: 10)
   end
 
   def reported_users
-    users = User.where(reported: true).where("blocked_until < ?", Time.now)
+    users = User.where(reported: true)
+
+    order_by = user_search_params.delete(:order_by) || "id"
+    users.where(user_search_params)
+    users.order(order_by => :asc)
 
     @users = users.paginate(page: params[:page], per_page: 10)
   end
@@ -97,7 +101,17 @@ class PetsController < ApplicationController
     @pet.block!
 
     respond_to do |format|
-      format.html { redirect_to reported_pets_path, notice: I18n.t("pets.blocked") }
+      format.html { redirect_to request.referrer, notice: I18n.t("pets.blocked") }
+      format.json { head :no_content }
+    end
+  end
+
+  # POST /pets/1/block.json
+  def unblock
+    @pet.unblock!
+
+    respond_to do |format|
+      format.html { redirect_to request.referrer, notice: I18n.t("pets.unblocked") }
       format.json { head :no_content }
     end
   end
@@ -107,7 +121,17 @@ class PetsController < ApplicationController
     @pet.user.block!
 
     respond_to do |format|
-      format.html { redirect_to reported_users_pets_path, notice: I18n.t("pets.blocked_user") }
+      format.html { redirect_to request.referrer, notice: I18n.t("pets.blocked_user") }
+      format.json { head :no_content }
+    end
+  end
+
+  # POST /pets/1/block_owner.json
+  def unblock_owner
+    @pet.user.unblock!
+
+    respond_to do |format|
+      format.html { redirect_to request.referrer, notice: I18n.t("pets.unblocked_user") }
       format.json { head :no_content }
     end
   end
@@ -117,7 +141,7 @@ class PetsController < ApplicationController
     User.find(params[:id]).pets.each { |pet| pet.block! }
 
     respond_to do |format|
-      format.html { redirect_to reported_users_pets_path, notice: I18n.t("pets.blocked_user") }
+      format.html { redirect_to request.referrer, notice: I18n.t("pets.blocked_user") }
       format.json { head :no_content }
     end
   end
@@ -158,7 +182,7 @@ class PetsController < ApplicationController
     @lost_pet_match_service ||= LostPetMatchService.new
   end
 
-  def pets_from_query(base_pets = nil)
+  def pets_from_query(base_pets = nil, override_published = false)
     params = pet_search_params
     limit  = params.delete(:limit)
 
@@ -186,8 +210,10 @@ class PetsController < ApplicationController
     pets = pets.includes(:adoption_requests).where(adoption_requests: { user_id: current_user.id }).where(['pets.user_id <> ?', current_user.id]) if requested_by_me.present?
 
     # Published pets by default.
-    pets = pets.published unless adopted.present? || adopted_by_me.present? || requested_by_me.present? ||
+    unless override_published
+      pets = pets.published unless adopted.present? || adopted_by_me.present? || requested_by_me.present? ||
         (published.present? && published == 'false')
+    end
 
     if order_by.present?
       pets = pets.order(order_by => :asc)
@@ -199,4 +225,9 @@ class PetsController < ApplicationController
 
     pets
   end
+
+  def user_search_params
+    params.permit(:order_by, :first_name, :last_name).reject { |_, v| v.blank? }
+  end
+
 end

@@ -13,7 +13,9 @@ Rails.application.routes.draw do
     member do
       put "report"
       put "block"
+      put "unblock"
       put "block_owner"
+      put "unblock_owner"
     end
     collection do
       get "top"
