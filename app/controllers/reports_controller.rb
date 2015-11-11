@@ -15,6 +15,11 @@ class ReportsController < ApplicationController
 
     found_pets = Pet.lost.approved
     @avg_found_time = average_approved_time(found_pets)
+
+    @adoption_total = Pet.for_adoption.count
+    @adopted_total  = Pet.for_adoption.approved.count
+    @lost_total     = Pet.lost.count
+    @found_total    = Pet.lost.approved.count
   end
 
   private

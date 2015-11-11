@@ -75,7 +75,7 @@ class PetsController < ApplicationController
   end
 
   def reported
-    pets = Pet.published.reported
+    pets = pets_from_query(Pet.published.reported)
 
     @pets = pets.paginate(page: params[:page], per_page: 10)
   end
@@ -130,7 +130,7 @@ class PetsController < ApplicationController
     params.
       permit(:type, :name, :description, :gender, :colors, :needs_transit_home, :vaccinated, :published, :user_id,
              :metadata, :location, :age, :limit, :children_friendly, :pet_friendly, :with_adoption_requests,
-             :adopted, :adopted_by_me, :requested_by_me, :publication_type).
+             :adopted, :adopted_by_me, :requested_by_me, :publication_type, :order_by).
       reject { |_, v| v.blank? }
   end
 
@@ -142,7 +142,7 @@ class PetsController < ApplicationController
     @lost_pet_match_service ||= LostPetMatchService.new
   end
 
-  def pets_from_query
+  def pets_from_query(base_pets = nil)
     params = pet_search_params
     limit  = params.delete(:limit)
 
@@ -153,10 +153,12 @@ class PetsController < ApplicationController
     adopted_by_me  = params.delete(:adopted_by_me)
     requested_by_me  = params.delete(:requested_by_me)
     published  = params.delete(:published)
+    order_by  = params.delete(:order_by)
 
     with_adoption_requests = params.delete(:with_adoption_requests)
 
-    pets = Pet.where(params).order(created_at: :desc)
+    pets = base_pets || Pet
+    pets = pets.where(params)
     pets = pets.with_metadata(metadata_query) if metadata_query.present?
     pets = pets.with_colors(color_query) if color_query.present?
     pets = pets.near_location(location_query, params.fetch(:location_range, 5000)) if location_query.present?
@@ -170,6 +172,12 @@ class PetsController < ApplicationController
     # Published pets by default.
     pets = pets.published unless adopted.present? || adopted_by_me.present? || requested_by_me.present? ||
         (published.present? && published == 'false')
+
+    if order_by.present?
+      pets = pets.order(order_by => :asc)
+    else
+      pets = pets.order(created_at: :desc)
+    end
 
     pets = pets.limit(limit) if limit
 

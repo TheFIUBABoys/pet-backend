@@ -1,5 +1,10 @@
 module PetsHelper
 
+  def pet_order_by_options(selected = nil)
+    options = %w[id type gender name].map { |attribute| [I18n.t("activerecord.attributes.pet.#{attribute}"), attribute] }
+    options_for_select options, selected
+  end
+
   def pet_type_options(selected = nil)
     options = Pet::TYPES.map { |type| [I18n.t("pets.#{type.downcase}"), type] }
     options_for_select options, selected

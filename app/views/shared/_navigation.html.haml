@@ -9,7 +9,7 @@
       = link_to "Hogar Grupo 7", "#", class: "navbar-brand"
     #navbar.collapse.navbar-collapse
       %ul.nav.navbar-nav
-        %li.active
+        %li
           %a{ href: reported_pets_path }= t("pets.reported.title")
         - if user_signed_in?
           %li

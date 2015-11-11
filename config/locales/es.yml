@@ -13,6 +13,9 @@ es:
     actions: "Acciones"
     hours: "horas"
     block: "Bloquear"
+    days: "días"
+    minutes: "minutos"
+    seconds: "segundos"
   pets:
     cat: Gato
     dog: Perro
@@ -25,6 +28,7 @@ es:
       vaccinated_prompt: "- Vacunas -"
       needs_transit_home_prompt: "- Hogar en tránsito -"
       submit: "Buscar"
+      order_by_prompt: "- Ordenar por -"
     image_form:
       help: "Adjunte la nueva imagen aquí"
     edit:
@@ -87,3 +91,7 @@ es:
       to: "Hasta"
       submit: "Graficar"
       no_results: "No hay datos para mostrar para estas fechas."
+      type: "Tipo"
+      count: "Cantidad"
+      adopted_ratio: "%{adopted} mascotas adoptadas de %{total} en adopción."
+      found_ratio: "%{found} mascotas encontradas de %{total} perdidas."
