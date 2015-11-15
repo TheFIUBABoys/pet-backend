@@ -1,0 +1,22 @@
+$navbar-pet-adopt-color:          #071926 !default
+$navbar-pet-adopt-boderd:         #0a97a5 !default
+$navbar-pet-adopt-text-color:     #e8e8e8 !default
+$navbar-pet-adopt-hover-color:     #137c7c !default
+
+.navbar-pet-adopt
+  background-color: $navbar-pet-adopt-color
+  border-color: $navbar-pet-adopt-boderd
+
+  .navbar-header .navbar-brand
+    color: transparent
+    background-image: url("/assets/icon.png")
+    background-size: contain
+    background-repeat: no-repeat
+    background-position-x: 50%
+
+  #navbar li a
+    color: $navbar-pet-adopt-text-color
+
+    &:hover
+      text-decoration: none
+      background-color: $navbar-pet-adopt-hover-color
