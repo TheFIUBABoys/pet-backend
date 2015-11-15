@@ -142,7 +142,17 @@ class PetsController < ApplicationController
     User.find(params[:id]).pets.each { |pet| pet.block! }
 
     respond_to do |format|
-      format.html { redirect_to request.referrer, notice: I18n.t("pets.blocked_user") }
+      format.html { redirect_to request.referrer, notice: I18n.t("pets.blocked_user_publications") }
+      format.json { head :no_content }
+    end
+  end
+
+  # POST /pets/unblock_owner_publications.json
+  def unblock_owner_publications
+    User.find(params[:id]).pets.each { |pet| pet.unblock! }
+
+    respond_to do |format|
+      format.html { redirect_to request.referrer, notice: I18n.t("pets.unblocked_user_publications") }
       format.json { head :no_content }
     end
   end

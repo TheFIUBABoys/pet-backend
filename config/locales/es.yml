@@ -19,6 +19,7 @@ es:
     block_all: "Ocultar publicaciones"
     unblock: "Desbloquear"
     date_error: "Por favor, ingrese fechas de inicio y fin válidas."
+    unblock_all: "Mostrar publicaciones"
   pets:
     cat: Gato
     dog: Perro
@@ -65,6 +66,8 @@ es:
       order_by_prompt: "- Ordenar por -"
     unblocked: "La mascota fue desbloqueada."
     unblocked_user: "El usuario ha sido desbloqueado"
+    blocked_user_publications: "Las publicaciones fueron bloquedas."
+    unblocked_user_publications: "Las publicaciones fueron desbloqueadas."
   will_paginate:
     previous_label: Anterior
     next_label: Siguiente

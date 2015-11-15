@@ -22,6 +22,7 @@ Rails.application.routes.draw do
       get "reported"
       get "reported_users"
       post "block_owner_publications"
+      post "unblock_owner_publications"
     end
 
     resources :images, only: [:show, :create, :destroy]
