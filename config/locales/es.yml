@@ -18,6 +18,7 @@ es:
     seconds: "segundos"
     block_all: "Ocultar publicaciones"
     unblock: "Desbloquear"
+    date_error: "Por favor, ingrese fechas de inicio y fin válidas."
   pets:
     cat: Gato
     dog: Perro

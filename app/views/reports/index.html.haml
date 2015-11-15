@@ -13,30 +13,32 @@
     .col-xs-2
       = submit_tag t(".submit"), class: "btn btn-info", style: "margin-top: 25px;width: 100%;"
 
-= column_chart @data
+- unless flash[:error].present?
 
-.table-responsive
-  %table.table.table-striped.table-bordered.table-hover
-    %thead
-      %tr
-        %th= t(".type")
-        %th= t(".count")
+  = column_chart @data
 
-    %tbody
-      - @data.each do |key, value|
+  .table-responsive
+    %table.table.table-striped.table-bordered.table-hover
+      %thead
         %tr
-          %td= key
-          %td= value
+          %th= t(".type")
+          %th= t(".count")
 
-.row
-  .col-xs-6
-    %h4= t(".adopted_ratio", total: @adoption_total, adopted: @adopted_total)
-    - if @adopted_total > 0
-      %h3= t(".average_adoption_time")
-      %h4= average_time(@avg_adoption_time)
+      %tbody
+        - @data.each do |key, value|
+          %tr
+            %td= key
+            %td= value
 
-  .col-xs-6
-    %h4= t(".found_ratio", total: @lost_total, found: @found_total)
-    - if @found_total > 0
-      %h3= t(".average_found_time")
-      %h4= average_time(@avg_found_time)
+  .row
+    .col-xs-6
+      %h4= t(".adopted_ratio", total: @adoption_total, adopted: @adopted_total)
+      - if @adopted_total > 0
+        %h3= t(".average_adoption_time")
+        %h4= average_time(@avg_adoption_time)
+
+    .col-xs-6
+      %h4= t(".found_ratio", total: @lost_total, found: @found_total)
+      - if @found_total > 0
+        %h3= t(".average_found_time")
+        %h4= average_time(@avg_found_time)

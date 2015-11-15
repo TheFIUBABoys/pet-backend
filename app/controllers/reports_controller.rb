@@ -20,6 +20,9 @@ class ReportsController < ApplicationController
     @adopted_total  = Pet.for_adoption.approved.count
     @lost_total     = Pet.lost.count
     @found_total    = Pet.lost.approved.count
+
+  rescue ArgumentError => _e
+    flash[:error] = I18n.t("shared.date_error")
   end
 
   private
@@ -28,8 +31,12 @@ class ReportsController < ApplicationController
     @from = params.fetch(:from, 1.month.ago.to_date.to_s)
     @to   = params.fetch(:to, Date.today.to_s)
 
+    raise ArgumentError.new("Invalid date") if !@from || !@to
+
     from = Date.parse(@from)
     to   = Date.parse(@to)
+
+    raise ArgumentError.new("Invalid date") if from > to
 
     [from..to]
   end
