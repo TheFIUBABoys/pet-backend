@@ -36,6 +36,15 @@ class User < ActiveRecord::Base
     %w[phone first_name last_name location email].all? { |attribute| self.send(attribute).present? }
   end
 
+  def report
+    self.reported = true
+  end
+
+  def report!
+    self.report
+    self.save!
+  end
+
   def blocked?
     self.blocked_until.present? && self.blocked_until > Time.now
   end

@@ -93,6 +93,7 @@ class PetsController < ApplicationController
   # POST /pets/1/report.json
   def report
     @pet.report!
+    @pet.user.report!
     head :no_content
   end
 
