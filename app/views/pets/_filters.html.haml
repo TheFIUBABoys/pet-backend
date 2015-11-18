@@ -9,7 +9,7 @@
     .form-group
       = select_tag attribute, boolean_options(params[attribute]), prompt: t(".#{attribute}_prompt") , class: "form-control"
   .form-group
-    = text_field_tag :colors, nil, placeholder: t("activerecord.attributes.pet.colors") , class: "form-control"
+    = text_field_tag :colors, params[:colors], placeholder: t("activerecord.attributes.pet.colors") , class: "form-control"
   .form-group
-    = text_field_tag :metadata, nil, placeholder: t("activerecord.attributes.pet.metadata") , class: "form-control"
+    = text_field_tag :metadata, params[:metadata], placeholder: t("activerecord.attributes.pet.metadata") , class: "form-control"
   = submit_tag t(".submit"), class: "btn btn-primary"

@@ -84,8 +84,9 @@ class PetsController < ApplicationController
     users = User.where(reported: true)
 
     order_by = user_search_params.delete(:order_by) || "id"
-    users.where(user_search_params)
-    users.order(order_by => :asc)
+
+    users = users.where(user_search_params)
+    users = users.order(order_by => :asc)
 
     @users = users.paginate(page: params[:page], per_page: 10)
   end

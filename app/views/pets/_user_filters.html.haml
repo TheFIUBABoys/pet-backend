@@ -2,7 +2,7 @@
   .form-group
     = select_tag :order_by, user_order_by_options(params[:order_by]), prompt: t(".order_by_prompt") , class: "form-control"
   .form-group
-    = text_field_tag :first_name, nil, placeholder: t("activerecord.attributes.user.first_name") , class: "form-control"
+    = text_field_tag :first_name, params[:first_name], placeholder: t("activerecord.attributes.user.first_name") , class: "form-control"
   .form-group
-    = text_field_tag :last_name, nil, placeholder: t("activerecord.attributes.user.last_name") , class: "form-control"
+    = text_field_tag :last_name, params[:last_name], placeholder: t("activerecord.attributes.user.last_name") , class: "form-control"
   = submit_tag t(".submit"), class: "btn btn-primary"
