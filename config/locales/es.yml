@@ -119,3 +119,7 @@ es:
       count: "Cantidad"
       adopted_ratio: "%{adopted} mascotas adoptadas de %{total} en adopción."
       found_ratio: "%{found} mascotas encontradas de %{total} perdidas."
+  pet_questions:
+    reported: "La pregunta fue reportada."
+    blocked: "La pregunta fue bloqueada."
+    unblocked: "La pregunta fue desbloqueada."

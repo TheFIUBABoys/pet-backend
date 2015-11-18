@@ -1,10 +1,10 @@
 class QuestionsController < ApplicationController
 
-  before_action :set_pet, only: [:index, :create, :show, :answer]
-  before_action :set_pet_question, only: [:show, :answer]
+  before_action :set_pet, only: [:index, :create, :show, :answer, :report, :block, :unblock]
+  before_action :set_pet_question, only: [:show, :answer, :report, :block, :unblock]
 
   def index
-    @pet_questions = @pet.questions.order(created_at: :desc)
+    @pet_questions = @pet.questions.not_blocked.order(created_at: :desc)
   end
 
   def show
@@ -25,6 +25,33 @@ class QuestionsController < ApplicationController
     respond_to do |format|
       format.html { redirect_to @pet, notice: I18n.t("pets.edit.answer_created") }
       format.json { render :show }
+    end
+  end
+
+  def report
+    @pet_question.report!
+
+    respond_to do |format|
+      format.html { redirect_to pets_url, notice: I18n.t("pet_questions.reported") }
+      format.json { head :no_content }
+    end
+  end
+
+  def block
+    @pet_question.block!
+
+    respond_to do |format|
+      format.html { redirect_to pets_url, notice: I18n.t("pet_questions.blocked") }
+      format.json { head :no_content }
+    end
+  end
+
+  def unblock
+    @pet_question.unblock!
+
+    respond_to do |format|
+      format.html { redirect_to pets_url, notice: I18n.t("pet_questions.unblocked") }
+      format.json { head :no_content }
     end
   end
 

@@ -30,7 +30,12 @@ Rails.application.routes.draw do
       post "accept", on: :member
     end
     resources :questions, only: [:index, :show, :create] do
-      post "answer"
+      member do
+        post "answer"
+        put "report"
+        put "block"
+        put "unblock"
+      end
     end
   end
 
