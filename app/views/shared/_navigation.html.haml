@@ -15,6 +15,8 @@
           %li
             %a{ href: reported_users_pets_path }= t("pets.reported_users.title")
           %li
+            %a{ href: reported_questions_pets_path }= t("pets.reported_questions.title")
+          %li
             = link_to t("shared.logout"), destroy_user_session_path, method: :delete
         - else
           %li

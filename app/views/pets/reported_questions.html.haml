@@ -1,0 +1,32 @@
+.page-header
+  %h1= t(".title")
+
+-#.filters
+  = render "user_filters", filter_path: reported_users_pets_path
+
+- if @questions.any?
+  .table-responsive
+    %table.table.table-striped.table-bordered.table-hover
+      %thead
+        %tr
+          %th= t("activerecord.attributes.question.id")
+          %th= t("activerecord.attributes.question.body")
+          %th(colspan="2")= t("shared.actions")
+
+      %tbody
+        - @questions.each do |question|
+          %tr
+            %td= question.id
+            %td= question.body
+            %td= link_to t("shared.show"), pet_path(question.pet)
+            %td
+              - if question.blocked?
+                = link_to t("shared.unblock"), unblock_pet_question_path(question.pet, question), data: { confirm: t("shared.confirm") }, method: :put
+              - else
+                = link_to t("shared.block"), block_pet_question_path(question.pet, question), data: { confirm: t("shared.confirm") }, method: :put
+
+  .pagination-container
+    = will_paginate @questions, renderer: BootstrapPagination::Rails
+
+- else
+  .alert.alert-info= t(".no_results")

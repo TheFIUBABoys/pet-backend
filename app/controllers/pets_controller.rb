@@ -91,6 +91,12 @@ class PetsController < ApplicationController
     @users = users.paginate(page: params[:page], per_page: 10)
   end
 
+  def reported_questions
+    questions = PetQuestion.reported
+
+    @questions = questions.paginate(page: params[:page], per_page: 10)
+  end
+
   # POST /pets/1/report.json
   def report
     @pet.report!

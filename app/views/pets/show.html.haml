@@ -31,6 +31,22 @@
             - else
               = value
 
+- if @pet.questions.any?
+  .questions
+    %h2= t(".questions")
+    - @pet.questions.each do |question|
+      .question{ class: "#{question.reported? && 'reported'} #{question.blocked? && 'blocked'}" }
+        - if question.blocked?
+          %small= t(".question_blocked")
+          %br
+        - elsif question.reported?
+          %small= t(".question_reported")
+          %br
+        %strong= question.user.full_name
+        %p= question.body
+        - if question.answer.present?
+          %p.answer= question.answer.body
+
 - if @pet.images.any?
   .photos
     %h2= t(".photos")

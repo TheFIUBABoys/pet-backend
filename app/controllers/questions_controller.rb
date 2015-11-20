@@ -32,7 +32,7 @@ class QuestionsController < ApplicationController
     @pet_question.report!
 
     respond_to do |format|
-      format.html { redirect_to pets_url, notice: I18n.t("pet_questions.reported") }
+      format.html { redirect_to request.referrer, notice: I18n.t("pet_questions.reported") }
       format.json { head :no_content }
     end
   end
@@ -41,7 +41,7 @@ class QuestionsController < ApplicationController
     @pet_question.block!
 
     respond_to do |format|
-      format.html { redirect_to pets_url, notice: I18n.t("pet_questions.blocked") }
+      format.html { redirect_to request.referrer, notice: I18n.t("pet_questions.blocked") }
       format.json { head :no_content }
     end
   end
@@ -50,7 +50,7 @@ class QuestionsController < ApplicationController
     @pet_question.unblock!
 
     respond_to do |format|
-      format.html { redirect_to pets_url, notice: I18n.t("pet_questions.unblocked") }
+      format.html { redirect_to request.referrer, notice: I18n.t("pet_questions.unblocked") }
       format.json { head :no_content }
     end
   end

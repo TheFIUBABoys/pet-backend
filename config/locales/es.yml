@@ -52,6 +52,9 @@ es:
       photos: "Fotos de la mascota"
       created: "La mascota fue creada con éxito"
       updated: "La mascota fue actualizada exitosamente."
+      questions: "Preguntas y respuestas"
+      question_reported: "Pregunta reportada"
+      question_blocked: "Pregunta bloqueada"
     reported:
       title: "Mascotas reportadas"
       no_results: "No se encontraron publicaciones reportadas."
@@ -68,6 +71,9 @@ es:
     unblocked_user: "El usuario ha sido desbloqueado"
     blocked_user_publications: "Las publicaciones fueron bloquedas."
     unblocked_user_publications: "Las publicaciones fueron desbloqueadas."
+    reported_questions:
+      title: "Preguntas reportadas"
+      no_results: "No se encontraron preguntas reportadas."
   will_paginate:
     previous_label: Anterior
     next_label: Siguiente
@@ -102,6 +108,9 @@ es:
         id: "Id"
         first_name: "Nombre"
         last_name: "Apellido"
+      question:
+        id: "Id"
+        body: "Pregunta"
   reports:
     index:
       title: "Reportes"

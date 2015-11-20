@@ -21,6 +21,7 @@ Rails.application.routes.draw do
       get "top"
       get "reported"
       get "reported_users"
+      get "reported_questions"
       post "block_owner_publications"
       post "unblock_owner_publications"
     end
