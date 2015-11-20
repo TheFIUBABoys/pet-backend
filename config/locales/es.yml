@@ -53,17 +53,17 @@ es:
       created: "La mascota fue creada con éxito"
       updated: "La mascota fue actualizada exitosamente."
       questions: "Preguntas y respuestas"
-      question_reported: "Pregunta reportada"
+      question_reported: "Pregunta denunciada"
       question_blocked: "Pregunta bloqueada"
     reported:
-      title: "Mascotas reportadas"
-      no_results: "No se encontraron publicaciones reportadas."
+      title: "Mascotas denunciadas"
+      no_results: "No se encontraron publicaciones denunciadas."
     blocked: "La publicación ha sido bloqueda"
     blocked_user: "El usuario ha sido bloquedo."
     reported_users:
-      title: "Usuarios reportados"
-      reported_publications: "Publicaciones reportadas"
-      no_results: "No se encontraron usuarios reportados."
+      title: "Usuarios denunciados"
+      reported_publications: "Publicaciones denunciadas"
+      no_results: "No se encontraron usuarios denunciados."
     user_filters:
       submit: "Buscar"
       order_by_prompt: "- Ordenar por -"
@@ -72,8 +72,8 @@ es:
     blocked_user_publications: "Las publicaciones fueron bloquedas."
     unblocked_user_publications: "Las publicaciones fueron desbloqueadas."
     reported_questions:
-      title: "Preguntas reportadas"
-      no_results: "No se encontraron preguntas reportadas."
+      title: "Preguntas denunciadas"
+      no_results: "No se encontraron preguntas denunciadas."
   will_paginate:
     previous_label: Anterior
     next_label: Siguiente
@@ -101,7 +101,7 @@ es:
         created_at: Creado el
         updated_at: Actualizado el
         images: "Imágenes"
-        reported: Reportada
+        reported: Denunciada
       pet_image:
         image: Imagen
       user:
@@ -129,6 +129,6 @@ es:
       adopted_ratio: "%{adopted} mascotas adoptadas de %{total} en adopción."
       found_ratio: "%{found} mascotas encontradas de %{total} perdidas."
   pet_questions:
-    reported: "La pregunta fue reportada."
+    reported: "La pregunta fue denunciada."
     blocked: "La pregunta fue bloqueada."
     unblocked: "La pregunta fue desbloqueada."
