@@ -21,9 +21,7 @@ class LostPetMatchService < BaseService
   end
 
   def notification_options(pet)
-    notification_type = "lost_pet_match"
-
-    { data: { pet_id: pet.id, user_id: pet.user.id, type: notification_type }, collapse_key: notification_type }
+      { data: { pet_id: pet.id, user_id: pet.user.id, type: "lost_pet_match" }, collapse_key: "lost_pet_match" }
   end
 
   def notification_service
@@ -31,7 +29,13 @@ class LostPetMatchService < BaseService
   end
 
   def notify_pet_matches(pet, pet_matches)
-    pet_matches.each { |matched_pet| notification_service.call(pet.user, notification_options(matched_pet)) }
+    pet_matches.each { |matched_pet|
+      if matched_pet.publication_type == "lost"
+        notification_service.call(matched_pet.user, notification_options(matched_pet))
+      else
+        notification_service.call(pet.user, notification_options(matched_pet))
+      end
+    }
   end
 
 end
